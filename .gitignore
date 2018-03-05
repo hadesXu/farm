@@ -1,0 +1,18 @@
+# IntelliJ
+.idea/
+*.eml
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.metadata
+.settings/
+
+target
+.DS_Store
+
+
+logs

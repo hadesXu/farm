@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hades.farm.core.data.mapper.UserMapper">
+
+    <resultMap id="user" type="User">
+        <id property="id" column="id"/>
+        <result property="nick" column="nick"/>
+        <result property="pwd" column="pwd"/>
+    </resultMap>
+
+    <sql id="user_columns">
+        id,nick,pwd
+    </sql>
+
+    <select id="getUserById" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE id=#{id}
+    </select>
+
+</mapper>

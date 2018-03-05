@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:mysql://120.79.137.135:3306/farm?useUnicode=true&autoReconnect=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: XHroot2018!
+    jmx-enabled: true
+    test-while-idle: true
+    test-on-borrow: true
+    validation-query: SELECT 1
+    test-on-return: false
+    validation-interval: 30000
+    time-between-eviction-runs-millis: 30000
+    max-active: 100
+    initial-size: 10
+    max-wait: 10000
+    remove-abandoned-timeout: 60
+    min-evictable-idle-time-millis: 30000
+    min-idle: 10
+    log-abandoned: true
+    remove-abandoned: true
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jackson:
+    serialization-inclusion: non_null
+task:
+  pool:
+    size: 6
+  queue:
+    capacity: 20
+
+mybatis:
+  typeAliasesPackage: com.hades.farm.core.data.entity
+  configLocation: classpath:mybatis/mybatis.xml
+  mapperLocations: classpath:mybatis/sql/*.xml
+
+emchat:
+  schema: https
+  host: a1.easemob.com
+  password: 123456
+  appkey: pingke#yungo-test
+  clientId: YXA6Rc6j0Hz5EeanSeU_LEl1aQ
+  secret: YXA6NuO-NjzTOgXe444wxLbgAtZG6Vg
+
+server:
+  port: 8098
+  
+switch:
+  debug: true
+
