@@ -13,12 +13,12 @@ public class User {
     /**
      * 用户昵称
      */
-    private String nick;
+    private String name;
 
     /**
      * 用户密码
      */
-    private String pwd;
+    private String password;
 
 
     public long getId() {
@@ -29,19 +29,20 @@ public class User {
         this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public String getName() {
+        return name;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPwd() {
-        return pwd;
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

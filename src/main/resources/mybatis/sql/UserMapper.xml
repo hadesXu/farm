@@ -4,12 +4,12 @@
 
     <resultMap id="user" type="User">
         <id property="id" column="id"/>
-        <result property="nick" column="nick"/>
-        <result property="pwd" column="pwd"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
     </resultMap>
 
     <sql id="user_columns">
-        id,nick,pwd
+        id,name,password
     </sql>
 
     <select id="getUserById" resultMap="user">

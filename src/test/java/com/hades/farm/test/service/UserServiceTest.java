@@ -17,7 +17,7 @@ public class UserServiceTest extends BaseTest {
         Result<User> result= userService.get(1);
         if(result.isSuccess()){
             User obj = result.getObject();
-            System.out.println("名称:"+obj.getNick());
+            System.out.println("名称:"+obj.getName());
         }
     }
 }
