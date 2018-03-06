@@ -36,3 +36,17 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `idx_user_telephone` (`telephone`),
   UNIQUE KEY `idx_user_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_account_ticket_flow` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT(20) NOT NULL,
+  `type` INT(2) NOT NULL COMMENT '1.购买种鸭 2.购买种蛋 3.充值 4.提现 5.出售商品鸭 6.出售商品蛋 7.购买饲料 8.佣金 9.购买看门狗 10.购买机器人 11.兑换积分',
+  `amount` DECIMAL(18,2) DEFAULT '0.00' COMMENT '金额',
+  `amount_before` DECIMAL(18,2) DEFAULT '0.00' COMMENT '交易前金额',
+  `amount_after` DECIMAL(18,2) DEFAULT '0.00' COMMENT '交易后金额',
+  `remarks` VARCHAR(200) DEFAULT NULL COMMENT '备注',
+  `add_time` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX idx_account_ticket_flow_userid(user_id)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
