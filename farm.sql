@@ -21,7 +21,7 @@ CREATE TABLE `t_user` (
   `telephone` varchar(11) NOT NULL COMMENT '注册手机号,唯一',
   `password` varchar(100) NOT NULL COMMENT '登录密码',
   `number` int(8) NOT NULL COMMENT '唯一，系统生成，填写扫码师傅ID时用到',
-  `opend_id` varchar(40) DEFAULT NULL COMMENT '微信ID',
+  `wechat` varchar(40) DEFAULT NULL COMMENT '微信ID',
   `father_number` varchar(40) DEFAULT NULL COMMENT '推荐人ID',
   `grade` int(1) NOT NULL DEFAULT '1' COMMENT '1:徒弟（默认）2:师傅 3:师爷 4:地主 5:合伙人  6:代理',
   `is_trainee` int(1) NOT NULL DEFAULT '1' COMMENT '值为1（否）、2（是）。默认为否。',
@@ -35,7 +35,7 @@ CREATE TABLE `t_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_telephone` (`telephone`),
   UNIQUE KEY `idx_user_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `t_account_ticket_flow` (
@@ -49,4 +49,11 @@ CREATE TABLE `t_account_ticket_flow` (
   `add_time` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX idx_account_ticket_flow_userid(user_id)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `t_user_token` (
+  `user_id` BIGINT(20) NOT NULL COMMENT '用户id',
+  `token` VARCHAR(130) DEFAULT NULL COMMENT '登录token',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  PRIMARY KEY (`user_id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;

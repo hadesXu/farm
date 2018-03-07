@@ -8,6 +8,8 @@ import com.hades.farm.core.data.entity.User;
  */
 public interface UserMapper {
 
+    int insert(User user);
+
     /**
      * 根据ID获取用户
      *

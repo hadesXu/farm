@@ -13,12 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebAppConfig extends WebMvcConfigurerAdapter{
 
     @Bean
-    public DefaultTokenUserService tokenUserService(){
+    public DefaultTokenUserService tokenUserService() {
         return new DefaultTokenUserService();
     }
 
     @Bean
-    public AuthIntercepter authIntercepter(){
+    public AuthIntercepter authIntercepter() {
         AuthIntercepter intercepter = new AuthIntercepter();
         intercepter.setTokenParamKey("token");
         intercepter.setUserIdKey("userId");
@@ -26,23 +26,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
         return intercepter;
     }
 
-    @Bean(name = "decryptFilter")
-    public DecryptFilter decryptFilter() {
-        return new DecryptFilter();
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authIntercepter()).addPathPatterns("/api/user/*");
-    }
-
-    @Bean
-    public FilterRegistrationBean newFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(decryptFilter());
-        registration.addUrlPatterns("/api/encrypt/*");
-        registration.setName("decryptFilter");
-        return registration;
+        registry.addInterceptor(authIntercepter()).addPathPatterns("/**").excludePathPatterns("/txim/callback");
     }
 
 }

@@ -4,13 +4,34 @@
 
     <resultMap id="user" type="User">
         <id property="id" column="id"/>
+        <result property="telephone" column="telephone"/>
         <result property="name" column="name"/>
         <result property="password" column="password"/>
+        <result property="wechat" column="wechat"/>
+        <result property="fatherNumber" column="father_number"/>
+        <result property="grade" column="grade"/>
+        <result property="isTrainee" column="is_trainee"/>
+        <result property="sEgg" column="s_egg"/>
+        <result property="sDuck" column="s_duck"/>
+        <result property="active" column="active"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="qrCode" column="qr_code"/>
+        <result property="addTime" column="add_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="user_columns">
-        id,name,password
+        id,telephone,name,password,wechat,father_number,grade,is_trainee,s_egg,s_duck,
+        active,img_url,qr_code,add_time,update_time
     </sql>
+
+    <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"
+            keyProperty="userId">
+        insert into t_user ( id,telephone,name,password,wechat,father_number,grade,is_trainee,
+        s_egg,s_duck, active,img_url,qr_code,add_time,update_time)
+        values (#{id},#{telephone},#{name},#{password},#{wechat},#{fatherNumber},#{grade},#{isTrainee},
+        #{sEgg},#{sDuck},#{active},#{imgUrl},#{qrCode},#{addTime},#{updateTime})
+    </insert>
 
     <select id="getUserById" resultMap="user">
         SELECT
