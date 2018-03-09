@@ -3,8 +3,8 @@ package com.hades.farm.core.manager.impl;
 import com.hades.farm.core.data.entity.UserToken;
 import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.core.data.mapper.UserTokenMapper;
-import com.hades.farm.core.result.Result;
-import com.hades.farm.core.result.error.ErrorCode;
+import com.hades.farm.result.ErrorCode;
+import com.hades.farm.result.Result;
 import com.langu.authorization.exception.TokenGenerateException;
 import com.langu.authorization.token.BlowfishToken;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public class TokenManagerImpl implements TokenManager {
                 userToken.setToken(str);
                 userTokenMapper.insertUserToken(userToken);
             }
-            result.setObject(str);
+            result.setData(str);
         } catch (TokenGenerateException e) {
             result.addError(ErrorCode.SYSTEM_ERROR);
             logger.error("GenerateToken exception, userId:{}", userId, e);
@@ -65,7 +65,7 @@ public class TokenManagerImpl implements TokenManager {
         Result<String> result = new Result<>();
         UserToken userToken = userTokenMapper.getUserTokenById(userId);
         if (userToken != null) {
-            result.setObject(userToken.getToken());
+            result.setData(userToken.getToken());
         }
         return result;
     }

@@ -1,10 +1,10 @@
-package com.hades.farm.web.controller.app;
+package com.hades.farm.api.controller;
 
+import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.core.data.entity.User;
-import com.hades.farm.core.result.Result;
 import com.hades.farm.core.service.UserService;
-import com.hades.farm.web.model.ViewResult;
-import com.hades.farm.web.model.view.user.UserModel;
+import com.hades.farm.result.Result;
+import com.hades.farm.api.view.response.UserModel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,18 +17,18 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserApi {
 
     @Resource
     private UserService userService;
 
     @RequestMapping(value = "/user/getUserById", method = RequestMethod.POST)
 //    @Auth
-    public ViewResult getUserById(@RequestParam long userId) {
-        ViewResult<UserModel> result = new ViewResult<>();
+    public ApiResponse getUserById(@RequestParam long userId) {
+        ApiResponse<UserModel> result = new ApiResponse<>();
         Result<User> uRes = userService.get(userId);
         if (!uRes.isSuccess()) {
-            result.addError(uRes.getErrMsg());
+            result.addError(uRes.getErrorCodes());
             return result;
         }
         return result;

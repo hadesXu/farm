@@ -1,6 +1,6 @@
 package com.hades.farm.core.manager;
 
-import com.hades.farm.core.result.Result;
+import com.hades.farm.result.Result;
 
 /**
  * Created by xiaoxu on 2018/3/7.

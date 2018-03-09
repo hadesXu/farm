@@ -1,4 +1,4 @@
-package com.hades.farm.config;
+package com.hades.farm.web.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

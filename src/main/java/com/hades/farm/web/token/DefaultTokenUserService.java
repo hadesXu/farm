@@ -1,7 +1,7 @@
 package com.hades.farm.web.token;
 
 import com.hades.farm.core.manager.TokenManager;
-import com.hades.farm.core.result.Result;
+import com.hades.farm.result.Result;
 import com.langu.authorization.exception.UserInvalidException;
 import com.langu.authorization.service.TokenUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class DefaultTokenUserService implements TokenUserService {
     public boolean isUserIdMatchToken(String token, long userId) throws UserInvalidException {
         Result<String> checkRes = tokenManager.getToken(userId);
         if (checkRes.isSuccess()) {
-            return StringUtils.equals(token, checkRes.getObject());
+            return StringUtils.equals(token, checkRes.getData());
         } else {
             log.error("getUserToken failed. userId:{} token:{}", userId, token);
         }

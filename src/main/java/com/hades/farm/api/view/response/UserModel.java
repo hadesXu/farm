@@ -1,4 +1,4 @@
-package com.hades.farm.web.model.view.user;
+package com.hades.farm.api.view.response;
 
 /**
  * 返回给客户端的用户模型

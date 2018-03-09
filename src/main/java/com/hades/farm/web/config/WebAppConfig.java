@@ -1,4 +1,4 @@
-package com.hades.farm.config;
+package com.hades.farm.web.config;
 
 import com.langu.authorization.filter.DecryptFilter;
 import com.langu.authorization.interceptor.AuthIntercepter;
