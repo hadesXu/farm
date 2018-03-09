@@ -1,4 +1,4 @@
-package com.hades.farm.core.data.manager;
+package com.hades.farm.core.manager;
 
 import com.hades.farm.core.result.Result;
 

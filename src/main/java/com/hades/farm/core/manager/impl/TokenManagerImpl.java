@@ -1,13 +1,12 @@
-package com.hades.farm.core.data.manager.impl;
+package com.hades.farm.core.manager.impl;
 
 import com.hades.farm.core.data.entity.UserToken;
-import com.hades.farm.core.data.manager.TokenManager;
+import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.core.data.mapper.UserTokenMapper;
 import com.hades.farm.core.result.Result;
 import com.hades.farm.core.result.error.ErrorCode;
 import com.langu.authorization.exception.TokenGenerateException;
 import com.langu.authorization.token.BlowfishToken;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

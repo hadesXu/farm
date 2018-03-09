@@ -1,6 +1,6 @@
 package com.hades.farm.web.token;
 
-import com.hades.farm.core.data.manager.TokenManager;
+import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.core.result.Result;
 import com.langu.authorization.exception.UserInvalidException;
 import com.langu.authorization.service.TokenUserService;
