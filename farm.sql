@@ -57,3 +57,77 @@ CREATE TABLE `t_user_token` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
+
+
+
+CREATE TABLE `t_duck_breeding` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `num` int(11) NOT NULL DEFAULT '0' COMMENT '孵化蛋数量',
+  `num_harvest` int(11) NOT NULL DEFAULT '0' COMMENT '已孵化的鸭数量',
+  `day` int(11) NOT NULL DEFAULT '0' COMMENT '已孵化的天数',
+  `acc_no_feed` int(11) NOT NULL DEFAULT '0' COMMENT '累计未喂养天数',
+  `status` int(5) NOT NULL DEFAULT '1' COMMENT '1:孵化中，2：孵化成功，3：孵化失败',
+  `if_feed` int(5) DEFAULT '1' COMMENT '今日是否喂养 1:是，2：否',
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_duck_breeding_userid` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_duck_warehouse` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(11) NOT NULL,
+  `duck` int(11) NOT NULL DEFAULT '0' COMMENT '种鸭(待生产)',
+  `duck_doing` int(11) NOT NULL DEFAULT '0' COMMENT '生产中的鸭',
+  `egg` int(11) NOT NULL DEFAULT '0' COMMENT '商品蛋(可出售)',
+  `egg_freeze` int(11) NOT NULL DEFAULT '0' COMMENT '冻结中的蛋',
+  `egg_harvest` int(11) NOT NULL DEFAULT '0' COMMENT '可收获的蛋',
+  `if_harvest` int(5) NOT NULL DEFAULT '1' COMMENT '今日是否丰收 1:是，2：否',
+  `if_steal` int(5) NOT NULL DEFAULT '1' COMMENT '今日是否可偷 1:是，2：否',
+  `all_sell` int(11) NOT NULL DEFAULT '0' COMMENT '累计出售商品蛋数量',
+  `all_profit` decimal(18,2) DEFAULT '0.00' COMMENT '累计出售商品蛋利润',
+  `all_integral` decimal(18,2) DEFAULT '0.00' COMMENT '累计出售商品蛋积分',
+  `food` decimal(18,2) DEFAULT '0.00' COMMENT '剩余饲料',
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_duck_warehouse_userid` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_egg_breeding` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `num` int(11) NOT NULL DEFAULT '0' COMMENT '孵化蛋数量',
+  `num_harvest` int(11) NOT NULL DEFAULT '0' COMMENT '已孵化的鸭数量',
+  `day` int(11) NOT NULL DEFAULT '0' COMMENT '已孵化的天数',
+  `acc_no_hot` int(11) NOT NULL DEFAULT '0' COMMENT '累计未加温天数',
+  `status` int(5) NOT NULL DEFAULT '1' COMMENT '1:孵化中，2：孵化成功，3：孵化失败',
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_egg_breeding_userid` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_egg_warehouse` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `egg` int(11) NOT NULL DEFAULT '0' COMMENT '种蛋（待孵化）',
+  `egg_doing` int(11) NOT NULL DEFAULT '0' COMMENT '孵化中的蛋',
+  `duck` int(11) NOT NULL DEFAULT '0' COMMENT '商品鸭(可出售)',
+  `duck_freeze` int(11) NOT NULL DEFAULT '0' COMMENT '冻结中的鸭',
+  `duck_harvest` int(11) NOT NULL DEFAULT '0' COMMENT '可收获的鸭',
+  `if_hot` int(5) NOT NULL DEFAULT '1' COMMENT '今日是否加温1:是，2否',
+  `if_harvest` int(5) NOT NULL DEFAULT '1' COMMENT '今日是否丰收1:是，2否',
+  `if_steal` int(5) NOT NULL DEFAULT '1' COMMENT '今日是否可偷1:是，2否',
+  `all_sell` int(11) NOT NULL DEFAULT '0' COMMENT '累计出售商品鸭数量',
+  `all_profit` decimal(18,2) DEFAULT '0.00' COMMENT '累计出售商品鸭利润',
+  `all_integral` decimal(18,2) DEFAULT '0.00' COMMENT '累计出售商品鸭积分',
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_egg_warehouse_userid` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
