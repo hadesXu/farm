@@ -10,13 +10,9 @@ public interface UserMapper {
 
     int insert(User user);
 
-    /**
-     * 根据ID获取用户
-     *
-     * @param userId
-     * @return
-     */
     User getUserById(long userId);
+
+    User getUserByWeChat(String weChat);
 
 
 }

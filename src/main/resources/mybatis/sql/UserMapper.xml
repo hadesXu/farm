@@ -40,4 +40,11 @@
         WHERE id=#{id}
     </select>
 
+    <select id="getUserByWeChat" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE wechat=#{wechat}
+    </select>
+
 </mapper>

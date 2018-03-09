@@ -1,5 +1,6 @@
 package com.hades.farm.core.service;
 
+import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.result.Result;
 
@@ -11,13 +12,10 @@ public interface UserService {
     /**
      * 注册
      *
-     * @param phone
-     * @param pwd
-     * @param weChat
-     * @param fatherNumber
+     * @param request
      * @return
      */
-    Result<User> userRegister(String phone, String pwd, String weChat, String fatherNumber);
+    Result<User> userRegister(RegisterRequest request);
 
     /**
      * 获取用户
