@@ -81,6 +81,7 @@ public class TEggBreeding {
      *
      * @mbggenerated
      */
+    public TEggBreeding(){}
     public TEggBreeding(Long id, Long userId, Integer num, Integer numHarvest, Integer day, Integer accNoHot, Integer status, Date addTime, Date updateTime) {
         this.id = id;
         this.userId = userId;
@@ -199,5 +200,41 @@ public class TEggBreeding {
      */
     public Date getUpdateTime() {
         return updateTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public void setNumHarvest(Integer numHarvest) {
+        this.numHarvest = numHarvest;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
+    }
+
+    public void setAccNoHot(Integer accNoHot) {
+        this.accNoHot = accNoHot;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

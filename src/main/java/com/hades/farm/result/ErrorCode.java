@@ -4,9 +4,11 @@ package com.hades.farm.result;
  * Created by xiaoxu on 2018/3/9.
  */
 public enum ErrorCode {
+    SUCCESS(0000,"成功"),
     ADD_ERR(1001, "数据插入失败，请稍后再试"),
     UPDATE_ERR(1002, "数据更新失败，请稍后再试"),
-    SYSTEM_ERROR(1000, "当前系统错误，请稍后再试");
+    SYSTEM_ERROR(1000, "当前系统错误，请稍后再试"),
+    EGG_NO_ENOUGH(2000,"鸭蛋数量不足");
 
     /**
      * 错误码
