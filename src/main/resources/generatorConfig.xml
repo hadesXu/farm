@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_egg_breeding"
+        <table tableName="t_notice"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

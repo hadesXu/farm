@@ -131,3 +131,14 @@ CREATE TABLE `t_egg_warehouse` (
   PRIMARY KEY (`id`),
   KEY `idx_egg_warehouse_userid` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_notice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `type` int(5) NOT NULL COMMENT '1:喂鸡，2：给蛋加温，3：孵蛋',
+  `remarks` varchar(200) DEFAULT NULL,
+  `add_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_notice_userid` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -3,10 +3,13 @@ package com.hades.farm.core.service.impl;
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
 import com.hades.farm.core.data.entity.TEggBreeding;
 import com.hades.farm.core.data.entity.TEggWarehouse;
+import com.hades.farm.core.data.entity.TNotice;
 import com.hades.farm.core.data.mapper.TEggBreedingMapper;
 import com.hades.farm.core.data.mapper.TEggWarehouseMapper;
+import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.EggBreedingService;
+import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class EggBreedingServiceImpl implements EggBreedingService {
     private TEggBreedingMapper tEggBreedingMapper;
     @Autowired
     private TEggWarehouseMapper tEggWarehouseMapper;
+    @Autowired
+    private TNoticeMapper tNoticeMapper;
 
     /**
      * 孵蛋
@@ -78,6 +83,13 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         if(updateCount !=1){
             throw new BizException(ErrorCode.UPDATE_ERR);
         }
+        //孵蛋notice记录
+        TNotice tNotice = new TNotice();
+        tNotice.setUserId(requestDto.getUserId());
+        tNotice.setType(NoticeType.BREEDING_EGG.getType());
+        tNotice.setRemarks(NoticeType.BREEDING_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+        tNotice.setAddTime(new Date());
+        tNoticeMapper.insertSelective(tNotice);
         return true;
     }
 }
