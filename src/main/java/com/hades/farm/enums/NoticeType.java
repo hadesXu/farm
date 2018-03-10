@@ -7,7 +7,8 @@ public enum NoticeType {
     FEED_DUCK(1,"喂鸭",""),
     EGG_HOT(2,"给蛋加温",""),
     BREEDING_EGG(3,"孵蛋","成功放入num个蛋孵化"),
-    BREEDING_DUCK(4,"养鸭","成功放入num个鸭入鸭场养殖")
+    BREEDING_DUCK(4,"养鸭","成功放入num个鸭入鸭场养殖"),
+    BUY_DUCK(5,"买鸭","成功购买num个鸭")
     ;
     private int type;
     private String desc;

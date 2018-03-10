@@ -252,4 +252,21 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
 
+  <update id="updateDuckWareHouseBreedingDuck" parameterType="com.hades.farm.core.data.dto.requestDto.BreedingRequestDto" >
+    UPDATE t_duck_warehouse
+    SET duck = duck - #{num,jdbcType=INTEGER},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+    and duck &gt;=#{num,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateDuckWareHouseBuyDuck" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
+    UPDATE t_duck_warehouse
+    SET duck = duck + #{num,jdbcType=INTEGER},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+
 </mapper>

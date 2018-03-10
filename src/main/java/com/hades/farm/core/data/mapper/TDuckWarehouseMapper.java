@@ -1,5 +1,7 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 
 public interface TDuckWarehouseMapper {
@@ -52,4 +54,8 @@ public interface TDuckWarehouseMapper {
     int updateByPrimaryKey(TDuckWarehouse record);
 
     TDuckWarehouse selectByUserId(long userId);
+
+    int updateDuckWareHouseBreedingDuck(BreedingRequestDto requestDto);
+
+    int updateDuckWareHouseBuyDuck(BuyGoodsRequestDto requestDto);
 }

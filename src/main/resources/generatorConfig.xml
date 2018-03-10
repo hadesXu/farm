@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_duck_warehouse"
+        <table tableName="t_account_ticket_flow"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
