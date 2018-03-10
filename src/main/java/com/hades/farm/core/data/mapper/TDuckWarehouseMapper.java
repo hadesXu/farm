@@ -58,4 +58,7 @@ public interface TDuckWarehouseMapper {
     int updateDuckWareHouseBreedingDuck(BreedingRequestDto requestDto);
 
     int updateDuckWareHouseBuyDuck(BuyGoodsRequestDto requestDto);
+
+    int updateDuckWareHouseBuyFeed(BuyGoodsRequestDto requestDto);
+
 }

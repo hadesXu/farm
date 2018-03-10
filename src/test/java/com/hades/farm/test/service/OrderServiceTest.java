@@ -9,6 +9,7 @@ import com.hades.farm.test.BaseTest;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * Created by zhengzl on 2018/3/10.
@@ -25,6 +26,22 @@ public class OrderServiceTest  extends BaseTest {
         requestDto.setType(GoodsType.DUCK.getType());
         try {
             orderService.buyDuckFromPlatform(requestDto);
+        }catch (BizException e){
+            System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void buyFeed() throws BizException{
+        BuyGoodsRequestDto requestDto = new  BuyGoodsRequestDto();
+        requestDto.setUserId(1);
+        requestDto.setFeedNum(new BigDecimal("5"));
+        requestDto.setType(GoodsType.FEED.getType());
+        try {
+            orderService.buyFeed(requestDto);
         }catch (BizException e){
             System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
             e.printStackTrace();

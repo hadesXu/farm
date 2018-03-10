@@ -4,11 +4,21 @@ package com.hades.farm.enums;
  * Created by zhengzl on 2018/3/10.
  */
 public enum NoticeType {
-    FEED_DUCK(1,"喂鸭",""),
-    EGG_HOT(2,"给蛋加温",""),
-    BREEDING_EGG(3,"孵蛋","成功放入num个蛋孵化"),
-    BREEDING_DUCK(4,"养鸭","成功放入num个鸭入鸭场养殖"),
-    BUY_DUCK(5,"买鸭","成功购买num个鸭")
+    BUY_DUCK(1,"购买种鸭","成功购买num个鸭"),
+    BUY_EGG(2,"购买种蛋","成功购买num个鸭蛋"),
+    RECHARGE(3,"充值","充值amount"),
+    WITHDRAW(4,"提现","提现amount"),
+    SELL_DUCK(5,"出售商品鸭","成功出售num个鸭"),
+    SELL_EGG(6,"出售商品蛋","成功出售num个鸭蛋"),
+    BUY_FEED(7,"买饲料","成功购买num包饲料"),
+    BROKER_CHARGES(8,"佣金","获得佣金amount"),
+    BUY_DOG(9,"购买看门狗","成功购买看门狗"),
+    BUY_ROBOT(10,"购买机器人","成功购买机器人"),
+    EXCHANGE_GRADE(11,"兑换积分","成功兑换积分"),
+    FEED_DUCK(12,"喂鸭","喂鸭"),
+    EGG_HOT(13,"给蛋加温","给蛋加温"),
+    BREEDING_EGG(14,"孵蛋","成功放入num个蛋孵化"),
+    BREEDING_DUCK(15,"养鸭","成功放入num个鸭入鸭场养殖")
     ;
     private int type;
     private String desc;
