@@ -1,5 +1,7 @@
 package com.hades.farm.api.view.request;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by xiaoxu on 2018/3/9.
  */
@@ -7,21 +9,31 @@ public class RegisterRequest {
     /**
      * 手机号
      */
+    @NotNull
     private String phone;
 
     /**
      * 手机验证码
      */
+    @NotNull
     private String code;
+
+    /**
+     * 头像
+     */
+    @NotNull
+    private String face;
 
     /**
      * 密码
      */
-    String pwd;
+    @NotNull
+    private String pwd;
 
     /**
      * 微信
      */
+    @NotNull
     private String wechat;
 
     /**
@@ -43,6 +55,14 @@ public class RegisterRequest {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
     }
 
     public String getPwd() {

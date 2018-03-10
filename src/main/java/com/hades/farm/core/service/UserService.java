@@ -18,6 +18,31 @@ public interface UserService {
     Result<User> userRegister(RegisterRequest request);
 
     /**
+     * 登录
+     *
+     * @param phone
+     * @param pwd
+     * @return
+     */
+    Result<User> login(String phone, String pwd);
+
+    /**
+     * 登录
+     *
+     * @param wechat
+     * @return
+     */
+    Result<User> login(String wechat);
+
+    /**
+     * 自动登录
+     *
+     * @param userId
+     * @return
+     */
+    Result<User> userAutoLogin(long userId);
+
+    /**
      * 获取用户
      *
      * @param userId

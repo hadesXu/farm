@@ -1,51 +1,31 @@
 package com.hades.farm.api.view.response;
 
 /**
- * 返回给客户端的用户模型
- * Created by Ben on 16/9/5.
+ * Created by xiaoxu on 2018/3/10.
  */
 public class UserModel {
-
     /**
      * 用户id
      */
     private long userId;
     /**
-     * 用户token
-     */
-    private String token;
-    /**
-     * 用户昵称
+     * 昵称
      */
     private String nick;
     /**
-     * 用户头像
+     * 头像
      */
     private String face;
+
     /**
-     * 省
+     * 手机号
      */
-    private String province;
+    private String phone;
+
     /**
-     * 市
+     * 登陆token
      */
-    private String city;
-    /**
-     * 客户端IP地址
-     */
-    private String ip;
-    /**
-     * IM账号
-     */
-    private String chatId;
-    /**
-     * IM密码
-     */
-    private String chatPwd;
-    /**
-     * 数据版本号
-     */
-    private int syncVersion;
+    private String token;
 
     public long getUserId() {
         return userId;
@@ -53,14 +33,6 @@ public class UserModel {
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getNick() {
@@ -79,51 +51,19 @@ public class UserModel {
         this.face = face;
     }
 
-    public String getProvince() {
-        return province;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getCity() {
-        return city;
+    public String getToken() {
+        return token;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
-    }
-
-    public String getChatPwd() {
-        return chatPwd;
-    }
-
-    public void setChatPwd(String chatPwd) {
-        this.chatPwd = chatPwd;
-    }
-
-    public int getSyncVersion() {
-        return syncVersion;
-    }
-
-    public void setSyncVersion(int syncVersion) {
-        this.syncVersion = syncVersion;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

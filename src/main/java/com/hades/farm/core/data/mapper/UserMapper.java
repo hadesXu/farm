@@ -14,5 +14,7 @@ public interface UserMapper {
 
     User getUserByWeChat(String weChat);
 
+    User getUserPhone(String telephone);
+
 
 }

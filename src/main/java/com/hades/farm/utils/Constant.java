@@ -6,6 +6,13 @@ import java.math.BigDecimal;
  * Created by xiaoxu on 2018/3/7.
  */
 public class Constant {
+
+    public static final long DEFAULT_ID = 0L;//默认ID
+    public static final int NUMBER_MINUS_ONE = -1;//数字-1
+    public static final int NUMBER_ZERO = 0;//数字0
+    public static final int NUMBER_ONE = 1;//数字1
+
+
     //菜票对人民币倍数
     public static final int TICKET_CNY = 1;
     //最少购买蛋的数量
@@ -25,7 +32,11 @@ public class Constant {
     //鸭养殖周期
     public static final int BREEDING_DUCK_CYC = 24;
     //蛋养殖周期
-    public static final int BREEDING_EGG_CYC =  9;
+    public static final int BREEDING_EGG_CYC = 9;
+
+
+    public static final String DEFAULT_CODE = "0000";//默认code
+    public static final String CODE_MESSAGE_TEMPLATE = "欢迎使用本产品， 您本次操作操作验证码为：%s, 3分钟有效~";
 
 
 }

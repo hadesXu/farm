@@ -47,4 +47,11 @@
         WHERE wechat=#{wechat}
     </select>
 
+    <select id="getUserPhone" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE telephone=#{telephone}
+    </select>
+
 </mapper>
