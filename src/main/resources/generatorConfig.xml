@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_notice"
+        <table tableName="t_duck_warehouse"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
