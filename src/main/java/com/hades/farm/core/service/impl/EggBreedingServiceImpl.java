@@ -42,26 +42,7 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(requestDto.getUserId());
         int updateCount = 0;
         if(eggWarehouse == null){
-            //添加记录
-            eggWarehouse = new TEggWarehouse();
-            eggWarehouse.setUserId(requestDto.getUserId());
-            eggWarehouse.setEgg(0);
-            eggWarehouse.setEggDoing(0);
-            eggWarehouse.setDuck(0);
-            eggWarehouse.setDuckFreeze(0);
-            eggWarehouse.setDuckHarvest(0);
-            eggWarehouse.setIfHot(2);
-            eggWarehouse.setIfHarvest(2);
-            eggWarehouse.setIfSteal(2);
-            eggWarehouse.setAllSell(0);
-            eggWarehouse.setAllProfit(new BigDecimal("0"));
-            eggWarehouse.setAllIntegral(new BigDecimal("0"));
-            eggWarehouse.setAddTime(new Date());
-            eggWarehouse.setUpdateTime(new Date());
-            updateCount = tEggWarehouseMapper.insertSelective(eggWarehouse);
-            if(updateCount !=1){
-                throw new BizException(ErrorCode.ADD_ERR);
-            }
+            throw new BizException(ErrorCode.EGG_NO_ENOUGH);
         }else if(eggWarehouse.getEgg()<requestDto.getNum()){
             throw new BizException(ErrorCode.EGG_NO_ENOUGH);
         }
@@ -92,4 +73,5 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         tNoticeMapper.insertSelective(tNotice);
         return true;
     }
+
 }
