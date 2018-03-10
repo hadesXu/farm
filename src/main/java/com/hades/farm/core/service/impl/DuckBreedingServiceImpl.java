@@ -9,9 +9,11 @@ import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
 import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.DuckBreedingService;
+import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,27 +38,7 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         int updateCount = 0;
         TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(requestDto.getUserId());
         if(duckWarehouse == null){
-            //添加仓库记录
-            duckWarehouse = new TDuckWarehouse();
-            duckWarehouse.setUserId(requestDto.getUserId());
-            duckWarehouse.setDuck(0);
-            duckWarehouse.setDuckDoing(0);
-            duckWarehouse.setEgg(0);
-            duckWarehouse.setEggFreeze(0);
-            duckWarehouse.setEggHarvest(0);
-            duckWarehouse.setIfHarvest(2);
-            duckWarehouse.setIfSteal(2);
-            duckWarehouse.setAllSell(0);
-            duckWarehouse.setAllProfit(new BigDecimal("0"));
-            duckWarehouse.setAllIntegral(new BigDecimal("0"));
-            duckWarehouse.setFood(new BigDecimal("0"));
-            duckWarehouse.setAddTime(new Date());
-            duckWarehouse.setUpdateTime(new Date());
-            tDuckWarehouseMapper.insertSelective(duckWarehouse);
-            updateCount = tDuckWarehouseMapper.insertSelective(duckWarehouse);
-            if(updateCount !=1){
-                throw new BizException(ErrorCode.ADD_ERR);
-            }
+            throw new BizException(ErrorCode.DUCK_NO_ENOUGH);
         }else if(duckWarehouse.getDuck()<requestDto.getNum()) {
             throw new BizException(ErrorCode.DUCK_NO_ENOUGH);
         }

@@ -258,4 +258,13 @@
       where user_id = #{userId,jdbcType=BIGINT}
       and egg &gt;=#{num,jdbcType=INTEGER}
   </update>
+
+  <update id="updateEggWareHouseBuyDuck" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
+    UPDATE t_egg_warehouse
+    SET egg = egg + #{num,jdbcType=INTEGER},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+
 </mapper>

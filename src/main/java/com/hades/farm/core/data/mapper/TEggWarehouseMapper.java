@@ -1,6 +1,7 @@
 package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.entity.TEggWarehouse;
 
 public interface TEggWarehouseMapper {
@@ -55,4 +56,6 @@ public interface TEggWarehouseMapper {
     TEggWarehouse selectByUserId(Long userId);
 
     int updateEggWareHouseBreedingEgg(BreedingRequestDto requestDto);
+
+    int updateEggWareHouseBuyDuck(BuyGoodsRequestDto requestDto);
 }
