@@ -54,4 +54,22 @@
         WHERE telephone=#{telephone}
     </select>
 
+    <update id="updateDogEndDay" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
+        UPDATE t_user
+        SET dog_end_day =
+          CASE WHEN dog_end_day IS NULL OR dog_end_day &lt; NOW() THEN DATE_ADD(NOW(),INTERVAL #{num,jdbcType=INTEGER} DAY)
+          ELSE DATE_ADD(dog_end_day,INTERVAL #{num,jdbcType=INTEGER} DAY) END,
+        update_time = NOW()
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateRobotEndDay" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
+        UPDATE t_user
+        SET robot_end_day =
+        CASE WHEN robot_end_day IS NULL OR robot_end_day &lt; NOW() THEN DATE_ADD(NOW(),INTERVAL #{num,jdbcType=INTEGER} DAY)
+        ELSE DATE_ADD(robot_end_day,INTERVAL #{num,jdbcType=INTEGER} DAY) END,
+        update_time = NOW()
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
 </mapper>

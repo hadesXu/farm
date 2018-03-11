@@ -29,6 +29,8 @@ public class Constant {
     public static final BigDecimal FEED_PRICE = new BigDecimal("0.1");
     //狗的价格
     public static final BigDecimal DOG_PRICE = new BigDecimal("25");
+    //机器人价格
+    public static final BigDecimal ROBOT_PRICE = new BigDecimal("40");
     //鸭养殖周期
     public static final int BREEDING_DUCK_CYC = 24;
     //蛋养殖周期

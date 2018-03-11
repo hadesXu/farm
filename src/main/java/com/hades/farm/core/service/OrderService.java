@@ -16,4 +16,8 @@ public interface OrderService {
     public boolean buyEggFromOrder(BuyGoodsRequestDto requestDto) throws BizException;
 
     public boolean buyDuckFromOrder(BuyGoodsRequestDto requestDto) throws BizException;
+
+    public boolean buyDoorDog(BuyGoodsRequestDto requestDto) throws BizException;
+
+    public boolean buyRobot(BuyGoodsRequestDto requestDto) throws BizException;
 }

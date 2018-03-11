@@ -6,7 +6,9 @@ package com.hades.farm.enums;
 public enum GoodsType {
     EGG(1, "蛋"),
     DUCK(2, "鸭"),
-    FEED(3, "饲料");
+    FEED(3, "饲料"),
+    DOOR_DOG(4,"看门狗"),
+    ROBOT(5,"机器人");
     private int type;
     private String desc;
     GoodsType(int type, String desc) {

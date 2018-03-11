@@ -66,5 +66,37 @@ public class OrderServiceTest  extends BaseTest {
         }
     }
 
+    @Test
+    public void buyDoorDog() throws BizException{
+        BuyGoodsRequestDto requestDto = new  BuyGoodsRequestDto();
+        requestDto.setUserId(1);
+        requestDto.setNum(30);
+        requestDto.setType(GoodsType.DOOR_DOG.getType());
+        try {
+            orderService.buyDoorDog(requestDto);
+        }catch (BizException e){
+            System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void buyRobot() throws BizException{
+        BuyGoodsRequestDto requestDto = new  BuyGoodsRequestDto();
+        requestDto.setUserId(1);
+        requestDto.setNum(30);
+        requestDto.setType(GoodsType.ROBOT.getType());
+        try {
+            orderService.buyRobot(requestDto);
+        }catch (BizException e){
+            System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 }

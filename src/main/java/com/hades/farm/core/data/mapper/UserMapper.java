@@ -1,6 +1,7 @@
 package com.hades.farm.core.data.mapper;
 
 
+import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.entity.User;
 
 /**
@@ -16,5 +17,7 @@ public interface UserMapper {
 
     User getUserPhone(String telephone);
 
+    int updateDogEndDay(BuyGoodsRequestDto requestDto);
 
+    int updateRobotEndDay(BuyGoodsRequestDto requestDto);
 }
