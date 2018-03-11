@@ -10,7 +10,6 @@ import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.AccountValidatorUtil;
 import com.hades.farm.utils.Constant;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

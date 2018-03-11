@@ -33,7 +33,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public class CodeServiceImpl implements CodeService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${env.dev}")
+    @Value("${switch.debug}")
     private boolean envDev;
     @Resource
     private UserMapper userMapper;
