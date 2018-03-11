@@ -25,7 +25,7 @@ public class UserApi {
     @Resource
     private UserConverter userConverter;
 
-    @PostMapping("/register")
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ApiResponse<UserModel> login(RegisterRequest request) {
         ApiResponse<UserModel> response = new ApiResponse<>();
         Result<User> registerRes = userService.userRegister(request);
@@ -37,7 +37,7 @@ public class UserApi {
         return response;
     }
 
-    @GetMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ApiResponse<UserModel> login(@RequestParam(required = false, defaultValue = "0") String phone,
                                         @RequestParam(required = false, defaultValue = "0") String pwd) {
         ApiResponse<UserModel> response = new ApiResponse<>();
@@ -50,7 +50,7 @@ public class UserApi {
         return response;
     }
 
-    @GetMapping("/login/weChat")
+    @RequestMapping(value = "/login/weChat", method = RequestMethod.GET)
     public ApiResponse<UserModel> login(@RequestParam(required = false, defaultValue = "0") String wechat) {
         ApiResponse<UserModel> response = new ApiResponse<>();
         Result<User> loginRes = userService.login(wechat);
@@ -62,7 +62,7 @@ public class UserApi {
         return response;
     }
 
-    @GetMapping("/user/auto/login")
+    @RequestMapping(value = "/user/auto/login", method = RequestMethod.GET)
     @Auth
     public ApiResponse<UserModel> autoLogin(@RequestParam long userId) {
         ApiResponse<UserModel> response = new ApiResponse<>();
