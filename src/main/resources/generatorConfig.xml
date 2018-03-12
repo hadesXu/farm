@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_sms_record"
+        <table tableName="t_orders"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

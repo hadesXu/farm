@@ -1,6 +1,7 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
+import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.data.dto.requestDto.UpdateAccountTicketRequestDto;
 import com.hades.farm.core.data.dto.requestDto.UpdatePlatFormWarehouseRequestDto;
 import com.hades.farm.core.data.entity.*;
@@ -40,6 +41,8 @@ public class OrderServiceImpl implements OrderService {
     private TNoticeMapper tNoticeMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private TOrdersMapper tOrdersMapper;
 
     @Autowired
     @Qualifier("duckWareHouseServiceImpl")
@@ -105,7 +108,10 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setType(NoticeType.BUY_DUCK.getType());
         tNotice.setRemarks(NoticeType.BUY_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
         tNotice.setAddTime(new Date());
-        tNoticeMapper.insertSelective(tNotice);
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 
@@ -166,7 +172,10 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setType(NoticeType.BUY_EGG.getType());
         tNotice.setRemarks(NoticeType.BUY_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
         tNotice.setAddTime(new Date());
-        tNoticeMapper.insertSelective(tNotice);
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 
@@ -215,7 +224,10 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setType(NoticeType.BUY_DOG.getType());
         tNotice.setRemarks(NoticeType.BUY_DOG.getRemarks().replace("num", requestDto.getNum() + ""));
         tNotice.setAddTime(new Date());
-        tNoticeMapper.insertSelective(tNotice);
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 
@@ -226,6 +238,7 @@ public class OrderServiceImpl implements OrderService {
      * @throws BizException
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean buyRobot(BuyGoodsRequestDto requestDto) throws BizException{
         int updateCount = 0;
         //更新用户表机器人的到期时间
@@ -263,22 +276,81 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setType(NoticeType.BUY_ROBOT.getType());
         tNotice.setRemarks(NoticeType.BUY_ROBOT.getRemarks().replace("num", requestDto.getNum() + ""));
         tNotice.setAddTime(new Date());
-        tNoticeMapper.insertSelective(tNotice);
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean buyEggFromOrder(BuyGoodsRequestDto requestDto) throws BizException{
         //
         return true;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean buyDuckFromOrder(BuyGoodsRequestDto requestDto) throws BizException{
         //
         return true;
     }
 
+    /**
+     * 发布订单
+     * @param requestDto
+     * @return
+     * @throws BizException
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean publishOrders(PublishOrderRequestDto requestDto) throws BizException{
+        int updateCount = 0;
+        //更新个人仓库表
+        if(GoodsType.EGG.getType() == requestDto.getType()){
+            updateCount = tDuckWarehouseMapper.updateDuckWareHouseSellEgg(requestDto);
+            if(updateCount !=1){
+                throw new BizException(ErrorCode.EGG_NO_ENOUGH);
+            }
+        }else if(GoodsType.DUCK.getType() == requestDto.getType()){
+            updateCount = tEggWarehouseMapper.updateEggWareHouseSellDuck(requestDto);
+            if(updateCount !=1){
+                throw new BizException(ErrorCode.DUCK_NO_ENOUGH);
+            }
+        }else{
+            throw new BizException(ErrorCode.GOOD_TYPE_ERROR);
+        }
+        //插入订单表
+        TOrders orders = new TOrders();
+        orders.setUserId(requestDto.getUserId());
+        orders.setType(requestDto.getType());
+        orders.setNum(requestDto.getNum());
+        orders.setStatus(1);
+        orders.setAddTime(new Date());
+        orders.setUpdateTime(new Date());
+        orders.setIfCashback(2);
+        updateCount = tOrdersMapper.insertSelective(orders);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //插入t_notice
+        TNotice tNotice = new TNotice();
+        tNotice.setUserId(requestDto.getUserId());
+        if(GoodsType.EGG.getType() == requestDto.getType()){
+            tNotice.setType(NoticeType.SELL_EGG.getType());
+            tNotice.setRemarks(NoticeType.SELL_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+        }else if(GoodsType.DUCK.getType() == requestDto.getType()){
+            tNotice.setType(NoticeType.SELL_DUCK.getType());
+            tNotice.setRemarks(NoticeType.SELL_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
+        }
+        tNotice.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        return true;
+    }
 
     /**
      * 购买饲料
@@ -329,7 +401,10 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setType(NoticeType.BUY_FEED.getType());
         tNotice.setRemarks(NoticeType.BUY_FEED.getRemarks().replace("num", requestDto.getFeedNum() + ""));
         tNotice.setAddTime(new Date());
-        tNoticeMapper.insertSelective(tNotice);
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 

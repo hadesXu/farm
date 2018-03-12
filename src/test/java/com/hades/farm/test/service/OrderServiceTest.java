@@ -1,6 +1,7 @@
 package com.hades.farm.test.service;
 
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
+import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.OrderService;
 import com.hades.farm.core.service.impl.OrderServiceImpl;
@@ -97,6 +98,24 @@ public class OrderServiceTest  extends BaseTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void publishOrders() throws BizException{
+        PublishOrderRequestDto requestDto = new  PublishOrderRequestDto();
+        requestDto.setUserId(1);
+        requestDto.setNum(10);
+        requestDto.setType(GoodsType.DUCK.getType());
+        try {
+            orderService.publishOrders(requestDto);
+        }catch (BizException e){
+            System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 }
