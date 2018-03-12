@@ -142,3 +142,21 @@ CREATE TABLE `t_notice` (
   PRIMARY KEY (`id`),
   KEY `idx_notice_userid` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `t_relation` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '关系记录ID',
+  `user_id` bigint(11) NOT NULL COMMENT '用户ID',
+  `fathers` text COMMENT '父级集合',
+  `add_time` datetime DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `USER_ID` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+CREATE TABLE `t_user_token` (
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `token` varchar(130) DEFAULT NULL COMMENT '登录token',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+
