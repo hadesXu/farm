@@ -255,6 +255,7 @@
   <update id="updateDuckWareHouseBreedingDuck" parameterType="com.hades.farm.core.data.dto.requestDto.BreedingRequestDto" >
     UPDATE t_duck_warehouse
     SET duck = duck - #{num,jdbcType=INTEGER},
+    duck_doing = duck_doing+#{num,jdbcType=INTEGER},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
     and duck &gt;=#{num,jdbcType=INTEGER}
@@ -273,6 +274,15 @@
     SET food = food + #{feedNum,jdbcType=INTEGER},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+
+  <update id="updateDuckWareHouseSellEgg" parameterType="com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto" >
+    UPDATE t_duck_warehouse
+    SET egg = egg - #{num,jdbcType=INTEGER},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+    and egg &gt;=#{num,jdbcType=INTEGER}
   </update>
 
 

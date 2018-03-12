@@ -9,6 +9,7 @@ public enum ErrorCode {
     UPDATE_ERR(1002, "数据更新失败，请稍后再试"),
     INVALID_REQUEST(1003, "非法请求"),
     ARGUMENTS_NULL(1004, "参数不能为空"),
+    GOOD_TYPE_ERROR(1005, "物品类型错误"),
 
 
     EGG_NO_ENOUGH(2000, "鸭蛋数量不足"),

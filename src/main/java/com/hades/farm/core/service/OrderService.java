@@ -1,6 +1,7 @@
 package com.hades.farm.core.service;
 
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
+import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.exception.BizException;
 
 /**
@@ -20,4 +21,6 @@ public interface OrderService {
     public boolean buyDoorDog(BuyGoodsRequestDto requestDto) throws BizException;
 
     public boolean buyRobot(BuyGoodsRequestDto requestDto) throws BizException;
+
+    public boolean publishOrders(PublishOrderRequestDto requestDto) throws BizException;
 }
