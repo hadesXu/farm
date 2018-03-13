@@ -285,15 +285,139 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean buyEggFromOrder(BuyGoodsRequestDto requestDto) throws BizException{
-        //
-        return true;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean buyDuckFromOrder(BuyGoodsRequestDto requestDto) throws BizException{
-        //
+    public boolean buyGoodsFromOrder(BuyGoodsRequestDto requestDto) throws BizException{
+        int updateCount = 0;
+        TOrders order = tOrdersMapper.selectByPrimaryKey(requestDto.getOrderId());
+        if(order == null){
+            throw new BizException(ErrorCode.ORDER_ERROR);
+        }
+        if(requestDto.getUserId() == order.getUserId()) {
+            throw new BizException(ErrorCode.NO_BUY_SELF_ORDER);
+        }
+        if(requestDto.getNum()!=order.getNum()){
+            throw new BizException(ErrorCode.BUY_ALLOF_ORDER);
+        }
+        //更新t_orders
+        updateCount = tOrdersMapper.updateOrderOfBuy(requestDto);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ORDER_STATUS_ERROR);
+        }
+        //更新卖家账户表、账户流水表、t_notice
+        BigDecimal amount = null;
+        if(GoodsType.EGG.getType() == order.getType()){
+            amount = Constant.EGG_PRICE.multiply(new BigDecimal(requestDto.getNum()));
+        }else if(GoodsType.DUCK.getType()== order.getType()){
+            amount = Constant.DUCK_PRICE.multiply(new BigDecimal(requestDto.getNum()));
+        }else{
+            //TODO 狗
+        }
+        long sellUserId = order.getUserId();
+        long buyUserId = requestDto.getUserId();
+        TAccountTicket sellAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(sellUserId);
+        TAccountTicket buyAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(buyUserId);
+        TAccountTicketFlow sellAccountTicketFlow = new  TAccountTicketFlow();
+        TAccountTicketFlow buyAccountTicketFlow = new  TAccountTicketFlow();
+        TNotice tSellNotice = new TNotice();
+        TNotice tbuyNotice = new TNotice();
+        UpdateAccountTicketRequestDto updateSellAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
+        UpdateAccountTicketRequestDto updateBuyAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
+        updateSellAccountTicketRequestDto.setUserId(sellUserId);
+        updateSellAccountTicketRequestDto.setBalance(amount);
+        updateBuyAccountTicketRequestDto.setUserId(buyUserId);
+        updateBuyAccountTicketRequestDto.setBalance(amount);
+        if(GoodsType.EGG.getType() == order.getType()){
+            updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_EGG.getType());
+            updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_EGG.getType());
+            sellAccountTicketFlow.setType(AcctOpreType.SELL_EGG.getType());
+            sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount);
+            buyAccountTicketFlow.setType(AcctOpreType.BUY_EGG.getType());
+            buyAccountTicketFlow.setRemarks("买鸭蛋花费菜票:"+amount);
+            tSellNotice.setType(NoticeType.SELL_EGG.getType());
+            tSellNotice.setRemarks(NoticeType.SELL_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+            tbuyNotice.setType(NoticeType.BUY_EGG.getType());
+            tbuyNotice.setRemarks(NoticeType.BUY_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+        }else if(GoodsType.DUCK.getType()== order.getType()){
+            updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_DUCK.getType());
+            updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_DUCK.getType());
+            sellAccountTicketFlow.setType(AcctOpreType.SELL_DUCK.getType());
+            sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount);
+            buyAccountTicketFlow.setType(AcctOpreType.BUY_DUCK.getType());
+            buyAccountTicketFlow.setRemarks("买鸭花费菜票:"+amount);
+            tSellNotice.setType(NoticeType.SELL_DUCK.getType());
+            tSellNotice.setRemarks(NoticeType.SELL_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
+            tbuyNotice.setType(NoticeType.BUY_DUCK.getType());
+            tbuyNotice.setRemarks(NoticeType.BUY_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
+        }else{
+            //TODO 狗
+        }
+        updateCount = tAccountTicketMapper.updateAccountTicket(updateSellAccountTicketRequestDto);
+        if(updateCount!=1){
+            throw new BizException(ErrorCode.UPDATE_ERR);
+        }
+        sellAccountTicketFlow.setUserId(sellUserId);
+        sellAccountTicketFlow.setAmount(amount);
+        sellAccountTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance());
+        sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount));
+        sellAccountTicketFlow.setAddTime(new Date());
+        updateCount = tAccountTicketFlowMapper.insertSelective(sellAccountTicketFlow);
+        if(updateCount!=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //添加日志记录t_notice
+        tSellNotice.setUserId(sellUserId);
+        tSellNotice.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tSellNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //更新买家仓库表
+        BuyGoodsRequestDto buyGoodsRequestDto = new  BuyGoodsRequestDto();
+        buyGoodsRequestDto.setNum(requestDto.getNum());
+        buyGoodsRequestDto.setUserId(buyUserId);
+        if(GoodsType.EGG.getType() == order.getType()){
+            TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(buyUserId);
+            if(eggWarehouse == null){
+                //添加记录
+                eggWareHouseServiceImpl.addWareHouse(buyUserId);
+            }
+            //更新个人仓库记录
+            updateCount = tEggWarehouseMapper.updateEggWareHouseBuyDuck(buyGoodsRequestDto);
+            if(updateCount!=1){
+                throw new BizException(ErrorCode.UPDATE_ERR);
+            }
+        }else if(GoodsType.DUCK.getType()== order.getType()){
+            //鸭仓库表，如果没有仓库则新增一条仓库记录
+            TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(buyUserId);
+            if(duckWarehouse == null){
+                duckWareHouseServiceImpl.addWareHouse(buyUserId);
+            }
+            updateCount = tDuckWarehouseMapper.updateDuckWareHouseBuyDuck(buyGoodsRequestDto);
+            if(updateCount!=1){
+                throw new BizException(ErrorCode.UPDATE_ERR);
+            }
+        }else{
+            //todo dog
+        }
+        //更新买家账户表、账户流水表、t_notice
+        updateCount = tAccountTicketMapper.updateAccountTicket(updateBuyAccountTicketRequestDto);
+        if(updateCount!=1){
+            throw new BizException(ErrorCode.TICKET_NO_ENOUGH);
+        }
+        buyAccountTicketFlow.setUserId(buyUserId);
+        buyAccountTicketFlow.setAmount(amount);
+        buyAccountTicketFlow.setAmountBefore(buyAccountTicketBefore.getBalance());
+        buyAccountTicketFlow.setAmountAfter(buyAccountTicketBefore.getBalance().subtract(amount));
+        buyAccountTicketFlow.setAddTime(new Date());
+        updateCount = tAccountTicketFlowMapper.insertSelective(buyAccountTicketFlow);
+        if(updateCount!=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        tbuyNotice.setUserId(buyUserId);
+        tbuyNotice.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tbuyNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         return true;
     }
 
@@ -338,11 +462,11 @@ public class OrderServiceImpl implements OrderService {
         TNotice tNotice = new TNotice();
         tNotice.setUserId(requestDto.getUserId());
         if(GoodsType.EGG.getType() == requestDto.getType()){
-            tNotice.setType(NoticeType.SELL_EGG.getType());
-            tNotice.setRemarks(NoticeType.SELL_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+            tNotice.setType(NoticeType.ORDER_SELL_EGG.getType());
+            tNotice.setRemarks(NoticeType.ORDER_SELL_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
         }else if(GoodsType.DUCK.getType() == requestDto.getType()){
-            tNotice.setType(NoticeType.SELL_DUCK.getType());
-            tNotice.setRemarks(NoticeType.SELL_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
+            tNotice.setType(NoticeType.ORDER_SELL_DUCK.getType());
+            tNotice.setRemarks(NoticeType.ORDER_SELL_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
         }
         tNotice.setAddTime(new Date());
         updateCount = tNoticeMapper.insertSelective(tNotice);

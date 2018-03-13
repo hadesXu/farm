@@ -159,4 +159,12 @@
       if_cashback = #{ifCashback,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateOrderOfBuy" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto">
+     update t_orders
+     set status = 2,
+       update_time = now()
+     where id = #{orderId,jdbcType=BIGINT} and status = 1
+  </update>
+
 </mapper>

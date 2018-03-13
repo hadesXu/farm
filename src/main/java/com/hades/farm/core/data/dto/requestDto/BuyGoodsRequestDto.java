@@ -10,6 +10,7 @@ public class BuyGoodsRequestDto {
     private int type;
     private int num;
     private BigDecimal feedNum;
+    private long orderId;
 
     public long getUserId() {
         return userId;
@@ -41,5 +42,13 @@ public class BuyGoodsRequestDto {
 
     public void setFeedNum(BigDecimal feedNum) {
         this.feedNum = feedNum;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 }

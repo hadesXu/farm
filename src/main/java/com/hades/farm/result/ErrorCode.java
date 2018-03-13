@@ -18,6 +18,10 @@ public enum ErrorCode {
     PLATFORM_DUCK_NO_ENOUGH(2003, "仓库鸭数量不足"),
     PLATFORM_DOG_NO_ENOUGH(2004, "仓库狗数量不足"),
     TICKET_NO_ENOUGH(2005, "菜票不足，请充值"),
+    ORDER_ERROR(2006, "未找到对应订单信息"),
+    NO_BUY_SELF_ORDER(2007, "不能购买自己发布的订单"),
+    BUY_ALLOF_ORDER(2008, "必须全部购买"),
+    ORDER_STATUS_ERROR(2009, "订单状态不正确"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
