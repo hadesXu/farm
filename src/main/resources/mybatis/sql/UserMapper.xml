@@ -8,7 +8,7 @@
         <result property="name" column="name"/>
         <result property="password" column="password"/>
         <result property="wechat" column="wechat"/>
-        <result property="fatherNumber" column="father_number"/>
+        <result property="parentId" column="parent_id"/>
         <result property="grade" column="grade"/>
         <result property="isTrainee" column="is_trainee"/>
         <result property="sEgg" column="s_egg"/>
@@ -21,15 +21,15 @@
     </resultMap>
 
     <sql id="user_columns">
-        id,telephone,name,password,wechat,father_number,grade,is_trainee,s_egg,s_duck,
+        id,telephone,name,password,wechat,parent_id,grade,is_trainee,s_egg,s_duck,
         active,img_url,qr_code,add_time,update_time
     </sql>
 
     <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"
             keyProperty="userId">
-        insert into t_user ( id,telephone,name,password,wechat,father_number,grade,is_trainee,
+        insert into t_user ( id,telephone,name,password,wechat,parent_id,grade,is_trainee,
         s_egg,s_duck, active,img_url,qr_code,add_time,update_time)
-        values (#{id},#{telephone},#{name},#{password},#{wechat},#{fatherNumber},#{grade},#{isTrainee},
+        values (#{id},#{telephone},#{name},#{password},#{wechat},#{parentId},#{grade},#{isTrainee},
         #{sEgg},#{sDuck},#{active},#{imgUrl},#{qrCode},#{addTime},#{updateTime})
     </insert>
 

@@ -35,6 +35,8 @@ public class Constant {
     public static final int BREEDING_DUCK_CYC = 24;
     //蛋养殖周期
     public static final int BREEDING_EGG_CYC = 9;
+    //实习期天数
+    public static final int PRACTICE_DAY = 3;
 
 
     public static final String DEFAULT_CODE = "0000";//默认code

@@ -16,11 +16,12 @@ public enum NoticeType {
     BUY_ROBOT(10,"购买机器人","成功购买机器人num天"),
     EXCHANGE_GRADE(11,"兑换积分","成功兑换积分"),
     FEED_DUCK(12,"喂鸭","喂鸭"),
-    EGG_HOT(13,"给蛋加温","给蛋加温"),
+    EGG_HOT(13,"给蛋加温","成功给蛋加温"),
     BREEDING_EGG(14,"孵蛋","成功放入num个蛋孵化"),
     BREEDING_DUCK(15,"养鸭","成功放入num个鸭入鸭场养殖"),
     ORDER_SELL_DUCK(16,"挂单出售商品鸭","挂单出售num个鸭"),
-    ORDER_SELL_EGG(17,"挂单出售商品蛋","挂单出售num个鸭蛋")
+    ORDER_SELL_EGG(17,"挂单出售商品蛋","挂单出售num个鸭蛋"),
+    MASTER_EGG_HOT(18,"给师父蛋加温","成功给师父蛋加温"),
     ;
     private int type;
     private String desc;
