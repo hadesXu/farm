@@ -183,4 +183,25 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="queryDuckBreeding" resultType="com.hades.farm.core.data.entity.TDuckBreeding"
+          parameterType="com.hades.farm.core.data.dto.requestDto.QueryDuckBreedingRequestDto" >
+  select
+  <include refid="Base_Column_List" />
+  from t_duck_breeding
+  where user_id = #{userId,jdbcType=BIGINT}
+    and status = #{status,jdbcType=INTEGER}
+</select>
+
+  <update id="updateOfFeeding" parameterType="com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto" >
+     update t_duck_breeding set
+     if_feed = 1
+     where user_id = #{userId,jdbcType=BIGINT}
+     and id in(
+     <foreach collection="ids" separator="," item="item">
+       #{item,jdbcType=BIGINT}
+     </foreach>
+     )
+    and if_feed = 2
+  </update>
 </mapper>

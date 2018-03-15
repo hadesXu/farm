@@ -28,6 +28,10 @@ public enum ErrorCode {
     HAS_WARM(2011, "今日已加温"),
     NO_MASTER(2012, "您没有师父"),
     MASTER_NO_EGG(2013, "师父未养蛋"),
+    NO_DUCK_DOING(2014, "没有待喂养的鸭"),
+    DUCK_DOING_NUM_NOT_MATCH(2015, "待喂养的鸭的数量不匹配，请联系客服"),
+    FOOD_NOT_ENOUGH(2016, "饲料不够，请先购买饲料"),
+    HAS_FEED(2017, "今日已喂养"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),

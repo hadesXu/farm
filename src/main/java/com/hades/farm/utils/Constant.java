@@ -37,6 +37,8 @@ public class Constant {
     public static final int BREEDING_EGG_CYC = 9;
     //实习期天数
     public static final int PRACTICE_DAY = 3;
+    //一只鸭每次喂饲料数量
+    public static final BigDecimal DUCK_SINGLE_FEED_AMOUNT = new BigDecimal("1");
 
 
     public static final String DEFAULT_CODE = "0000";//默认code

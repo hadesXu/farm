@@ -1,6 +1,9 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.QueryDuckBreedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto;
 import com.hades.farm.core.data.entity.TDuckBreeding;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 import com.hades.farm.core.data.entity.TNotice;
@@ -12,6 +15,7 @@ import com.hades.farm.core.service.DuckBreedingService;
 import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
+import com.hades.farm.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhengzl on 2018/3/10.
@@ -68,6 +73,65 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         tNotice.setRemarks(NoticeType.BREEDING_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
         tNotice.setAddTime(new Date());
         tNoticeMapper.insertSelective(tNotice);
+        return true;
+    }
+
+    /**
+     * 给鸭喂饲料
+     * @param userId
+     * @return
+     * @throws BizException
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean feeding(long userId) throws BizException{
+        TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(userId);
+        if(duckWarehouse == null || duckWarehouse.getDuckDoing() == 0){
+            throw new BizException(ErrorCode.NO_DUCK_DOING);
+        }
+        BigDecimal needFoodAmount = Constant.DUCK_SINGLE_FEED_AMOUNT.multiply(new BigDecimal(duckWarehouse.getDuckDoing()));
+        if(duckWarehouse.getFood().compareTo(needFoodAmount) <0){
+            throw new BizException(ErrorCode.FOOD_NOT_ENOUGH);
+        }
+        QueryDuckBreedingRequestDto requestDto = new QueryDuckBreedingRequestDto();
+        requestDto.setUserId(userId);
+        requestDto.setStatus(1);
+        List<TDuckBreeding> duckBreedings = tDuckBreedingMapper.queryDuckBreeding(requestDto);
+        int breedingDucks = 0;
+        Long[] duckBreedingIds = new Long[duckBreedings.size()];
+        for(int i=0;i<duckBreedings.size();i++){
+            TDuckBreeding duckBreeding = duckBreedings.get(i);
+            breedingDucks = breedingDucks+duckBreeding.getNum();
+            duckBreedingIds[i] = duckBreeding.getId();
+        }
+        if(breedingDucks != duckWarehouse.getDuckDoing()){
+            throw new BizException(ErrorCode.DUCK_DOING_NUM_NOT_MATCH);
+        }
+        //更新养殖表
+        UpdateOfFeedingRequestDto updateOfFeedingRequestDto = new UpdateOfFeedingRequestDto();
+        updateOfFeedingRequestDto.setUserId(userId);
+        updateOfFeedingRequestDto.setIds(duckBreedingIds);
+        int updateCount = tDuckBreedingMapper.updateOfFeeding(updateOfFeedingRequestDto);
+        if(updateCount != duckBreedings.size()){
+            throw new BizException(ErrorCode.HAS_FEED);
+        }
+        //更新仓库表
+        UpdateDuckWareHouseFeedingRequestDto updateDuckWareHouseFeedingRequestDto = new UpdateDuckWareHouseFeedingRequestDto();
+        updateDuckWareHouseFeedingRequestDto.setUserId(userId);
+        updateDuckWareHouseFeedingRequestDto.setFeedNum(needFoodAmount);
+        updateCount = tDuckWarehouseMapper.updateDuckWareHouseOfFeeding(updateDuckWareHouseFeedingRequestDto);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.UPDATE_ERR);
+        }
+        //更新t_notice表
+        TNotice tNotice = new TNotice();
+        tNotice.setUserId(userId);
+        tNotice.setType(NoticeType.FEED_DUCK.getType());
+        tNotice.setRemarks(NoticeType.FEED_DUCK.getRemarks());
+        tNotice.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.UPDATE_ERR);
+        }
         return true;
     }
 }

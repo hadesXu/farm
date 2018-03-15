@@ -15,7 +15,7 @@ public enum NoticeType {
     BUY_DOG(9,"购买看门狗","成功购买看门狗num天"),
     BUY_ROBOT(10,"购买机器人","成功购买机器人num天"),
     EXCHANGE_GRADE(11,"兑换积分","成功兑换积分"),
-    FEED_DUCK(12,"喂鸭","喂鸭"),
+    FEED_DUCK(12,"喂鸭","成功喂鸭"),
     EGG_HOT(13,"给蛋加温","成功给蛋加温"),
     BREEDING_EGG(14,"孵蛋","成功放入num个蛋孵化"),
     BREEDING_DUCK(15,"养鸭","成功放入num个鸭入鸭场养殖"),

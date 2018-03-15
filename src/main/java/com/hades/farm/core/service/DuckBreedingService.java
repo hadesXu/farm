@@ -8,4 +8,6 @@ import com.hades.farm.core.exception.BizException;
  */
 public interface DuckBreedingService {
     public boolean breeding(BreedingRequestDto requestDto) throws BizException;
+
+    public boolean feeding(long userId) throws BizException;
 }

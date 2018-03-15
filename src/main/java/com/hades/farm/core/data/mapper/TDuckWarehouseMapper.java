@@ -3,6 +3,7 @@ package com.hades.farm.core.data.mapper;
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
+import com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 
 public interface TDuckWarehouseMapper {
@@ -63,5 +64,7 @@ public interface TDuckWarehouseMapper {
     int updateDuckWareHouseBuyFeed(BuyGoodsRequestDto requestDto);
 
     int updateDuckWareHouseSellEgg(PublishOrderRequestDto requestDto);
+
+    int updateDuckWareHouseOfFeeding(UpdateDuckWareHouseFeedingRequestDto requestDto);
 
 }

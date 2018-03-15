@@ -1,6 +1,11 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.dto.requestDto.QueryDuckBreedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto;
+import com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto;
 import com.hades.farm.core.data.entity.TDuckBreeding;
+
+import java.util.List;
 
 public interface TDuckBreedingMapper {
     /**
@@ -50,4 +55,10 @@ public interface TDuckBreedingMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TDuckBreeding record);
+
+    List<TDuckBreeding> queryDuckBreeding(QueryDuckBreedingRequestDto requestDto);
+
+    int updateOfFeeding(UpdateOfFeedingRequestDto requestDto);
+
+
 }

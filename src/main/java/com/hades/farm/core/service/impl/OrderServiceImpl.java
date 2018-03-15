@@ -69,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
         if(updateCount!=1){
             throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
         }
+        //TODO 添加平台仓库流水
         //鸭仓库表，如果没有仓库则新增一条仓库记录
         TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(requestDto.getUserId());
         if(duckWarehouse == null){
@@ -132,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
         if(updateCount!=1){
             throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
         }
+        //TODO 添加平台仓库流水
         TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(requestDto.getUserId());
         if(eggWarehouse == null){
             //添加记录
@@ -283,6 +285,12 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
+    /**
+     * TODO 更新卖家仓库累计出售数量、累计利润、累计积分
+     * @param requestDto
+     * @return
+     * @throws BizException
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean buyGoodsFromOrder(BuyGoodsRequestDto requestDto) throws BizException{

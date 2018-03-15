@@ -271,7 +271,7 @@
 
   <update id="updateDuckWareHouseBuyFeed" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
     UPDATE t_duck_warehouse
-    SET food = food + #{feedNum,jdbcType=INTEGER},
+    SET food = food + #{feedNum,jdbcType=DECIMAL},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
@@ -283,6 +283,14 @@
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
     and egg &gt;=#{num,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateDuckWareHouseOfFeeding" parameterType="com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto" >
+    UPDATE t_duck_warehouse
+    SET food = food - #{feedNum,jdbcType=DECIMAL},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+    and food &gt;= #{feedNum,jdbcType=DECIMAL}
   </update>
 
 
