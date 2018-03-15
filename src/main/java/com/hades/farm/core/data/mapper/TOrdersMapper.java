@@ -1,5 +1,6 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.entity.TOrders;
 
 public interface TOrdersMapper {
@@ -50,4 +51,6 @@ public interface TOrdersMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TOrders record);
+
+    int updateOrderOfBuy(BuyGoodsRequestDto requestDto);
 }

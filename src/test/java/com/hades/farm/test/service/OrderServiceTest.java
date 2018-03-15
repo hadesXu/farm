@@ -115,6 +115,23 @@ public class OrderServiceTest  extends BaseTest {
         }
     }
 
+    @Test
+    public void buyGoodsFromOrderTest() throws BizException{
+        BuyGoodsRequestDto requestDto = new  BuyGoodsRequestDto();
+        requestDto.setUserId(2);
+        requestDto.setNum(10);
+        requestDto.setOrderId(1);
+        requestDto.setType(GoodsType.EGG.getType());
+        try {
+            orderService.buyGoodsFromOrder(requestDto);
+        }catch (BizException e){
+            System.out.println("errorCode:" +e.getErrCode()+"errorMsg:"+e.getErrMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 
 
