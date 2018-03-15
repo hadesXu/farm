@@ -10,6 +10,7 @@ import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.AccountValidatorUtil;
 import com.hades.farm.utils.Constant;
+import com.hades.farm.utils.NickUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -83,6 +84,7 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.USER_NOT_EXIST);
             return result;
         }
+
         return result;
     }
 
@@ -135,9 +137,10 @@ public class UserServiceImpl implements UserService {
         user.setImgUrl(request.getFace());
         user.setGrade(Grade.APPRENTICE.getType());
         user.setAddTime(new Date());
-        user.setFatherNumber(request.getFatherNumber());
+        user.setParentId(request.getParentId());
         user.setWechat(request.getWechat());
         user.setTelephone(request.getPhone());
+        user.setName(NickUtil.randomNick());
         return user;
     }
 }

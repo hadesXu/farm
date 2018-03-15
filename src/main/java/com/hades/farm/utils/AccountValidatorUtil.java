@@ -15,12 +15,12 @@ public class AccountValidatorUtil {
     /**
      * 正则表达式：验证密码
      */
-    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,20}$";
+    public static final String REGEX_PASSWORD = "^(?:\\d+|[a-zA-Z]+|[!@#$%^&*]+)$";
 
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\\\d{8}$";
+    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\\\d{8}$";
 
     /**
      * 正则表达式：验证邮箱

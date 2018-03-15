@@ -35,7 +35,7 @@ public class User {
     /**
      * 推荐人ID
      */
-    private String fatherNumber;
+    private long parentId;
 
     /**
      * 等级{@link com.hades.farm.enums.Grade}
@@ -122,12 +122,12 @@ public class User {
         this.wechat = wechat;
     }
 
-    public String getFatherNumber() {
-        return fatherNumber;
+    public long getParentId() {
+        return parentId;
     }
 
-    public void setFatherNumber(String fatherNumber) {
-        this.fatherNumber = fatherNumber;
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
     }
 
     public int getGrade() {
