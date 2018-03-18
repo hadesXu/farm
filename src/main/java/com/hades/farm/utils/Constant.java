@@ -43,6 +43,12 @@ public class Constant {
 
     public static final String DEFAULT_CODE = "0000";//默认code
     public static final String CODE_MESSAGE_TEMPLATE = "欢迎使用本产品， 您本次操作操作验证码为：%s, 3分钟有效~";
+    //师爷条件人数
+    public static final int ADVISER_CONDITION_NUMBER = 200;
+    //师爷条件代数
+    public static final int ADVISER_CONDITION_GENERATION = 3;
 
-
+    //地主条件忍住
+    public static final int LANDLORD_CONDITION_NUMBER = 10;
+    public static final int LANDLORD_CONDITION_GENERATION = 1;
 }

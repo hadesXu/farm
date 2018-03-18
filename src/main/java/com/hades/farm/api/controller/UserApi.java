@@ -4,6 +4,7 @@ import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
+import com.hades.farm.core.service.RelationService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.result.Result;
 import com.hades.farm.api.view.response.UserModel;

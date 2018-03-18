@@ -4,6 +4,7 @@ import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.service.CodeService;
+import com.hades.farm.core.service.RelationService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.enums.Grade;
 import com.hades.farm.result.ErrorCode;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Resource
     private CodeService codeService;
+    @Resource
+    private RelationService relationService;
 
     @Override
     public Result<User> userRegister(RegisterRequest request) {
@@ -46,6 +49,9 @@ public class UserServiceImpl implements UserService {
             return result;
         }
         result.setData(user);
+        if (request.getParentId() != null) {
+            relationService.initRelation(user.getId(), request.getParentId());
+        }
         return result;
     }
 
@@ -137,7 +143,9 @@ public class UserServiceImpl implements UserService {
         user.setImgUrl(request.getFace());
         user.setGrade(Grade.APPRENTICE.getType());
         user.setAddTime(new Date());
-        user.setParentId(request.getParentId());
+        if (request.getParentId() != null) {
+            user.setParentId(request.getParentId());
+        }
         user.setWechat(request.getWechat());
         user.setTelephone(request.getPhone());
         user.setName(NickUtil.randomNick());

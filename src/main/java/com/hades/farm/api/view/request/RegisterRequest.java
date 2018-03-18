@@ -39,7 +39,7 @@ public class RegisterRequest {
     /**
      * 父ID
      */
-    private long parentId;
+    private Long parentId;
 
     public String getPhone() {
         return phone;
@@ -81,11 +81,11 @@ public class RegisterRequest {
         this.wechat = wechat;
     }
 
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 }

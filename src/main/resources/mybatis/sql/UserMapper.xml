@@ -72,4 +72,24 @@
         WHERE id = #{userId,jdbcType=BIGINT}
     </update>
 
+    <update id="updateGrade">
+        UPDATE t_user
+        SET grade =#{grade,jdbcType=BIGINT}
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getApprentice" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getApprenticeCount" resultType="int">
+        SELECT
+        COALESCE(COUNT(*),0)
+        FROM `t_user`
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

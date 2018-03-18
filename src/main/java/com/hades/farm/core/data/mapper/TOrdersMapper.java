@@ -2,6 +2,9 @@ package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.entity.TOrders;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TOrdersMapper {
     /**
@@ -53,4 +56,8 @@ public interface TOrdersMapper {
     int updateByPrimaryKey(TOrders record);
 
     int updateOrderOfBuy(BuyGoodsRequestDto requestDto);
+
+    List<TOrders> getUnCachBack();
+
+    int updateCashBack(long orderId);
 }
