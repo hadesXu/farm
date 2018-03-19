@@ -39,6 +39,16 @@ public class Constant {
     public static final int PRACTICE_DAY = 3;
     //一只鸭每次喂饲料数量
     public static final BigDecimal DUCK_SINGLE_FEED_AMOUNT = new BigDecimal("1");
+    //一个蛋的积分
+    public static final BigDecimal EGG_INTEGRAL_RATE = new BigDecimal("0.04");
+    //一个鸭的积分
+    public static final BigDecimal DUCK_INTEGRAL_RATE = new BigDecimal("0.1");
+    //卖出鸭的手续费
+    public static final BigDecimal SELL_DUCK_RATE = new BigDecimal("0.05");
+    //卖出蛋的手续费
+    public static final BigDecimal SELL_EGG_RATE = new BigDecimal("0.05");
+    //一只鸭的产蛋量
+    public static final int PRODUCE_EGGS = 3;
 
 
     public static final String DEFAULT_CODE = "0000";//默认code

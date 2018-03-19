@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_relation"
+        <table tableName="t_platform_warehouse_flow"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

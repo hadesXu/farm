@@ -293,5 +293,15 @@
     and food &gt;= #{feedNum,jdbcType=DECIMAL}
   </update>
 
+  <!--  更新累计数据 -->
+  <update id="updateDuckWareHouseCumulativeData" parameterType="com.hades.farm.core.data.dto.requestDto.WareHouseCumulativeDataRequestDto">
+    UPDATE t_duck_warehouse
+    set all_sell = all_sell + #{allSell,jdbcType=INTEGER},
+    all_profit = #{allProfit,jdbcType=DECIMAL},
+    all_integral = #{allIntegral,jdbcType=DECIMAL},
+    update_time = now()
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
 
 </mapper>

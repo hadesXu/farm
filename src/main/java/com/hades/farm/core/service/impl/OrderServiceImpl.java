@@ -1,9 +1,6 @@
 package com.hades.farm.core.service.impl;
 
-import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
-import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
-import com.hades.farm.core.data.dto.requestDto.UpdateAccountTicketRequestDto;
-import com.hades.farm.core.data.dto.requestDto.UpdatePlatFormWarehouseRequestDto;
+import com.hades.farm.core.data.dto.requestDto.*;
 import com.hades.farm.core.data.entity.*;
 import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
@@ -12,8 +9,10 @@ import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.enums.AcctOpreType;
 import com.hades.farm.enums.GoodsType;
 import com.hades.farm.enums.NoticeType;
+import com.hades.farm.enums.WareHouseOperType;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
+import com.hades.farm.utils.AmountUtil;
 import com.hades.farm.utils.Constant;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,8 @@ public class OrderServiceImpl implements OrderService {
     private UserMapper userMapper;
     @Autowired
     private TOrdersMapper tOrdersMapper;
+    @Autowired
+    private TPlatformWarehouseFlowMapper tPlatformWarehouseFlowMapper;
 
     @Autowired
     @Qualifier("duckWareHouseServiceImpl")
@@ -73,7 +74,21 @@ public class OrderServiceImpl implements OrderService {
         if (updateCount != 1) {
             throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
         }
-        //TODO 添加平台仓库流水
+        //添加平台仓库流水
+        TPlatformWarehouse platformWarehouse = tPlatformWarehouseMapper.queryPlatformWarehouse();
+        TPlatformWarehouseFlow platformWarehouseFlow = new TPlatformWarehouseFlow();
+        platformWarehouseFlow.setpId(platformWarehouse.getId());
+        platformWarehouseFlow.setGoods(GoodsType.DUCK.getType() + "");
+        platformWarehouseFlow.setType(WareHouseOperType.SELL.getType() + "");
+        platformWarehouseFlow.setNum(requestDto.getNum());
+        platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
+        platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
+        platformWarehouseFlow.setRemarks(GoodsType.DUCK.getDesc());
+        platformWarehouseFlow.setAddTime(new Date());
+        updateCount =  tPlatformWarehouseFlowMapper.insertSelective(platformWarehouseFlow);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
+        }
         //鸭仓库表，如果没有仓库则新增一条仓库记录
         TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(requestDto.getUserId());
         if (duckWarehouse == null) {
@@ -138,7 +153,21 @@ public class OrderServiceImpl implements OrderService {
         if (updateCount != 1) {
             throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
         }
-        //TODO 添加平台仓库流水
+        //添加平台仓库流水
+        TPlatformWarehouse platformWarehouse = tPlatformWarehouseMapper.queryPlatformWarehouse();
+        TPlatformWarehouseFlow platformWarehouseFlow = new TPlatformWarehouseFlow();
+        platformWarehouseFlow.setpId(platformWarehouse.getId());
+        platformWarehouseFlow.setGoods(GoodsType.EGG.getType() + "");
+        platformWarehouseFlow.setType(WareHouseOperType.SELL.getType() + "");
+        platformWarehouseFlow.setNum(requestDto.getNum());
+        platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
+        platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
+        platformWarehouseFlow.setRemarks(GoodsType.EGG.getDesc());
+        platformWarehouseFlow.setAddTime(new Date());
+        updateCount =  tPlatformWarehouseFlowMapper.insertSelective(platformWarehouseFlow);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.PLATFORM_DUCK_NO_ENOUGH);
+        }
         TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(requestDto.getUserId());
         if (eggWarehouse == null) {
             //添加记录
@@ -293,8 +322,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * TODO 更新卖家仓库累计出售数量、累计利润、累计积分
-     *
+     * TODO 手续费
      * @param requestDto
      * @return
      * @throws BizException
@@ -318,7 +346,7 @@ public class OrderServiceImpl implements OrderService {
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ORDER_STATUS_ERROR);
         }
-        //更新卖家账户表、账户流水表、t_notice
+        //更新卖家账户表、账户流水表、仓库表、t_notice
         BigDecimal amount = null;
         if (GoodsType.EGG.getType() == order.getType()) {
             amount = Constant.EGG_PRICE.multiply(new BigDecimal(requestDto.getNum()));
@@ -376,6 +404,20 @@ public class OrderServiceImpl implements OrderService {
         sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount));
         sellAccountTicketFlow.setAddTime(new Date());
         updateCount = tAccountTicketFlowMapper.insertSelective(sellAccountTicketFlow);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //TODO 更新卖家仓库累计出售数量、累计利润、累计积分
+        WareHouseCumulativeDataRequestDto wareHouseCumulativeDataRequestDto = new WareHouseCumulativeDataRequestDto();
+        wareHouseCumulativeDataRequestDto.setUserId(sellUserId);
+        wareHouseCumulativeDataRequestDto.setAllSell(requestDto.getNum());
+        wareHouseCumulativeDataRequestDto.setAllProfit(AmountUtil.profitCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum())));
+        wareHouseCumulativeDataRequestDto.setAllIntegral(AmountUtil.integralCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum())));
+        if (GoodsType.EGG.getType() == order.getType()){
+            updateCount = tDuckWarehouseMapper.updateDuckWareHouseCumulativeData(wareHouseCumulativeDataRequestDto);
+        }else if (GoodsType.DUCK.getType() == order.getType()){
+            updateCount = tEggWarehouseMapper.updateEggWareHouseCumulativeData(wareHouseCumulativeDataRequestDto);
+        }
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
         }

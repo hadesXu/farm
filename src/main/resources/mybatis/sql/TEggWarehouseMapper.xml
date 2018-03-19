@@ -275,5 +275,15 @@
     and duck &gt;=#{num,jdbcType=INTEGER}
   </update>
 
+  <!--  更新累计数据 -->
+  <update id="updateEggWareHouseCumulativeData" parameterType="com.hades.farm.core.data.dto.requestDto.WareHouseCumulativeDataRequestDto">
+    UPDATE t_egg_warehouse
+    set all_sell = all_sell + #{allSell,jdbcType=INTEGER},
+       all_profit = #{allProfit,jdbcType=DECIMAL},
+      all_integral = #{allIntegral,jdbcType=DECIMAL},
+      update_time = now()
+      where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
 
 </mapper>
