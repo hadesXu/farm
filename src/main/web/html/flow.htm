@@ -1,0 +1,564 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta name="Generator" content="ECSHOP v2.7.3" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>购物流程_我爱微集市 </title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" href="../css/public.css" tppabs="javascript:;">
+<link rel="stylesheet" href="../css/flow.css" tppabs="javascript:;">
+<link rel="stylesheet" href="../css/style_jm.css" tppabs="javascript:;">
+<script type="text/javascript" src="../js/jquery.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/ecsmart.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/jquery.json.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="transport.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="common.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="utils.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="shopping_flow.js" tppabs="javascript:;"></script>
+</head>
+<body style="background:#e5e5e5;">
+
+<div id="popup_window" style="background:#EFEFF4;box-shadow: 0 0 10px #ccc;border: 1px solid #ccc;border-radius: 6px;width:85%;height:auto;margin-left:-43%;margin-top:-20%;left:50%;top:50%;position:fixed;display:none;z-index:9999;">
+  <label class="yezf_tit" style="float:left;margin:15px;width: 91%;text-align: center;"><span>请输入余额支付密码</span> </label>
+  <input id="surplus_password_input" type="password" style='float:left;margin:10px 3%;width:91%;background-color:white;height:30px;border: 1px solid #ccc;padding-left: 6px;'/>
+  <span class="flow_tank">
+  <input class='yezf_QRB tankuang' type="button" onclick="end_input_surplus()"  value="确定" />
+</span>
+  <span class="flow_tank">
+  <input class='yezf_QXB tankuang' type="button" onclick="cancel_input_surplus()" value="取消" />
+  </span>
+</div>
+ 
+
+<div class="tab_nav">
+  <div class="header" style=" position:relative">
+    <div class="h-left"> <a class="sb-back" href="javascript:history.back(-1)" title="返回"></a> </div>
+    <div class="h-mid"> 购物车 </div>
+  </div>
+  <dl>
+    <dd class="top_bar" style=" position:absolute; top:0; right:2%; z-index:999999">
+      <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+    </dd>
+  </dl>
+</div>
+<script type="text/javascript" src="../js/mobile.js" tppabs="javascript:;" ></script>
+<div class="goods_nav hid" id="menu">
+        <div class="Triangle">
+          <h2></h2>
+        </div>
+        <ul>
+          <li><a href="farm_shopping.php.htm" tppabs="javascript:;"><span class="menu1"></span><i>首页</i></a></li>
+          <!--<li><a href="catalog.php"><span class="menu2"></span><i>分类</i></a></li>
+          <li><a href="flow.php"><span class="menu3"></span><i>购物车</i></a></li>-->
+          <li style=" border:0;"><a href="user-1.php.htm" tppabs="javascript:;"><span class="menu4"></span><i>个人信息</i></a></li>
+        </ul>
+      </div> 
+ 
+  <section id="cart-content">
+  <div class="qb_tac" style="padding:50px 0"> <img src="../img/empty_cart.png" tppabs="javascript:;" width="100" height="95"> <br>
+    购物车还是空的</div>
+  <div class="qb_gap" style="width:60%; margin:0 auto;"> <a href="farm_shopping.php.htm" tppabs="javascript:;" class="mod_btn btn_strong" >马上逛逛</a> </div>
+</section>
+   
+
+<section class="f_mask" style="display: none;"></section>
+<section class="f_block" id="choose" style="height:0px;"></section>
+<section class="f_block" id="choose_attr" style="height:0; overflow:hidden;"> </section>
+<script type="text/javascript">
+function closeCustomer(){
+	$("#choose").hide();
+	}
+function choose_gift(suppid)
+{
+	var sel_goods = new Array();
+	var obj_cartgoods = document.getElementsByName("sel_cartgoods[]");
+	var j = 0;
+	for (i=0; i<obj_cartgoods.length; i++)
+	{
+		//if(obj_cartgoods[i].checked == true)
+		{	
+			sel_goods[j] = obj_cartgoods[i].value;
+			j++;
+		}
+	}
+	Ajax.call('flow.php.htm'/*tpa=javascript:;*/, 'is_ajax=1&suppid=' + suppid + '&sel_goods='+sel_goods, selgiftResponse, 'GET', 'JSON');
+}
+function selgiftResponse(res)
+{
+	$('#choose').html(res.result);
+	$("#choose").animate({height:'80%'},[10000]);
+		var total=0,h=$(window).height(),
+        top =$('.f_title').height()||0,
+        con = $('.f_content');
+		total = 0.8*h;
+		con.height(total-top+'px');
+	$(".f_mask").show();
+}
+function close_choose(){	
+
+	$(".f_mask").hide();
+	$('#choose').animate({height:'0'},[10000]);
+
+}
+
+function choose_attr(rec_id)
+{
+ Ajax.call('flow.php-is_ajax=1&step=show_choose_attr.htm'/*tpa=javascript:;*/,'rec_id='+rec_id, show_choose_attr, 'GET', 'JSON');
+}
+function show_choose_attr(result){
+	$("#choose_attr").animate({height:'80%'},[10000]);
+        $("#choose_attr").html(result);
+		var total=0,h=$(window).height(),
+        top =$('.f_title_attr').height()||0,
+        con = $('.f_content_attr');
+		total = 0.8*h;
+		con.height(total-top+'px');
+	$(".f_mask").show();
+ changePrice();
+}
+function close_choose_attr(){	
+
+	$(".f_mask").hide();
+	
+	$('#choose_attr').animate({height:'0'},[10000]);
+
+}
+
+function changeAtt(t) {
+t.lastChild.checked='checked';
+for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+        if (t.parentNode.childNodes[i].className == 'hover') {
+            t.parentNode.childNodes[i].className = '';
+			t.childNodes[0].checked="checked";
+		}
+    }
+t.className = "hover";
+changePrice();
+}
+
+/**
+ * 点选可选属性或改变数量时修改商品价格的函数
+ */
+function changePrice()
+{
+  var goodsId = document.getElementById('goods_id').value;
+  var attr = getSelectedAttributes(document.forms['formCart']);
+  var qty = document.getElementById('cart_goods_number').value;
+  Ajax.call('index-1.htm'/*tpa=javascript:;*/, 'act=price&id=' + goodsId + '&attr=' + attr + '&number=' + qty, changePriceResponse, 'GET', 'JSON');
+}
+
+/**
+ * 接收返回的信息
+ */
+function changePriceResponse(res)
+{
+  if (res.err_msg.length > 0)
+  {
+    alert(res.err_msg);
+  }
+  else
+  {
+        if (document.getElementById('ECS_GOODS_AMOUNT')){
+          document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+        }
+       if(document.getElementById('ECS_GOODS_NUMBER')){
+        document.getElementById('ECS_GOODS_NUMBER').innerHTML = res.goods_attr_number;
+        }
+        if(document.getElementById('ECS_GOODS_AMOUNT_JF')){
+          document.getElementById('ECS_GOODS_AMOUNT_JF').innerHTML = res.result_jf;
+        }
+        if(document.getElementById('ECS_GOODS_AMOUNT_CHOOSE')){
+                document.getElementById('ECS_GOODS_AMOUNT_CHOOSE').innerHTML = res.result;
+        }
+        if(document.getElementById('ECS_GOODS_ATTR_THUMB')){
+            document.getElementById('ECS_GOODS_ATTR_THUMB').src = res.goods_attr_thumb;
+        }
+        if(document.getElementById('ECS_GOODS_ATTR')){
+            document.getElementById('ECS_GOODS_ATTR').innerHTML = res.goods_attr;
+        }
+    }
+}
+
+</script> 
+ 
+<script type="text/javascript" charset="utf-8">   
+function editCartGoods(rec_id){
+    var goodsId = document.getElementById('goods_id').value;
+    var attr = getSelectedAttributes(document.forms['formCart']);
+    var qty = document.getElementById('cart_goods_number').value;
+    Ajax.call('flow.php-is_ajax=1&step=edit_cart_goods.htm'/*tpa=javascript:;*/,'rec_id='+rec_id + '&goods_id=' + goodsId + '&attr=' + attr + '&number=' + qty, editCartGoodsResponse, 'GET', 'JSON');    
+}
+
+function editCartGoodsResponse(result){
+
+    if(result.err != 0){
+       alert(result.err);
+    }else{
+        window.location.href = "flow-1.php-step=cart.htm"/*tpa=javascript:;*/;
+    }
+}
+
+</script> 
+ 
+<script type="text/javascript" charset="utf-8">   
+    $(".inner .f_checkbox").click(function(){
+      
+	pub = $(this).attr("title");
+	
+	if($(this).attr("checked") == "checked")
+	{
+
+		var is_checked_2 = true;
+        $('.check-wrapper-'+pub).each(function(){
+        if($(this).attr("checked") != "checked")
+          {
+            is_checked_2 = false;
+            return false;
+          }
+          });
+        if(is_checked_2){
+        $('.f_pub_checkbox_'+pub).attr("checked",'checked');
+        }else
+        {
+       $('.f_pub_checkbox_'+pub).removeAttr("checked",'checked');
+        }
+		
+	}
+	else
+	{
+		$('.f_pub_checkbox_'+pub).removeAttr("checked");
+	}
+	
+  		var is_checked = true;
+        $('.f_checkbox').each(function(){
+        if($(this).attr("checked") != "checked")
+          {
+            is_checked = false;
+            return false;
+          }
+          });
+        if(is_checked){
+        $('.quanxuan .cart-checkbox1').addClass('checked'); 
+        }else
+        {
+        $('.quanxuan .cart-checkbox1').removeClass('checked'); 
+        }
+      select_cart_goods();
+         
+});
+
+$(".f_pub_checkbox").click(function(){
+    	pub = $(this).attr("title");
+		var is_checked = false;
+    if($(this).attr("checked") == 'checked'){
+				
+	$(this).attr("checked","checked");
+    $(this).parent().parent().parent().find('.check-wrapper-'+pub).attr('checked','checked');
+
+    is_checked = true;
+	}   
+    else{
+	 $(this).parent().parent().parent().find('.check-wrapper-'+pub).removeAttr("checked");
+	 is_checked = false;
+}
+
+
+        $('.f_checkbox').each(function(){
+        if($(this).attr("checked") != "checked")
+          {
+            is_checked = false;
+            return false;
+          }
+          });
+        if(is_checked){
+        $('.quanxuan .cart-checkbox1').addClass('checked'); 
+        }else
+        {
+        $('.quanxuan .cart-checkbox1').removeClass('checked'); 
+        }
+
+	  
+    select_cart_goods();
+
+})
+   
+  function chkAll_onclick() 
+  {
+    var is_checked = false;
+    if($('.quanxuan .cart-checkbox1').hasClass('checked')){
+      $('.quanxuan .cart-checkbox1').removeClass('checked');
+        $('.inner .f_checkbox').removeAttr("checked");
+      is_checked = false;
+    }   
+    else{
+      $('.quanxuan .cart-checkbox1').addClass('checked');
+       $('.inner .f_checkbox').attr("checked","checked");
+      is_checked = true;
+    }
+    for (var i=0;i<document.formCart.elements.length;i++)
+    {
+    var e = document.formCart.elements[i];
+    e.checked = is_checked;
+    }
+    select_cart_goods();
+  }
+  function select_cart_goods()
+  {
+        var sel_goods = new Array();
+        var obj_cartgoods = document.getElementsByName("sel_cartgoods[]");
+        var j=0;
+        for (i=0;i<obj_cartgoods.length;i++)
+        {
+      if(obj_cartgoods[i].checked == true)
+      { 
+        sel_goods[j] = obj_cartgoods[i].value;
+        j++;
+      }
+        }
+        Ajax.call('flow.php.htm'/*tpa=javascript:;*/, 'act=selcart&sel_goods=' + sel_goods, selcartResponse, 'GET', 'JSON');
+  }
+  function selcartResponse(res)
+  {
+  if(res.result == '请选择要结算的商品！')
+  {
+        $('.xm-button').addClass('to_cart');
+      $('.xm-button').attr('disable');
+  }
+  else{
+      $('.xm-button').removeClass('to_cart');
+      $('.xm-button').removeAttr('disable');
+    }
+    if (res.err_msg.length > 0)
+    {
+            alert(res.err_msg);
+    }
+    else
+    {
+     
+       document.getElementById('cart_amount_desc').innerHTML=res.result;
+    }
+  }
+  function selcart_submit()
+  {
+        var obj_cartgoods = document.getElementsByName("sel_cartgoods[]");
+        var j=0;
+        for (i=0;i<obj_cartgoods.length;i++)
+        {
+      if(obj_cartgoods[i].checked == true)
+      { 
+        j++;
+      }
+        }
+        if (j>0)
+        {
+      document.formCart.action='user.php-act=login&jump=jszx.htm'/*tpa=javascript:;*/;
+      document.formCart.elements['step'].value='checkout';
+      document.formCart.submit();
+      return true;
+       }
+       else
+      {   
+      alert('请选择要结算的商品！');
+      return false;
+      }
+  }
+  </script> 
+ 
+<script>
+			
+			$('.edit_btn').bind('click', function() {
+				
+				if($(this).html()=="编辑"){		
+					num = $(this).attr("name");		
+					$(".edit_box_"+num).show();
+					$(".edit_info_"+num).hide();
+					$(this).html("完成");
+					
+					}
+					
+					else
+					{			
+					num = $(this).attr("name");
+					$(".edit_box_"+num).hide();
+					$(".edit_info_"+num).show();
+					$(this).html("编辑");
+					window.location.reload();
+					}
+				
+				
+				 });
+
+                </script> 
+ 
+ 
+
+ 
+ 
+<script type="text/javascript">
+  
+  function showCheckoutOther(obj)
+  {
+    var otherParent = obj.parentNode;
+    otherParent.className = (otherParent.className=='checkout_other') ? 'checkout_other2' : 'checkout_other';
+    var spanzi = obj.getElementsByTagName('span')[0];
+    spanzi.className= spanzi.className == 'right_arrow_flow' ? 'right_arrow_flow2' : 'right_arrow_flow';
+
+  }
+  
+      </script>
+     
+</div>
+ 
+ 
+
+<script type="text/javascript" src="../js/order_pickpoint.js" tppabs="javascript:;"></script> 
+      <script type="text/javascript">
+var process_request = "正在处理您的请求...";
+var username_empty = "- 用户名不能为空。";
+var username_shorter = "- 用户名长度不能少于 3 个字符。";
+var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+var password_empty = "- 登录密码不能为空。";
+var password_shorter = "- 登录密码不能少于 6 个字符。";
+var confirm_password_invalid = "- 两次输入密码不一致";
+var email_empty = "- Email 为空";
+var email_invalid = "- Email 不是合法的地址";
+var agreement = "- 您没有接受协议";
+var msn_invalid = "- msn地址不是一个有效的邮件地址";
+var qq_invalid = "- QQ号码不是一个有效的号码";
+var home_phone_invalid = "- 家庭电话不是一个有效号码";
+var office_phone_invalid = "- 办公电话不是一个有效号码";
+var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+var msg_un_blank = "* 用户名不能为空";
+var msg_un_length = "* 用户名不得超过14个字符";
+var msg_un_format = "* 用户名含有非法字符";
+var msg_un_registered = "* 用户名已经存在,请重新输入";
+var msg_can_rg = "* 可以注册";
+var msg_email_blank = "* 邮件地址不能为空";
+var msg_email_registered = "* 邮箱已存在";
+var msg_email_format = "* 邮件地址不合法";
+var msg_blank = "不能为空";
+var no_select_question = "- 您没有完成密码提示问题的操作";
+var passwd_balnk = "- 密码中不能包含空格";
+var username_chana = "- 用户名不能有中文。";
+var msg_uname_length = "- 用户名不能超过 20 个字符。";
+var msg_un_chine = "* 用户名不能为中文";
+var msg_mobile_phone_blank = "* 手机号码不能为空";
+var msg_mobile_phone_registered = "* 手机号码已存在";
+var msg_mobile_phone_format = "* 手机号码不是一个有效号码";
+var msg_email_code_blank = "- 邮箱验证码不能为空";
+var msg_mobile_phone_code_blank = "- 手机验证码不能为空";
+var msg_captcha_blank = "- 验证码不能为空";
+var msg_register_type_blank = "- 注册类型不能为空";
+var username_exist = "用户名 %s 已经存在";
+var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+var btn_buy = "购买";
+var is_cancel = "取消";
+var select_spe = "请选择商品属性";
+</script> 
+      <script type="text/javascript">
+
+function choose_gift(suppid)
+{
+
+	var sel_goods = new Array();
+	var obj_cartgoods = document.getElementsByName("sel_cartgoods[]");
+	var j = 0;
+	for (i=0; i<obj_cartgoods.length; i++)
+	{
+		//if(obj_cartgoods[i].checked == true)
+		{	
+			sel_goods[j] = obj_cartgoods[i].value;
+			j++;
+		}
+	}
+	Ajax.call('flow.php.htm'/*tpa=javascript:;*/, 'is_ajax=1&suppid=' + suppid + '&sel_goods='+sel_goods, selgiftResponse, 'GET', 'JSON');
+}
+function selgiftResponse(res)
+{
+	$('#choose').html(res.result);
+	$("#choose").animate({height:'80%'},[10000]);
+		var total=0,h=$(window).height(),
+        top =$('.f_title').height()||0,
+        con = $('.f_content');
+		total = 0.8*h;
+		con.height(total-top+'px');
+	$(".f_mask").show();
+}
+function close_choose(){	
+
+	$(".f_mask").hide();
+	$('#choose').animate({height:'0'},[10000]);
+
+}
+</script> 
+      <script type="text/javascript">
+var process_request = "正在处理您的请求...";
+var username_empty = "- 用户名不能为空。";
+var username_shorter = "- 用户名长度不能少于 3 个字符。";
+var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+var password_empty = "- 登录密码不能为空。";
+var password_shorter = "- 登录密码不能少于 6 个字符。";
+var confirm_password_invalid = "- 两次输入密码不一致";
+var email_empty = "- Email 为空";
+var email_invalid = "- Email 不是合法的地址";
+var agreement = "- 您没有接受协议";
+var msn_invalid = "- msn地址不是一个有效的邮件地址";
+var qq_invalid = "- QQ号码不是一个有效的号码";
+var home_phone_invalid = "- 家庭电话不是一个有效号码";
+var office_phone_invalid = "- 办公电话不是一个有效号码";
+var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+var msg_un_blank = "* 用户名不能为空";
+var msg_un_length = "* 用户名不得超过14个字符";
+var msg_un_format = "* 用户名含有非法字符";
+var msg_un_registered = "* 用户名已经存在,请重新输入";
+var msg_can_rg = "* 可以注册";
+var msg_email_blank = "* 邮件地址不能为空";
+var msg_email_registered = "* 邮箱已存在";
+var msg_email_format = "* 邮件地址不合法";
+var msg_blank = "不能为空";
+var no_select_question = "- 您没有完成密码提示问题的操作";
+var passwd_balnk = "- 密码中不能包含空格";
+var username_chana = "- 用户名不能有中文。";
+var msg_uname_length = "- 用户名不能超过 20 个字符。";
+var msg_un_chine = "* 用户名不能为中文";
+var msg_mobile_phone_blank = "* 手机号码不能为空";
+var msg_mobile_phone_registered = "* 手机号码已存在";
+var msg_mobile_phone_format = "* 手机号码不是一个有效号码";
+var msg_email_code_blank = "- 邮箱验证码不能为空";
+var msg_mobile_phone_code_blank = "- 手机验证码不能为空";
+var msg_captcha_blank = "- 验证码不能为空";
+var msg_register_type_blank = "- 注册类型不能为空";
+var username_exist = "用户名 %s 已经存在";
+var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+var btn_buy = "购买";
+var is_cancel = "取消";
+var select_spe = "请选择商品属性";
+</script> 
+      <script>
+//点击input标签时间
+$(function() {
+	$(".order_checked input").click(
+	function() {
+	$(this).parents(".checkout_other2").addClass("checkout_other");
+	$(this).parents(".checkout_other2").removeClass("checkout_other2");
+	$(this).parents(".order_checked").find(".right_arrow_flow2").addClass("right_arrow_flow");
+	$(this).parents(".order_checked").find(".right_arrow_flow2").removeClass("right_arrow_flow2");
+	$(this).parents(".order_checked").find("em").html($(this).next().html());
+	if($(this).attr("id")=='definetime_input')
+	{
+		$("#choose_time").animate({height:'80%'},[10000]);
+		var total=0,h=$(window).height(),
+        top =$('.f_title_time').height()||0,
+        con = $('.f_content_time');
+		total = 0.8*h;
+		con.height(total-top+'px');
+		$(".f_mask").show();
+	}
+	})
+});
+</script>
+</body>
+</html>

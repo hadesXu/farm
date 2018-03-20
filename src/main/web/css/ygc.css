@@ -1,0 +1,39 @@
+/* CSS Document */
+
+
+.stylie {
+  animation-name: stylie-transform-keyframes;
+  animation-duration: 35000ms;
+  animation-delay: 0ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 0 0;
+}
+@keyframes stylie-transform-keyframes {
+  0% {transform:translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  75% {transform:translate(99px, 3px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  75.01% {transform:translate(99px, 4px) scale(1) rotateX(-2deg) rotateY(-180deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  100% {transform:translate(0px, 0px) scale(1) rotateX(-2deg) rotateY(-180deg) rotateZ(0deg) translate(-50%, -50%);}
+}
+
+
+
+.stylie1 {
+  animation-name: stylie-transform-keyframes;
+  animation-duration: 30000ms;
+  animation-delay: 0ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 0 0;
+}
+@keyframes stylie1-transform-keyframes {
+  0% {transform:translate(0px, 0px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  75% {transform:translate(-1px, 82px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  75.01% {transform:translate(0px, 83px) scale(1) rotateX(-2deg) rotateY(-180deg) rotateZ(0deg) translate(-50%, -50%);animation-timing-function: cubic-bezier(.25,.25,.75,.75);}
+  100% {transform:translate(-1px, 0px) scale(1) rotateX(-2deg) rotateY(-180deg) rotateZ(0deg) translate(-50%, -50%);}
+}
+
+
+

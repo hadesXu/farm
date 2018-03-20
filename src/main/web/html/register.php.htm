@@ -1,0 +1,423 @@
+<!DOCTYPE html >
+<html style="height:100%;">
+<head>
+<meta name="Generator" content="ECSHOP v2.7.3" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>注册</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="stylesheet" type="text/css" href="../css/public.css" tppabs="javascript:;"/>
+<link rel="stylesheet" type="text/css" href="../css/login.css" tppabs="javascript:;"/>  
+
+<script type="text/javascript" src="../js/jquery.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/common.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/utils.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/register.js" tppabs="javascript:;"></script>
+<script type="text/javascript" src="../js/transport.js" tppabs="javascript:;"></script>
+</head>
+<body style="background:url(../img/back-1.jpg)/*tpa=javascript:;*/  no-repeat;    background-size: 100% 100%;">
+	<!--<header id="header" class='header'>
+	<div class="h-left"><a href="javascript:history.back(-1)" class="back"></a></div>
+    <div class="h-mid">用户注册</div>
+     </header>-->
+	<div id="tbh5v0">
+						<script type="text/javascript">
+		
+		$().ready(function(){
+			
+			setCurrentForm($("#mobileForm"));
+			
+			//判断点击验证码
+			var is_mob_log = true;
+			
+			$("#mobileForm").find(".check-code-img").click();
+			
+			//登录切换
+			$("#logRegTab li").bind("click", function () {
+				if (this.id == "mob_log") {
+					
+					if(is_mob_log){
+						return;
+					}
+					
+					is_mob_log = true;
+					
+					$("#mob_log").removeClass("currl");
+					$("#acc_log").addClass("currr");
+					$("#phonearea").removeClass("hide");
+					$("#accountarea").addClass("hide");
+					
+					setCurrentForm($("#mobileForm"));
+					
+					$("#mobileForm").find(".check-code-img").click();
+				} else {
+					
+					if(!is_mob_log){
+						return;
+					}
+					
+					is_mob_log = false;
+					
+					$("#acc_log").removeClass("currr");
+					$("#mob_log").addClass("currl");
+					$("#phonearea").addClass("hide");
+					$("#accountarea").removeClass("hide");
+					
+					setCurrentForm($("#emailForm"));
+					
+					$("#emailForm").find(".check-code-img").click();
+				}
+				$(".btn_log").css("color","#FFFEFE");
+				
+		    });
+		});
+		</script>
+        <style>
+        	.log_reg_box{width:90%;position:absolute;top:4%;left:5%;background:rgba(8,8,8,0.58);border-radius:5px; z-index:999;}
+			.log_reg_box ul.tab li{background:none;}
+			.footer{background:none;position:relative;bottom:0;color:#fff; z-index:990;}
+			.footer span{color:#fff;}
+			.mf_o4{color:#fff;}
+			input{background:none;}
+			.bgwhite{background:none;}
+			.Login dl dd{width:76%;color:#fff;}
+			.Login dl dt{width:52px;color:#fff;}
+			.codeTxt input{background:none;}
+			.Login dl dd input.zphone{width:112px;border-radius:5px;}
+			.color_f{color:#fff;}
+			.color_f input::-webkit-input-placeholder{color:#fff;}
+        </style>
+			<div class="log_reg_box">
+				<ul class="tab clearfix" id="logRegTab">
+					<li id="mob_log" class="curr" style="width:100%;">
+						<span style="color:#fff;">
+							<font>手机注册</font>
+						</span>
+					</li>
+					<!--<li id="acc_log" class="curr currr">
+						<span>
+							<font>邮箱注册</font>
+						</span>
+					</li>-->
+				</ul>
+				<div id="logRegTabCon">
+					<div class="log_reg_item" id="phonearea">
+						<form action="register.php" id="mobileForm" name="mobileForm" method="post">
+                        	
+							<input type="hidden" id="register_type" name="register_type" value="mobile" />
+                              <div class="bgwhite">
+                            <div class="Login" style="margin-top:-20px;">                          
+								<dl>
+                                
+                                <dt>手机号</dt>
+							    <dd><input type="text" id="mobile_phone" name="mobile_phone" class="color_f" placeholder="请输入手机号" class="" onblur="checkMobilePhone(this);" />
+                                <div class="tips">
+										<span id="mobile_phone_notice"></span>
+									</div>
+                                    </dd>
+								</dl>
+                                <dl>
+                                <dt>密&nbsp;&nbsp;&nbsp;&nbsp;码</dt>
+								<dd>
+                                <script>								
+                                function change_p_type1(){
+									if($(".password").attr("type") == "password"){
+ 										$(".p_type").addClass("on");
+									
+										//document.getElementById("password").type="text";	
+										document.getElementsByClassName("password").item(0).type = "text";
+									}
+									else{
+										$(".p_type").removeClass("on");
+										
+										//document.getElementById("password").type="password";
+										document.getElementsByClassName("password").item(0).type = "password";
+									}
+								}
+                                </script>
+                                <input type="password" class="password color_f" id="password" name="password" placeholder="请输入6至20位字符" onblur="check_password(this.value);"/> 
+                                <div class="tips">
+										<span id="password_notice"></span>
+									</div>
+                                </dd>
+                                <span onclick="change_p_type1()" id="p_type1" class="p_type"></span>
+                                </dl>
+                                
+                                
+                                									
+																
+                                  	<dl style="border:none;" >
+                                <dt>验证码</dt>
+							    <dd>
+                                <div class="codeTxt">
+									<input type="text" id="mobile_code" maxlength="8"  name="mobile_code" class="color_f" placeholder="短信验证码" class="" />
+									</div>
+									  <div class="codePhoto">
+									<input id="zphone" type="button" value="获取验证码 " class="zphone" >
+                                  </div>
+
+                               </dd>
+								</dl>
+                                
+                                <dl style="border:none;" >
+                                <dt>区&nbsp;&nbsp;&nbsp;&nbsp;域</dt>
+							    <dd style="line-height:10px; margin-left:8px;">
+                                <select name="adders" id="adders" style="width:100%; color:#fff; height:35px;-webkit-appearance:none; background:transparent; border:none;">
+                                <option value="1" }  >选填区域</option>
+                                <option value="1" }  >桂林</option>
+                                <option value="1" }  >桂平</option>
+                                                                <option value="1" } >南宁</option>
+                                                                <option value="17" } >柳州</option>
+                                                                <option value="13" } >崇左</option>
+                                                                <option value="1" } >北海</option>
+                                <option value="1" } >贵港</option>
+                                <option value="1" } >东兴</option>
+                                <option value="1" } >百色</option>
+                                <option value="1" } >靖西</option>
+                                <option value="1" } >钦州</option>
+                                <option value="1" } >玉林</option>
+                                <option value="1" } >博白</option>
+                                </select>
+								<!--<a></a>-->
+                               </dd>
+								</dl>
+                               <samp style="line-height:10px;margin-left:8px; color:#fff;">扫码ID:</samp>&nbsp;<input type="texit" name="uid" value="" class="color_f" placeholder="您确定没有师傅吗" style="color:#fff; height:35px;-webkit-appearance:none; background:transparent; border:none;" >
+                                
+                                </div>
+                                </div>
+                                 <div style="margin-left:20px; color:#fff; font-size:12px;">
+                                <input type="checkbox"  name="agreement" value="1" checked="checked" required />
+                                <a href="cf_desc_one.php-a=35.htm" tppabs="javascript:;" style="color:#fff; font-size:9px;">我已阅读并同意相关服务条款和隐私政策</a>
+                                <div>
+                                
+					  <div class="Login">
+                      	<div class="field submit-btn" style="padding-left:0px; padding-right:0px;">
+									<input type="submit" id="btn_submit" name="Submit" class="btn_big1" style="background:#50c503;" value="注 册" />
+									<input type="hidden" name="act" value="register" />
+									<input type="hidden" name="back_act" value="javascript:;" />
+                                    </div>
+                                    </div>
+						</form>
+					</div>
+					<div class="log_reg_item hide" id="accountarea">
+						<form action="register.php" method="post" id="emailForm" name="emailForm" >
+							<input type="hidden" id="register_type" name="register_type" value="email" />
+                            
+                      <div class="bgwhite">
+                            <div class="Login">
+                          
+								<dl>
+                                <dt>邮箱地址</dt>
+							    <dd>
+                                <input type="email" name="email" placeholder="请输入邮箱地址" value="" class="" id="email" onblur="checkEmail(this.value);" />
+                               	<div class="tips">
+										<span id="email_notice"></span>
+									</div>
+                                    </dd>
+								</dl>
+                                <dl>
+                                <dt>密码</dt>
+								<dd>
+                                <script>								
+                                function change_p_type(){
+									if($(".password1").attr("type") == "password"){
+ 										$(".p_type1").addClass("on");
+									
+										//document.getElementById("password").type="text";	
+										document.getElementsByClassName("password1").item(0).type = "text";
+									}
+									else{
+										$(".p_type1").removeClass("on");
+										
+										//document.getElementById("password").type="password";
+										document.getElementsByClassName("password1").item(0).type = "password";
+									}
+								}
+                                </script>
+                                <input type="password" name="password" id="password" onblur="check_password(this.value);" value="" placeholder="请输入6至20位字符" class="password1" />
+                               <div class="tips">
+										<span id="password_notice"> </span>
+									</div>
+                                </dd>
+                                <span onclick="change_p_type()" class="p_type1" id="p_type"></span>
+                                </dl>
+                                
+                                
+                                									
+																
+                                  	<dl style="border:none;" >
+                                <dt>验证码</dt>
+							    <dd>
+                                <div class="codeTxt">
+                                <input type="text" id="email_code" name="email_code" placeholder="邮箱验证码" class="" />
+								
+									</div>
+									<div class="codePhoto">
+									<input id="zemail" type="button" value="获取验证码 " class="zphone" >
+                                  </div>
+
+                               </dd>
+								</dl>
+
+                                </div>
+                                </div>                        
+                                
+                                
+					  <div class="Login" >
+									<div class="field submit-btn" style="padding-left:0px; padding-right:0px;">
+                                			<input type="checkbox" style="display: none" name="agreement" value="1" checked="checked" required />
+									<input type="submit" id="btn_submit" name="Submit" class="btn_big1" value="注 册" />
+									<input type="hidden" name="act" value="register" />
+									<input type="hidden" name="back_act" value="user.php" />
+                                    </div>
+                                    </div>
+                                    
+                                    
+                         
+
+						</form>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+			var process_request = "正在处理您的请求...";
+						var username_empty = "- 用户名不能为空。";
+						var username_shorter = "- 用户名长度不能少于 3 个字符。";
+						var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+						var password_empty = "- 登录密码不能为空。";
+						var password_shorter = "- 登录密码不能少于 6 个字符。";
+						var confirm_password_invalid = "- 两次输入密码不一致";
+						var email_empty = "- Email 为空";
+						var email_invalid = "- Email 不是合法的地址";
+						var agreement = "- 您没有接受协议";
+						var msn_invalid = "- msn地址不是一个有效的邮件地址";
+						var qq_invalid = "- QQ号码不是一个有效的号码";
+						var home_phone_invalid = "- 家庭电话不是一个有效号码";
+						var office_phone_invalid = "- 办公电话不是一个有效号码";
+						var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+						var msg_un_blank = "* 用户名不能为空";
+						var msg_un_length = "* 用户名不得超过14个字符";
+						var msg_un_format = "* 用户名含有非法字符";
+						var msg_un_registered = "* 用户名已经存在,请重新输入";
+						var msg_can_rg = "* 可以注册";
+						var msg_email_blank = "* 邮件地址不能为空";
+						var msg_email_registered = "* 邮箱已存在";
+						var msg_email_format = "* 邮件地址不合法";
+						var msg_blank = "不能为空";
+						var no_select_question = "- 您没有完成密码提示问题的操作";
+						var passwd_balnk = "- 密码中不能包含空格";
+						var username_chana = "- 用户名不能有中文。";
+						var msg_uname_length = "- 用户名不能超过 20 个字符。";
+						var msg_un_chine = "* 用户名不能为中文";
+						var msg_mobile_phone_blank = "* 手机号码不能为空";
+						var msg_mobile_phone_registered = "* 手机号码已存在";
+						var msg_mobile_phone_format = "* 手机号码不是一个有效号码";
+						var msg_email_code_blank = "- 邮箱验证码不能为空";
+						var msg_mobile_phone_code_blank = "- 手机验证码不能为空";
+						var msg_captcha_blank = "- 验证码不能为空";
+						var msg_register_type_blank = "- 注册类型不能为空";
+						var username_exist = "用户名 %s 已经存在";
+			$().ready(function(){
+				
+				$("#zemail").click(function(){
+					$("#emailForm").find("#email").blur();
+					$("#emailForm").find("#password").blur();
+					//$("#emailForm").find("#confirm_password").blur();
+					if ($("#emailForm").find("#captcha").size() > 0 && $("#emailForm").find("#captcha").val().length == 0) {
+						$("#emailForm").find("#captcha_notice").html(msg_captcha_blank);
+						$("#emailForm").find("#captcha_notice").css({color: '#900'});
+						return;
+					}
+					sendEmailCode($("#emailForm").find("#email"), $("#emailForm").find("#email_code"), $(this));
+				});
+				
+				$("#zphone").click(function(){
+					$("#mobileForm").find("#mobile_phone").blur();
+					$("#mobileForm").find("#password").blur();
+					//$("#mobileForm").find("#confirm_password").blur();
+					if ($("#mobileForm").find("#captcha").size() > 0 && $("#mobileForm").find("#captcha").val().length == 0) {
+						$("#mobileForm").find("#captcha_notice").html(msg_captcha_blank);
+						$("#mobileForm").find("#captcha_notice").css({color: '#900'});
+						return;
+					}
+					sendMobileCode($("#mobileForm").find("#mobile_phone"), $("#mobileForm").find("#mobile_code"), $(this));
+				});
+				
+				$("#emailForm").submit(function(){
+					return reg_by_email();
+				});
+				
+				$("#mobileForm").submit(function(){
+					return reg_by_mobile();
+				});
+			});
+			</script>
+						<div class="footer" >
+     <!-- <div class="links"  id="ECS_MEMBERZONE">       	<a href="user.php"><span>登录</span></a><a href="register.php"><span>注册</span></a><a href="javascript:window.scrollTo(0,0);"><span>回顶部</span></a>
+</div>-->
+         <!-- <ul class="linkss" >
+          <li>
+            <a href="#">
+            <i class="footerimg_1"></i>
+            <span >客户端</span></a></li>
+          <li>
+          <a href="javascript:;"><i class="footerimg_2"></i><span class="gl">触屏版</span></a></li>
+          <li><a href="index.php?is_c=1" class="goDesktop"><i class="footerimg_3"></i><span>电脑版</span></a></li></ul>-->
+  	 <p class="mf_o4">&copy; 2005-2018 我爱微集市版权所有，并保留所有权利。</p>
+</div>	</div>
+	<script type="text/javascript">
+	var process_request = "正在处理您的请求...";
+		var username_empty = "- 用户名不能为空。";
+		var username_shorter = "- 用户名长度不能少于 3 个字符。";
+		var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+		var password_empty = "- 登录密码不能为空。";
+		var password_shorter = "- 登录密码不能少于 6 个字符。";
+		var confirm_password_invalid = "- 两次输入密码不一致";
+		var email_empty = "- Email 为空";
+		var email_invalid = "- Email 不是合法的地址";
+		var agreement = "- 您没有接受协议";
+		var msn_invalid = "- msn地址不是一个有效的邮件地址";
+		var qq_invalid = "- QQ号码不是一个有效的号码";
+		var home_phone_invalid = "- 家庭电话不是一个有效号码";
+		var office_phone_invalid = "- 办公电话不是一个有效号码";
+		var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+		var msg_un_blank = "* 用户名不能为空";
+		var msg_un_length = "* 用户名不得超过14个字符";
+		var msg_un_format = "* 用户名含有非法字符";
+		var msg_un_registered = "* 用户名已经存在,请重新输入";
+		var msg_can_rg = "* 可以注册";
+		var msg_email_blank = "* 邮件地址不能为空";
+		var msg_email_registered = "* 邮箱已存在";
+		var msg_email_format = "* 邮件地址不合法";
+		var msg_blank = "不能为空";
+		var no_select_question = "- 您没有完成密码提示问题的操作";
+		var passwd_balnk = "- 密码中不能包含空格";
+		var username_chana = "- 用户名不能有中文。";
+		var msg_uname_length = "- 用户名不能超过 20 个字符。";
+		var msg_un_chine = "* 用户名不能为中文";
+		var msg_mobile_phone_blank = "* 手机号码不能为空";
+		var msg_mobile_phone_registered = "* 手机号码已存在";
+		var msg_mobile_phone_format = "* 手机号码不是一个有效号码";
+		var msg_email_code_blank = "- 邮箱验证码不能为空";
+		var msg_mobile_phone_code_blank = "- 手机验证码不能为空";
+		var msg_captcha_blank = "- 验证码不能为空";
+		var msg_register_type_blank = "- 注册类型不能为空";
+		var username_exist = "用户名 %s 已经存在";
+	</script>
+	</div>
+	<script type="text/javascript">
+	$(function(){ 
+		$('input[type=text],input[type=password]').bind({ 
+		focus:function(){ 
+		 $(".global-nav").css("display",'none'); 
+		}, 
+		blur:function(){ 
+		 $(".global-nav").css("display",'flex'); 
+		} 
+		}); 
+	}) 
+	</script>
+</body>
+</html>
