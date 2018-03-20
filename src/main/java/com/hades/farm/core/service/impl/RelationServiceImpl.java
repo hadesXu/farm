@@ -11,6 +11,7 @@ import com.hades.farm.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Date;
 /**
  * Created by xiaoxu on 2018/3/17.
  */
+@Service
 public class RelationServiceImpl implements RelationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
