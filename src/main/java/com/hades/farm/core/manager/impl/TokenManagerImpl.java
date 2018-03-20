@@ -40,10 +40,12 @@ public class TokenManagerImpl implements TokenManager {
                     userToken = new UserToken();
                     userToken.setUserId(userId);
                     userToken.setToken(str);
+                    userToken.setUpdateTime(new Date());
+                    userToken.setToken(str);
+                    userTokenMapper.insertUserToken(userToken);
+                } else {
+                    userTokenMapper.updateUserToken(userId, str);
                 }
-                userToken.setUpdateTime(new Date());
-                userToken.setToken(str);
-                userTokenMapper.insertUserToken(userToken);
             }
             result.setData(str);
         } catch (TokenGenerateException e) {

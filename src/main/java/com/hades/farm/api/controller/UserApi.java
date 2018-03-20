@@ -63,7 +63,7 @@ public class UserApi {
         return response;
     }
 
-    @RequestMapping(value = "/user/auto/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/auto/login", method = RequestMethod.GET)
     @Auth
     public ApiResponse<UserModel> autoLogin(@RequestParam long userId) {
         ApiResponse<UserModel> response = new ApiResponse<>();
@@ -73,6 +73,14 @@ public class UserApi {
             return response;
         }
         response.setResult(userConverter.convert(loginRes.getData(), false));
+        return response;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse<String> test(@RequestParam long userId) {
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setResult("userId:" + userId);
         return response;
     }
 }

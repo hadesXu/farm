@@ -2,6 +2,7 @@ package com.hades.farm.core.thread;
 
 import com.hades.farm.core.data.entity.TOrders;
 import com.hades.farm.core.service.OrderService;
+import com.hades.farm.core.service.RelationService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,11 @@ public class OrderTaskHeartMonitorThread implements Runnable {
     private final static Logger logger = LoggerFactory.getLogger(OrderTaskHeartMonitorThread.class);
 
     private OrderService orderService;
+    private RelationService relationService;
 
-    public OrderTaskHeartMonitorThread(OrderService orderService) {
+    public OrderTaskHeartMonitorThread(OrderService orderService, RelationService relationService) {
         this.orderService = orderService;
+        this.relationService = relationService;
     }
 
     public OrderTaskHeartMonitorThread() {
@@ -43,4 +46,7 @@ public class OrderTaskHeartMonitorThread implements Runnable {
             }
         }
     }
+
+
+
 }
