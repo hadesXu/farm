@@ -18,7 +18,7 @@ public class AmountUtil {
        }
         return integral;
     }
-    //卖出一只鸭一只蛋的净利润
+    //卖出num鸭或num个蛋的净利润
     public static BigDecimal profitCalculate(int type,int num){
         BigDecimal profit = new BigDecimal("1");
         if(type == GoodsType.EGG.getType()){
