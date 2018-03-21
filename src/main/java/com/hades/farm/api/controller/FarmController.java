@@ -26,7 +26,7 @@ public class FarmController {
     @Autowired
     private DuckWareHouseServiceImpl duckWareHouseService;
 
-    @RequestMapping(value = "/myfarm", method = RequestMethod.POST)
+    @RequestMapping(value = "/myfarm", method = RequestMethod.GET)
     @Auth
     public ApiResponse<Map<String,Object>> myfram(@RequestParam long userId){
         ApiResponse<Map<String,Object>> response = new ApiResponse<Map<String,Object>>();

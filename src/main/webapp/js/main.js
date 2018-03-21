@@ -1,7 +1,7 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
 var serverUrl = "http://localhost:8098";
-if (userId.length == 0 || token.length == 0) {
+if (userId==null || userId.length == 0 || token.length == 0) {
     //登录
 }
 

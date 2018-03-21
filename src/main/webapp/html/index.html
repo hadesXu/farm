@@ -140,13 +140,19 @@
 <script src="../js/main.js" tppabs="javascript:;"></script>
 <script language="javascript">
     $(function () {
-       jsonTokenAjax("/api/user/myfarm", "POST", {}, callBack, errorback);
+       jsonTokenAjax("/api/farm/myfarm", "GET", {}, callBack, errorback);
     });
     function callBack(data) {
-        alert(JSON.stringify(data));
+        if(data.status == "1"){
+            var result = data.result;
+            alert(JSON.stringify(result));
+        }
     }
     function errorback(msg) {
-        alert('error:' + JSON.stringify(msg));
+        if(msg.status=="0"){
+            window.location.href="user-1.htm?backurl=index.html";
+        }
+        //alert('error:' + JSON.stringify(msg));
     }
 </script>
 </body>
