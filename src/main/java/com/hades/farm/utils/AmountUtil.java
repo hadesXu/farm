@@ -23,7 +23,7 @@ public class AmountUtil {
         BigDecimal profit = new BigDecimal("1");
         if(type == GoodsType.EGG.getType()){
             profit = new BigDecimal(Constant.PRODUCE_EGGS).multiply(Constant.EGG_PRICE);//3只蛋总收入
-            profit = profit.multiply(new BigDecimal(Constant.PRODUCE_EGGS).subtract(Constant.SELL_EGG_RATE));//减手续费
+            profit = profit.multiply(new BigDecimal("1").subtract(Constant.SELL_EGG_RATE));//减手续费
             profit = profit.subtract(Constant.DUCK_PRICE);//减鸭的价格
             profit = profit.subtract(new BigDecimal(Constant.BREEDING_DUCK_CYC).multiply(Constant.FEED_PRICE).multiply(new BigDecimal(Constant.PRODUCE_EGGS)));//减饲料费用
             profit = profit.divide(new BigDecimal(Constant.PRODUCE_EGGS)).setScale(5, BigDecimal.ROUND_HALF_DOWN);//除以总共生产的蛋的数量得到单个利润(不考虑死掉的)
