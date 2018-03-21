@@ -407,11 +407,11 @@ public class OrderServiceImpl implements OrderService {
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
         }
-        //TODO 更新卖家仓库累计出售数量、累计利润、累计积分
+        //更新卖家仓库累计出售数量、累计利润、累计积分
         WareHouseCumulativeDataRequestDto wareHouseCumulativeDataRequestDto = new WareHouseCumulativeDataRequestDto();
         wareHouseCumulativeDataRequestDto.setUserId(sellUserId);
         wareHouseCumulativeDataRequestDto.setAllSell(requestDto.getNum());
-        wareHouseCumulativeDataRequestDto.setAllProfit(AmountUtil.profitCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum())));
+        wareHouseCumulativeDataRequestDto.setAllProfit(AmountUtil.profitCalculate(order.getType(),requestDto.getNum()));
         wareHouseCumulativeDataRequestDto.setAllIntegral(AmountUtil.integralCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum())));
         if (GoodsType.EGG.getType() == order.getType()){
             updateCount = tDuckWarehouseMapper.updateDuckWareHouseCumulativeData(wareHouseCumulativeDataRequestDto);
