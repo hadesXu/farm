@@ -41,4 +41,8 @@ public class DuckWareHouseServiceImpl implements WareHouseService {
             throw new BizException(ErrorCode.ADD_ERR);
         }
     }
+
+    public TDuckWarehouse queryDuckWareHouse(long userId){
+        return tDuckWarehouseMapper.selectByUserId(userId);
+    }
 }

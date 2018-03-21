@@ -140,7 +140,7 @@
 <script src="../js/main.js" tppabs="javascript:;"></script>
 <script language="javascript">
     $(function () {
-       jsonTokenAjax("/api/user/test", "GET", {}, callBack, errorback);
+       jsonTokenAjax("/api/user/myfarm", "POST", {}, callBack, errorback);
     });
     function callBack(data) {
         alert(JSON.stringify(data));
