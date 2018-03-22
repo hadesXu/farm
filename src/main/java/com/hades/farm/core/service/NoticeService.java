@@ -18,4 +18,6 @@ public interface NoticeService {
      */
     Result<List<TNotice>> getNotice(long userId);
 
+    public List<TNotice> getNumNotice(long userId,int num);
+
 }

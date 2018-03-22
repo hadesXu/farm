@@ -3,6 +3,8 @@ package com.hades.farm.api.controller;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.response.UserModel;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
+import com.hades.farm.core.data.entity.TNotice;
+import com.hades.farm.core.service.NoticeService;
 import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.core.service.impl.DuckWareHouseServiceImpl;
 import com.langu.authorization.annotation.Auth;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,14 +29,21 @@ public class FarmController {
     @Autowired
     private DuckWareHouseServiceImpl duckWareHouseService;
 
+    @Autowired
+    private NoticeService noticeService;
+
     @RequestMapping(value = "/myfarm", method = RequestMethod.GET)
     @Auth
-    public ApiResponse<Map<String,Object>> myfram(@RequestParam long userId){
-        ApiResponse<Map<String,Object>> response = new ApiResponse<Map<String,Object>>();
-        Map<String,Object> myFarmMap = new HashMap<>();
+    public ApiResponse<List<TNotice>> myfram(@RequestParam long userId){
+        ApiResponse<List<TNotice>> response = new ApiResponse<List<TNotice>>();
+        /*Map<String,Object> myFarmMap = new HashMap<>();
         TDuckWarehouse duckWarehouse = duckWareHouseService.queryDuckWareHouse(userId);
         myFarmMap.put("duckWarehouse",duckWarehouse);
-        response.setResult(myFarmMap);
+        response.setResult(myFarmMap);*/
+        //读取最近num条notice记录
+        int num = 5;
+        List<TNotice> noticeList = noticeService.getNumNotice(userId,num);
+        response.setResult(noticeList);
         return response;
     }
 }
