@@ -38,6 +38,21 @@ public class User {
     private Long parentId;
 
     /**
+     * 是否是集团用户    值为1（否）、2（是）。默认为否。
+     */
+    private int isGroup;
+
+    /**
+     * 代数
+     */
+    private int generation;
+
+    /**
+     * 集团boss ID
+     */
+    private long groupBossId;
+
+    /**
      * 等级{@link com.hades.farm.enums.Grade}
      */
     private int grade;
@@ -128,6 +143,30 @@ public class User {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public int getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(int isGroup) {
+        this.isGroup = isGroup;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
+    }
+
+    public long getGroupBossId() {
+        return groupBossId;
+    }
+
+    public void setGroupBossId(long groupBossId) {
+        this.groupBossId = groupBossId;
     }
 
     public int getGrade() {

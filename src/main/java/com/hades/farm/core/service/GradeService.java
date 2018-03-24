@@ -31,5 +31,19 @@ public interface GradeService {
      */
     void landlordUpgrade(long userId);
 
+    /**
+     * 合伙人升级
+     *
+     * @param userId
+     */
+    void partnerUpgrade(long userId);
+
+    /**
+     * 代理人升级
+     *
+     * @param userId
+     */
+    void partnerAgency(long userId);
+
 
 }

@@ -93,6 +93,16 @@ public class GradeServiceImpl implements GradeService {
         }
     }
 
+    @Override
+    public void partnerUpgrade(long userId) {
+
+    }
+
+    @Override
+    public void partnerAgency(long userId) {
+
+    }
+
     /**
      * 获取三代之内的人数
      *

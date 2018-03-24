@@ -55,4 +55,6 @@ public interface TAccountTicketMapper {
     int updateAccountTicket(UpdateAccountTicketRequestDto requestDto);
 
     TAccountTicket queryAccountByUserId(long userId);
+
+    int incUserAccount(TAccountTicket record);
 }

@@ -14,18 +14,18 @@
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
-            <property name="suppressDate" value="true" />
+            <property name="suppressDate" value="true"/>
         </commentGenerator>
 
 
         <!--jdbc的数据库连接 -->
-        <jdbcConnection driverClass="${jdbc.driverClassName}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
+        <jdbcConnection driverClass="${jdbc.driverClassName}" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}">
         </jdbcConnection>
 
 
-
-        <javaTypeResolver >
-            <property name="forceBigDecimals" value="false" />
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
 
@@ -49,7 +49,8 @@
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.hades.farm.core.data.mapper" targetProject="src/main/java" type="XMLMAPPER" >
+        <javaClientGenerator targetPackage="com.hades.farm.core.data.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
             <!--
                     定义Maper.java 源代码中的ByExample() 方法的可视性，可选的值有：
@@ -72,7 +73,6 @@
             <property name="rootInterface" value=""/>
 
 
-
         </javaClientGenerator>
 
         <table tableName="t_platform_warehouse_flow"
@@ -81,7 +81,6 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
-
 
 
     </context>
