@@ -9,6 +9,9 @@
         <result property="password" column="password"/>
         <result property="wechat" column="wechat"/>
         <result property="parentId" column="parent_id"/>
+        <result property="isGroup" column="is_group"/>
+        <result property="generation" column="generation"/>
+        <result property="groupBossId" column="group_boss_id"/>
         <result property="grade" column="grade"/>
         <result property="isTrainee" column="is_trainee"/>
         <result property="sEgg" column="s_egg"/>
