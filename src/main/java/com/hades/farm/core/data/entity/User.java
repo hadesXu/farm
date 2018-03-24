@@ -97,6 +97,10 @@ public class User {
      */
     private Date addTime;
 
+    private Date dogEndDay;
+
+    private Date robotEndDay;
+
     public long getId() {
         return id;
     }
@@ -239,6 +243,22 @@ public class User {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Date getDogEndDay() {
+        return dogEndDay;
+    }
+
+    public void setDogEndDay(Date dogEndDay) {
+        this.dogEndDay = dogEndDay;
+    }
+
+    public Date getRobotEndDay() {
+        return robotEndDay;
+    }
+
+    public void setRobotEndDay(Date robotEndDay) {
+        this.robotEndDay = robotEndDay;
     }
 }
 
