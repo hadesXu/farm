@@ -75,7 +75,7 @@
 
         </javaClientGenerator>
 
-        <table tableName="t_platform_warehouse_flow"
+        <table tableName="t_back_reward"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

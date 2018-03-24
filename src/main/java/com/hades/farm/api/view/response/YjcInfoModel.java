@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class YjcInfoModel {
     private int duckDoing;//生产中的鸭
     private int duck;//种鸭
-    private BigDecimal food;
+    private int food;
     private int hasDog;
     private int ifSteal;
     private int sDuck;
@@ -23,11 +23,11 @@ public class YjcInfoModel {
         this.duckDoing = duckDoing;
     }
 
-    public BigDecimal getFood() {
+    public int getFood() {
         return food;
     }
 
-    public void setFood(BigDecimal food) {
+    public void setFood(int food) {
         this.food = food;
     }
 

@@ -491,89 +491,7 @@
 
 	}
 
-	function getSl(){
 
-		var number3=document.getElementById("number3").value;
-
-		var timess=Date.parse(new Date());
-
-		if(number3==''){
-
-			 layer.open({
-
-					content:'请输入您要购买的数量'
-
-					,skin: 'msg'
-
-					,time: 2 //2秒后自动关闭
-
-				  });return;
-
-			}
-
-		$.ajax({
-
-			url:'farm_yjc.php',
-
-			dataType:"JSON",
-
-			async:false,
-
-			type:'POST',
-
-			data:{
-
-				act:'gersl',
-
-				number:number3,
-
-				timess:timess,
-
-				},
-
-			success: function(data){
-
-				if(data.status=='true'){
-
-				 //提示
-
-				  layer.open({
-
-					content: data.content
-
-					,skin: 'msg'
-
-					,time: 1 //2秒后自动关闭
-
-				  });
-
-				window.setTimeout("window.location='"+data.html+"'",1200); 
-
-				}
-
-			else{
-
-				 //提示
-
-				  layer.open({
-
-					content: data.content
-
-					,skin: 'msg'
-
-					,time: 1 //2秒后自动关闭
-
-				  });
-
-				}
-
-			
-
-				}
-
-			});
-
-		}
 
 	</script>
 
@@ -1270,13 +1188,15 @@
             if(result.sDuck !=2){
                 TanWind("up-box2", "close", "popup-box2");	//商店弹窗
             }
+        }else{
+
         }
     }
     function errorback(msg) {
         if(msg.status=="0"){
             window.location.href="user-1.htm?backurl=farm_yjc.html";
         }
-        //alert('error:' + JSON.stringify(msg));
+        alert('error:' + JSON.stringify(msg));
     }
 
     function stealDuck(){
@@ -1286,6 +1206,54 @@
            }else{
               alert("今日已偷");
            }
+        }
+    }
+
+    //购买饲料
+
+    function getSl(){
+        var number3=document.getElementById("number3").value;
+        var timess=Date.parse(new Date());
+        if(number3==''){
+            layer.open({
+                content:'请输入您要购买的数量'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });return;
+        }else{
+            if(!/^\d+?$/.test(number3)){
+                layer.open({
+                    content:'请输入正整数'
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });return;
+            }
+        }
+        jsonTokenAjax("/api/order/buyFood", "POST", {foodStr:number3}, buyFoodCallBack, buyFoodErrorback);
+        function buyFoodCallBack(data){
+            var result = data.result;
+            if(result.code=='0000'){
+                //提示
+                layer.open({
+                    content: "购买成功"
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+                window.setTimeout("window.location='farm_yjc.htm'",1200);
+            } else{
+                //提示
+                layer.open({
+                    content: result.message
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+            }
+        }
+        function buyFoodErrorback(msg){
+            if(msg.status=="0"){
+                window.location.href="user-1.htm?backurl=farm_yjc.htm";
+            }
+            alert('error:' + JSON.stringify(msg));
         }
     }
 </script>

@@ -88,8 +88,8 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         if(duckWarehouse == null || duckWarehouse.getDuckDoing() == 0){
             throw new BizException(ErrorCode.NO_DUCK_DOING);
         }
-        BigDecimal needFoodAmount = Constant.DUCK_SINGLE_FEED_AMOUNT.multiply(new BigDecimal(duckWarehouse.getDuckDoing()));
-        if(duckWarehouse.getFood().compareTo(needFoodAmount) <0){
+        int needFoodAmount = Constant.DUCK_SINGLE_FEED_AMOUNT*duckWarehouse.getDuckDoing();
+        if(duckWarehouse.getFood()<needFoodAmount){
             throw new BizException(ErrorCode.FOOD_NOT_ENOUGH);
         }
         QueryDuckBreedingRequestDto requestDto = new QueryDuckBreedingRequestDto();

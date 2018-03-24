@@ -44,11 +44,6 @@ public class FarmController {
     @Auth
     public ApiResponse<List<TNotice>> myfram(@RequestParam long userId){
         ApiResponse<List<TNotice>> response = new ApiResponse<List<TNotice>>();
-        /*Map<String,Object> myFarmMap = new HashMap<>();
-        TDuckWarehouse duckWarehouse = duckWareHouseService.queryDuckWareHouse(userId);
-        myFarmMap.put("duckWarehouse",duckWarehouse);
-        response.setResult(myFarmMap);*/
-        //读取最近num条notice记录
         int num = 5;
         List<TNotice> noticeList = noticeService.getNumNotice(userId,num);
         response.setResult(noticeList);

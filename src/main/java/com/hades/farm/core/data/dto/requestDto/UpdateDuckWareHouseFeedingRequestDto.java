@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class UpdateDuckWareHouseFeedingRequestDto {
     private long userId;
-    private BigDecimal feedNum;
+    private int feedNum;
 
     public long getUserId() {
         return userId;
@@ -17,11 +17,11 @@ public class UpdateDuckWareHouseFeedingRequestDto {
         this.userId = userId;
     }
 
-    public BigDecimal getFeedNum() {
+    public int getFeedNum() {
         return feedNum;
     }
 
-    public void setFeedNum(BigDecimal feedNum) {
+    public void setFeedNum(int feedNum) {
         this.feedNum = feedNum;
     }
 }

@@ -39,7 +39,7 @@ public class OrderServiceTest  extends BaseTest {
     public void buyFeed() throws BizException{
         BuyGoodsRequestDto requestDto = new  BuyGoodsRequestDto();
         requestDto.setUserId(1);
-        requestDto.setFeedNum(new BigDecimal("5"));
+        requestDto.setFeedNum(5);
         requestDto.setType(GoodsType.FEED.getType());
         try {
             orderService.buyFeed(requestDto);

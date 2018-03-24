@@ -32,6 +32,7 @@ public enum ErrorCode {
     DUCK_DOING_NUM_NOT_MATCH(2015, "待喂养的鸭的数量不匹配，请联系客服"),
     FOOD_NOT_ENOUGH(2016, "饲料不够，请先购买饲料"),
     HAS_FEED(2017, "今日已喂养"),
+    NUM_ILLEGAL(2018, "输入数量非法"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
