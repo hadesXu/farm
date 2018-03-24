@@ -21,8 +21,8 @@
     </resultMap>
 
     <sql id="user_columns">
-        id,telephone,name,password,wechat,parent_id,grade,is_trainee,s_egg,s_duck,
-        active,img_url,qr_code,add_time,update_time
+        id,telephone,name,password,wechat,parent_id parentId,grade,is_trainee isTrainee,s_egg sEgg,s_duck sDuck,
+        active,img_url imgUrl,qr_code qrCode,add_time addTime,update_time updateTime,dog_end_day dogEndDay,robot_end_day robotEndDay
     </sql>
 
     <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"

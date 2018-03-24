@@ -2,11 +2,15 @@ package com.hades.farm.api.controller;
 
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.response.UserModel;
+import com.hades.farm.api.view.response.YjcInfoModel;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 import com.hades.farm.core.data.entity.TNotice;
+import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
+import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.NoticeService;
 import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.core.service.impl.DuckWareHouseServiceImpl;
+import com.hades.farm.core.service.impl.FarmService;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,6 +36,10 @@ public class FarmController {
     @Autowired
     private NoticeService noticeService;
 
+    @Autowired
+    private FarmService farmService;
+
+
     @RequestMapping(value = "/myfarm", method = RequestMethod.GET)
     @Auth
     public ApiResponse<List<TNotice>> myfram(@RequestParam long userId){
@@ -44,6 +52,22 @@ public class FarmController {
         int num = 5;
         List<TNotice> noticeList = noticeService.getNumNotice(userId,num);
         response.setResult(noticeList);
+        return response;
+    }
+
+    @RequestMapping(value = "/yjcInfo", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse<YjcInfoModel> yjcInfo(@RequestParam long userId){
+        YjcInfoModel yjcInfoModel = null;
+        ApiResponse<YjcInfoModel> response = new ApiResponse<YjcInfoModel>();
+        try {
+            yjcInfoModel = farmService.queryYjcInfo(userId);
+        }catch (BizException e){
+            e.printStackTrace();
+        }catch (Exception e1){
+            e1.printStackTrace();
+        }
+        response.setResult(yjcInfoModel);
         return response;
     }
 }
