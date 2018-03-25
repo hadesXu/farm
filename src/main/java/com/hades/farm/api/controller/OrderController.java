@@ -30,7 +30,7 @@ public class OrderController {
     @Auth
     public ApiResponse<MsgModel> buyFood(@RequestParam long userId,@RequestParam String foodStr){
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
             requestDto.setUserId(userId);

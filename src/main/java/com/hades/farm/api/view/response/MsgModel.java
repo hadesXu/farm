@@ -7,6 +7,11 @@ public class MsgModel {
     private int code;
     private String message;
 
+    public MsgModel(int code,String message){
+       this.code = code;
+        this.message = message;
+    }
+
     public int getCode() {
         return code;
     }
