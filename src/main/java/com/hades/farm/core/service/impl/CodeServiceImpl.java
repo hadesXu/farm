@@ -40,15 +40,39 @@ public class CodeServiceImpl implements CodeService {
     @Resource
     private TSmsRecordMapper tSmsRecordMapper;
 
-
     @Override
-    public Result<String> getAndSendPhoneCode(String phone, String randomString, long time, String sign) {
+    public Result<String> getAndSendPhoneCode(String phone, String weChat, String ip) {
         Result<String> result = new Result<>();
-        if (!checkSign(phone, randomString, time, sign)) {
+        if (StringUtils.isBlank(weChat) || StringUtils.isBlank(phone)) {
             result.addError(ErrorCode.INVALID_REQUEST);
             return result;
         }
-        return sendCode(phone);
+        User user = userMapper.getUserPhone(phone);
+        if (user != null) {
+            result.addError(ErrorCode.PHONE_EXIST);
+            return result;
+        }
+        user = userMapper.getUserPhone(weChat);
+        if (user != null) {
+            result.addError(ErrorCode.WECHAT_EXIST);
+            return result;
+        }
+        return sendCode(phone, ip);
+    }
+
+    @Override
+    public Result<String> getAndSendPhoneCode(String phone, String ip) {
+        Result<String> result = Result.newResult();
+        if (StringUtils.isBlank(phone)) {
+            result.addError(ErrorCode.INVALID_REQUEST);
+            return result;
+        }
+        User user = userMapper.getUserPhone(phone);
+        if (user == null) {
+            result.addError(ErrorCode.USER_NOT_EXIST);
+            return result;
+        }
+        return sendCode(phone, ip);
     }
 
     @Override
@@ -59,7 +83,7 @@ public class CodeServiceImpl implements CodeService {
             result.addError(ErrorCode.SYSTEM_ERROR);
             return result;
         }
-        return sendCode(user.getTelephone());
+        return sendCode(user.getTelephone(), null);
     }
 
     @Override
@@ -93,7 +117,7 @@ public class CodeServiceImpl implements CodeService {
         return StringUtils.equals(StringUtils.upperCase(encryText), sign);
     }
 
-    private Result<String> sendCode(String phone) {
+    private Result<String> sendCode(String phone, String ip) {
         Result<String> result = Result.newResult();
         long now = Instant.now().toEpochMilli();
         String code = null;
@@ -103,7 +127,8 @@ public class CodeServiceImpl implements CodeService {
             tSmsRecord = new TSmsRecord();
             tSmsRecord.setPhone(phone);
             tSmsRecord.setCreateTime(now);
-            tSmsRecord.setSendCount((long) Constant.NUMBER_ONE);
+            tSmsRecord.setSendCount(Constant.NUMBER_ONE);
+            tSmsRecord.setSendIp(ip);
             code = RandomStringUtils.randomNumeric(4);
         } else {
             tSmsRecord.setSendCount(tSmsRecord.getSendCount() + Constant.NUMBER_ONE);
@@ -117,11 +142,11 @@ public class CodeServiceImpl implements CodeService {
             }
             hasUpdate = true;
         }
-
         Result<Void> sendRes = SmsUtil.sendSms(phone, String.format(Constant.CODE_MESSAGE_TEMPLATE, code));
         if (!sendRes.isSuccess()) {
             logger.error("Send code message failed, phone:{}", phone);
         } else {
+            tSmsRecord.setCode(code);
             tSmsRecord.setLastTime(now);
             if (hasUpdate) {
                 tSmsRecordMapper.updateByPrimaryKey(tSmsRecord);

@@ -67,6 +67,7 @@ color: #3e3e3e;}
 .c-form-txt-normal { display:block;height: 36px;width:96%; margin:auto;border: solid 1px #DDD;padding-left: 9px;color: #333333;
 font-size: 14px;-webkit-border-radius: 0;-webkit-appearance: none;background: #ffffff;}
 .Login dl dd input.zphone{width:112px; float:right; border:0px;background:#fff; font-size:14px; text-align:center; margin-top:2px;border-radius:0; color:#be3233; border:#be3233 1px solid; border-radius:16px; line-height:30px; height:30px; padding:0;}
+.codePhoto .zphone{width:112px; float:right; border:0px;background:#fff; font-size:14px; text-align:center; margin-top:2px;border-radius:0; color:#be3233; border:#be3233 1px solid; border-radius:16px; line-height:30px; height:30px; padding:0;}
 .field {padding: 5px 15px;}
 .tips {font-size: 14px;}
 #tbh5v0 .reg-success .tips, #tbh5v0 .login-success .tips, #tbh5v0 .reg-success .c-btn-oran-big1, #tbh5v0 .login-success 

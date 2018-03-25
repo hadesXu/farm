@@ -50,6 +50,14 @@ public interface UserService {
      */
     Result<User> get(long userId);
 
-
+    /**
+     * 更新密码
+     *
+     * @param phone
+     * @param code
+     * @param pwd
+     * @return
+     */
+    Result<Void> updatePwd(String phone, String code, String pwd);
 
 }

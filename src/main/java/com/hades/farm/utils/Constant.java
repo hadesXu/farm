@@ -11,6 +11,7 @@ public class Constant {
     public static final int NUMBER_MINUS_ONE = -1;//数字-1
     public static final int NUMBER_ZERO = 0;//数字0
     public static final int NUMBER_ONE = 1;//数字1
+    public static final int NUMBER_TWO = 2;//数字2
 
 
     //菜票对人民币倍数

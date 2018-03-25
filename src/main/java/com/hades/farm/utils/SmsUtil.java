@@ -36,17 +36,17 @@ public class SmsUtil {
         String requestJson = JSON.toJSONString(smsSingleRequest);
 
         System.out.println("before request string is: " + requestJson);
+//
+//        String response = SmsUtil.sendSmsByPost(smsSingleRequestServerUrl, requestJson);
+//
+//        System.out.println("response after request result is :" + response);
 
-        String response = SmsUtil.sendSmsByPost(smsSingleRequestServerUrl, requestJson);
-
-        System.out.println("response after request result is :" + response);
-
-        SmsSendResponse smsSingleResponse = JSON.parseObject(response, SmsSendResponse.class);
-        System.out.println("response  toString is :" + smsSingleResponse);
-        if (StringUtils.isNoneBlank(smsSingleResponse.getErrorMsg())) {
-            result.addError(ErrorCode.SYSTEM_ERROR);
-            return result;
-        }
+//        SmsSendResponse smsSingleResponse = JSON.parseObject(response, SmsSendResponse.class);
+//        System.out.println("response  toString is :" + smsSingleResponse);
+//        if (StringUtils.isNoneBlank(smsSingleResponse.getErrorMsg())) {
+//            result.addError(ErrorCode.SYSTEM_ERROR);
+//            return result;
+//        }
         return result;
     }
 

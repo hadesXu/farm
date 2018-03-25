@@ -10,13 +10,18 @@ public interface CodeService {
     /**
      * 获取并发送验证码
      *
-     * @param phone        手机号
-     * @param randomString 随机字符串
-     * @param time         时间戳
-     * @param sign         签名
+     * @param phone 手机号
      * @return
      */
-    Result<String> getAndSendPhoneCode(String phone, String randomString, long time, String sign);
+    Result<String> getAndSendPhoneCode(String phone, String weChat, String ip);
+
+    /**
+     * 获取并发送验证码
+     *
+     * @param phone
+     * @return
+     */
+    Result<String> getAndSendPhoneCode(String phone, String ip);
 
     /**
      * 获取并发送验证码

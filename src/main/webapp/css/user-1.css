@@ -1,0 +1,47 @@
+
+.denglu {
+    width: 90%;
+    overflow: hidden;
+    position: absolute;
+    top: 12%;
+    left: 5%;
+    background: rgba(0, 0, 0, 0.58);
+    border-radius: 4px;
+}
+
+input {
+    background: none;
+}
+
+.Login dl dd {
+    width: 64%;
+    color: #fff;
+}
+
+.Login dl dt {
+    width: 52px;
+    color: #fff;
+}
+
+.color_f {
+    color: #fff;
+    font-size: 16px;
+}
+
+.login_s {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    border-bottom: 1px solid red;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+}
+
+.login_input {
+    width: 100% !important;
+    background: none;
+    line-height: 16px !important;
+    height: 36px !important;
+}

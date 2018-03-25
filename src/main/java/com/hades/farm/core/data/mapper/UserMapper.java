@@ -26,6 +26,8 @@ public interface UserMapper {
 
     int updateGrade(@Param("userId") long userId, @Param("grade") int grade);
 
+    int updatePwd(@Param("userId") long userId, @Param("pwd") String pwd);
+
     /**
      * 获取徒弟
      *

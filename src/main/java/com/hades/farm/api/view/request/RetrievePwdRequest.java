@@ -3,9 +3,10 @@ package com.hades.farm.api.view.request;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by xiaoxu on 2018/3/9.
+ * Created by xiaoxu on 2018/3/26.
  */
-public class RegisterRequest {
+public class RetrievePwdRequest {
+
     /**
      * 手机号
      */
@@ -21,19 +22,7 @@ public class RegisterRequest {
     /**
      * 密码
      */
-    @NotNull
     private String pwd;
-
-    /**
-     * 微信
-     */
-    @NotNull
-    private String wechat;
-
-    /**
-     * 父ID
-     */
-    private Long parentId;
 
     public String getPhone() {
         return phone;
@@ -57,21 +46,5 @@ public class RegisterRequest {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-    }
-
-    public String getWechat() {
-        return wechat;
-    }
-
-    public void setWechat(String wechat) {
-        this.wechat = wechat;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
     }
 }

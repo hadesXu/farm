@@ -1,16 +1,19 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
 var serverUrl = "http://localhost:8098";
-if (userId==null || userId.length == 0 || token.length == 0) {
-    //登录
-}
 
+//校验登录
+function checkLogin() {
+    if (checkNull(userId) || checkNull(token)) {
+        location.href = "user-1.html"
+    }
+}
 //校验提交
 function jsonTokenAjax(url, method, data, callBack, errorback) {
     $.ajax({
         url: serverUrl + url,
         dataType: 'json',
-        method: method,
+        type: method,
         data: tokenJoint(data),
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         success: callBack,
@@ -23,7 +26,19 @@ function jsonAjax(url, method, callBack, errorback) {
     $.ajax({
         url: serverUrl + url,
         dataType: 'json',
-        method: method,
+        type: method,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: callBack,
+        error: errorback
+    });
+}
+
+function jsonPostAjax(url, data, callBack, errorback) {
+    $.ajax({
+        url: serverUrl + url,
+        dataType: 'json',
+        type: "POST",
+        data: data,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         success: callBack,
         error: errorback
@@ -55,4 +70,19 @@ function mergeJsonObject(jsonbject1, jsonbject2) {
     }
     return resultJsonObject;
 };
+function checkNull(object) {
+    return object == null || object == undefined || object == '';
+}
+
+function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+}
+
 

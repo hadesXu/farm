@@ -9,6 +9,7 @@
         <result property="password" column="password"/>
         <result property="wechat" column="wechat"/>
         <result property="parentId" column="parent_id"/>
+        <result property="parents" column="parents"/>
         <result property="isGroup" column="is_group"/>
         <result property="generation" column="generation"/>
         <result property="groupBossId" column="group_boss_id"/>
@@ -24,15 +25,15 @@
     </resultMap>
 
     <sql id="user_columns">
-        id,telephone,name,password,wechat,parent_id parentId,grade,is_trainee isTrainee,s_egg sEgg,s_duck sDuck,
+        id,telephone,name,password,wechat,parent_id,parents,grade,is_trainee isTrainee,s_egg sEgg,s_duck sDuck,
         active,img_url imgUrl,qr_code qrCode,add_time addTime,update_time updateTime,dog_end_day dogEndDay,robot_end_day robotEndDay
     </sql>
 
     <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"
             keyProperty="userId">
-        insert into t_user ( id,telephone,name,password,wechat,parent_id,grade,is_trainee,
+        insert into t_user ( id,telephone,name,password,wechat,parent_id,parents,grade,is_trainee,
         s_egg,s_duck, active,img_url,qr_code,add_time,update_time)
-        values (#{id},#{telephone},#{name},#{password},#{wechat},#{parentId},#{grade},#{isTrainee},
+        values (#{id},#{telephone},#{name},#{password},#{wechat},#{parentId},#{parents},#{grade},#{isTrainee},
         #{sEgg},#{sDuck},#{active},#{imgUrl},#{qrCode},#{addTime},#{updateTime})
     </insert>
 
@@ -78,6 +79,12 @@
     <update id="updateGrade">
         UPDATE t_user
         SET grade =#{grade,jdbcType=BIGINT}
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updatePwd">
+        UPDATE t_user
+        SET password =#{pwd}
         WHERE id = #{userId,jdbcType=BIGINT}
     </update>
 

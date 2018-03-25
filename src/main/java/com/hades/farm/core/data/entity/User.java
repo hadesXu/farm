@@ -38,6 +38,11 @@ public class User {
     private Long parentId;
 
     /**
+     * 3代Id集合,用逗号隔开 父亲,爷爷,曾祖父
+     */
+    private String parents;
+
+    /**
      * 是否是集团用户    值为1（否）、2（是）。默认为否。
      */
     private int isGroup;
@@ -147,6 +152,14 @@ public class User {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public String getParents() {
+        return parents;
+    }
+
+    public void setParents(String parents) {
+        this.parents = parents;
     }
 
     public int getIsGroup() {

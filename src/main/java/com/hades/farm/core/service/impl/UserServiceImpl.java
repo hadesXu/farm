@@ -4,7 +4,6 @@ import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.service.CodeService;
-import com.hades.farm.core.service.RelationService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.enums.Grade;
 import com.hades.farm.result.ErrorCode;
@@ -31,8 +30,6 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Resource
     private CodeService codeService;
-    @Resource
-    private RelationService relationService;
 
     @Override
     public Result<User> userRegister(RegisterRequest request) {
@@ -44,14 +41,11 @@ public class UserServiceImpl implements UserService {
         }
         User user = generateUser(request);
         int uRes = userMapper.insert(user);
-        if (uRes == Constant.NUMBER_ONE) {
+        if (uRes != Constant.NUMBER_ONE) {
             result.addError(ErrorCode.ADD_ERR);
             return result;
         }
         result.setData(user);
-        if (request.getParentId() != null) {
-            relationService.initRelation(user.getId(), request.getParentId());
-        }
         return result;
     }
 
@@ -104,6 +98,30 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public Result<Void> updatePwd(String phone, String code, String pwd) {
+        Result<Void> result = Result.newResult();
+        if (!AccountValidatorUtil.isPassword(pwd)) {
+            result.addError(ErrorCode.PWD_FORMAT_ERROR);
+            return result;
+        }
+        Result<Void> voidResult = codeService.validPhoneCode(phone, code);
+        if (!voidResult.isSuccess()) {
+            return voidResult;
+        }
+        User user = userMapper.getUserPhone(phone);
+        if (user == null) {
+            result.addError(ErrorCode.USER_NOT_EXIST);
+            return result;
+        }
+        int uRes = userMapper.updatePwd(user.getId(), DigestUtils.md5Hex(pwd));
+        if (uRes != Constant.NUMBER_ONE) {
+            result.addError(ErrorCode.UPDATE_ERR);
+            return result;
+        }
+        return result;
+    }
+
     /**
      * 注册前检查
      *
@@ -116,11 +134,11 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.PHONE_FORMAT_ERROR);
             return result;
         }
-        if (AccountValidatorUtil.isPassword(request.getPwd())) {
+        if (!AccountValidatorUtil.isPassword(request.getPwd())) {
             result.addError(ErrorCode.PWD_FORMAT_ERROR);
             return result;
         }
-        User user = userMapper.getUserByWeChat(request.getPhone());
+        User user = userMapper.getUserPhone(request.getPhone());
         if (user != null) {
             result.addError(ErrorCode.PHONE_EXIST);
             return result;
@@ -140,15 +158,38 @@ public class UserServiceImpl implements UserService {
     private User generateUser(RegisterRequest request) {
         User user = new User();
         user.setPassword(DigestUtils.md5Hex(request.getPwd()));
-        user.setImgUrl(request.getFace());
         user.setGrade(Grade.APPRENTICE.getType());
         user.setAddTime(new Date());
         if (request.getParentId() != null) {
-            user.setParentId(request.getParentId());
+            User parentUser = userMapper.getUserById(request.getParentId());
+            if (parentUser != null) {
+                user.setParentId(request.getParentId());
+                user.setParents(request.getParentId() + "");
+                user.setGeneration(parentUser.getGeneration() + Constant.NUMBER_ONE);
+                if (parentUser.getIsGroup() == Constant.NUMBER_TWO) {
+                    user.setIsGroup(parentUser.getIsGroup());
+                    if (parentUser.getGroupBossId() != Constant.DEFAULT_ID) {
+                        user.setGroupBossId(parentUser.getGroupBossId());
+                    }
+                }
+                if (parentUser.getParentId() != Constant.DEFAULT_ID) {
+                    user.setParents(user.getParents() + "," + parentUser.getParentId());
+                }
+                parentUser = userMapper.getUserById(parentUser.getParentId());
+                if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                    user.setParents(user.getParents() + "," + parentUser.getParentId());
+                    parentUser = userMapper.getUserById(parentUser.getParentId());
+                    if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                        user.setParents(user.getParents() + "," + parentUser.getParentId());
+                    }
+                }
+            }
         }
         user.setWechat(request.getWechat());
         user.setTelephone(request.getPhone());
         user.setName(NickUtil.randomNick());
         return user;
     }
+
+
 }

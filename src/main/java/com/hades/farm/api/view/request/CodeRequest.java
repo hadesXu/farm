@@ -8,18 +8,11 @@ public class CodeRequest {
      * 手机号
      */
     private String phone;
+
     /**
-     * 随机字符串
+     * 微信key
      */
-    private String randomString;
-    /**
-     * 时间戳
-     */
-    private long time;
-    /**
-     * 签名
-     */
-    private String sign;
+    private String wechat;
 
     public String getPhone() {
         return phone;
@@ -29,28 +22,11 @@ public class CodeRequest {
         this.phone = phone;
     }
 
-    public String getRandomString() {
-        return randomString;
+    public String getWechat() {
+        return wechat;
     }
 
-    public void setRandomString(String randomString) {
-        this.randomString = randomString;
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
 }

@@ -53,4 +53,6 @@ public interface TSmsRecordMapper {
 
 
     TSmsRecord getByPhone(String phone);
+
+    int queryIpCount(String ip);
 }

@@ -4,7 +4,6 @@ import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
-import com.hades.farm.core.service.RelationService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.result.Result;
 import com.hades.farm.api.view.response.UserModel;
@@ -12,7 +11,6 @@ import com.langu.authorization.annotation.Auth;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by xiaoxu on 2016/11/9.
@@ -76,11 +74,16 @@ public class UserApi {
         return response;
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    @Auth
-    public ApiResponse<String> test(@RequestParam long userId) {
-        ApiResponse<String> response = new ApiResponse<>();
-        response.setResult("userId:" + userId);
+    @RequestMapping(value = "/update/pwd", method = RequestMethod.POST)
+    public ApiResponse login(@RequestParam(required = false, defaultValue = "") String phone,
+                             @RequestParam(required = false, defaultValue = "") String code,
+                             @RequestParam(required = false, defaultValue = "") String pwd) {
+        ApiResponse response = new ApiResponse<>();
+        Result<Void> registerRes = userService.updatePwd(phone, code, pwd);
+        if (!registerRes.isSuccess()) {
+            response.addError(registerRes.getErrorCodes());
+            return response;
+        }
         return response;
     }
 }

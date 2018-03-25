@@ -1,0 +1,35 @@
+.find{width:90%;position:absolute;top:16%;left:5%;background:rgba(8,8,8,0.58);border-radius:5px; z-index:999;}
+
+.innercontent{width:90%;}
+
+.footer{background:none;position:fixed;bottom:0;}
+
+.footer span{color:#fff;}
+
+.mf_o4{color:#fff;}
+
+.login_s{width:100%;text-align:center;display:inline-block;border-bottom:1px solid red;color:#fff;height:50px;line-height:50px;font-size:16px;}
+
+.sjh{width:52px;font-size:16px; display:inline-block;color:#fff;}
+.sjh1{width:64px;font-size:16px; display:inline-block;color:#fff;}
+
+
+.sjh_ipt{width:60% !important;background:none !important;border:none !important;font-size:16px;color:#fff;}
+
+.yonghu{border-bottom:1px solid #fff;}
+
+.yanzheng{border-bottom:1px solid #fff;}
+
+.codeTxt{width:60%;}
+
+.codeTxt input{width:60%;background:none;border:none !important;}
+
+.codePhoto{width:40%;float:right;}
+
+.codePhoto img{width:100%;}
+
+#captcha-error{bottom:inherit;}
+
+.btn_big1{margin-top:36px;}
+
+.wz{font-size:16px;color:#fff;}

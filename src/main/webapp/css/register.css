@@ -1,0 +1,64 @@
+.log_reg_box {
+    width: 90%;
+    position: absolute;
+    top: 4%;
+    left: 5%;
+    background: rgba(8, 8, 8, 0.58);
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.log_reg_box ul.tab li {
+    background: none;
+}
+
+.footer {
+    background: none;
+    position: relative;
+    bottom: 0;
+    color: #fff;
+    z-index: 990;
+}
+
+.footer span {
+    color: #fff;
+}
+
+.mf_o4 {
+    color: #fff;
+}
+
+input {
+    background: none;
+}
+
+.bgwhite {
+    background: none;
+}
+
+.Login dl dd {
+    width: 76%;
+    color: #fff;
+}
+
+.Login dl dt {
+    width: 52px;
+    color: #fff;
+}
+
+.codeTxt input {
+    background: none;
+}
+
+.Login dl dd input.zphone {
+    width: 112px;
+    border-radius: 5px;
+}
+
+.color_f {
+    color: #fff;
+}
+
+.color_f input::-webkit-input-placeholder {
+    color: #fff;
+}
