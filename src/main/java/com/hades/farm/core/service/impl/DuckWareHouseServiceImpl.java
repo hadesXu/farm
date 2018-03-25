@@ -33,7 +33,7 @@ public class DuckWareHouseServiceImpl implements WareHouseService {
         duckWarehouse.setAllSell(0);
         duckWarehouse.setAllProfit(new BigDecimal("0"));
         duckWarehouse.setAllIntegral(new BigDecimal("0"));
-        duckWarehouse.setFood(new BigDecimal("0"));
+        duckWarehouse.setFood(0);
         duckWarehouse.setAddTime(new Date());
         duckWarehouse.setUpdateTime(new Date());
         int updateCount = tDuckWarehouseMapper.insertSelective(duckWarehouse);

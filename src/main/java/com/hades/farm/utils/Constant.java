@@ -39,7 +39,7 @@ public class Constant {
     //实习期天数
     public static final int PRACTICE_DAY = 3;
     //一只鸭每次喂饲料数量
-    public static final BigDecimal DUCK_SINGLE_FEED_AMOUNT = new BigDecimal("1");
+    public static final int DUCK_SINGLE_FEED_AMOUNT = 1;
     //一个蛋的积分
     public static final BigDecimal EGG_INTEGRAL_RATE = new BigDecimal("0.04");
     //一个鸭的积分

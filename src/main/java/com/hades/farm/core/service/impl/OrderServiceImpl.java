@@ -56,6 +56,9 @@ public class OrderServiceImpl implements OrderService {
     @Qualifier("eggWareHouseServiceImpl")
     private WareHouseService eggWareHouseServiceImpl;
 
+    @Autowired
+    private TBackRewardMapper tBackRewardMapper;
+
     /**
      * 从平台购买种鸭
      *
@@ -560,7 +563,7 @@ public class OrderServiceImpl implements OrderService {
         UpdateAccountTicketRequestDto updateAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         updateAccountTicketRequestDto.setUserId(requestDto.getUserId());
         updateAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_FEED.getType());
-        BigDecimal balance = Constant.FEED_PRICE.multiply(requestDto.getFeedNum());
+        BigDecimal balance = Constant.FEED_PRICE.multiply(new BigDecimal(requestDto.getFeedNum()));
         updateAccountTicketRequestDto.setBalance(balance);
         updateCount = tAccountTicketMapper.updateAccountTicket(updateAccountTicketRequestDto);
         if (updateCount != 1) {
@@ -576,7 +579,21 @@ public class OrderServiceImpl implements OrderService {
         accountTicketFlow.setRemarks("买饲料花费菜票：" + balance);
         accountTicketFlow.setAddTime(new Date());
         updateCount = tAccountTicketFlowMapper.insertSelective(accountTicketFlow);
-        if (updateCount != 1) {
+        if (updateCount < 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //添加返现记录表
+        TBackReward backReward = new TBackReward();
+        backReward.setUserId(requestDto.getUserId());
+        backReward.setType("3");
+        backReward.setNum(requestDto.getFeedNum());
+        backReward.setAmount(Constant.FEED_PRICE.multiply(new BigDecimal(requestDto.getFeedNum())));
+        backReward.setIfBack("1");
+        backReward.setSource(accountTicketFlow.getId());
+        backReward.setUpdateTime(new Date());
+        backReward.setAddTime(new Date());
+        updateCount = tBackRewardMapper.insertSelective(backReward);
+        if (updateCount < 1) {
             throw new BizException(ErrorCode.ADD_ERR);
         }
         //添加日志记录t_notice

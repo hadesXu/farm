@@ -82,6 +82,7 @@ public class TBackReward {
      *
      * @mbggenerated
      */
+    public TBackReward(){}
     public TBackReward(Long id, Long userId, String type, Integer num, BigDecimal amount, String ifBack, Long source, Date addTime, Date updateTime) {
         this.id = id;
         this.userId = userId;
@@ -200,5 +201,41 @@ public class TBackReward {
      */
     public Date getUpdateTime() {
         return updateTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public void setIfBack(String ifBack) {
+        this.ifBack = ifBack;
+    }
+
+    public void setSource(Long source) {
+        this.source = source;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -19,7 +19,7 @@
       <arg column="all_sell" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="all_profit" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="all_integral" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="food" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="food" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="add_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
@@ -65,7 +65,7 @@
       #{duckDoing,jdbcType=INTEGER}, #{egg,jdbcType=INTEGER}, #{eggFreeze,jdbcType=INTEGER}, 
       #{eggHarvest,jdbcType=INTEGER}, #{ifHarvest,jdbcType=INTEGER}, #{ifSteal,jdbcType=INTEGER}, 
       #{allSell,jdbcType=INTEGER}, #{allProfit,jdbcType=DECIMAL}, #{allIntegral,jdbcType=DECIMAL}, 
-      #{food,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{food,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hades.farm.core.data.entity.TDuckWarehouse" >
@@ -159,7 +159,7 @@
         #{allIntegral,jdbcType=DECIMAL},
       </if>
       <if test="food != null" >
-        #{food,jdbcType=DECIMAL},
+        #{food,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
@@ -210,7 +210,7 @@
         all_integral = #{allIntegral,jdbcType=DECIMAL},
       </if>
       <if test="food != null" >
-        food = #{food,jdbcType=DECIMAL},
+        food = #{food,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -238,7 +238,7 @@
       all_sell = #{allSell,jdbcType=INTEGER},
       all_profit = #{allProfit,jdbcType=DECIMAL},
       all_integral = #{allIntegral,jdbcType=DECIMAL},
-      food = #{food,jdbcType=DECIMAL},
+      food = #{food,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
@@ -271,7 +271,7 @@
 
   <update id="updateDuckWareHouseBuyFeed" parameterType="com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto" >
     UPDATE t_duck_warehouse
-    SET food = food + #{feedNum,jdbcType=DECIMAL},
+    SET food = food + #{feedNum,jdbcType=INTEGER},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
@@ -287,10 +287,10 @@
 
   <update id="updateDuckWareHouseOfFeeding" parameterType="com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto" >
     UPDATE t_duck_warehouse
-    SET food = food - #{feedNum,jdbcType=DECIMAL},
+    SET food = food - #{feedNum,jdbcType=INTEGER},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
-    and food &gt;= #{feedNum,jdbcType=DECIMAL}
+    and food &gt;= #{feedNum,jdbcType=INTEGER}
   </update>
 
   <!--  更新累计数据 -->

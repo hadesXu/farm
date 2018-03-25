@@ -1,537 +1,1072 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
 	<meta name="Generator" content="ECSHOP v2.7.3" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta name="format-detection" content="telephone=no, address=no, email=no">
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>孵蛋场</title>
-	<link href="../css/qui.css" rel="stylesheet">
-	<link href="../css/style.css" rel="stylesheet">
-	<link href="../css/ygc.css" rel="stylesheet">
-</head>
-<body style="overflow-y: auto;">
-<div class="warp-page" style=" background:url(../img/farm_fdc_9.jpg) no-repeat; background-size:100% 100%;">
-	
-     <style>
-		.xs{width:64%;float:left;}
-		.xs ul{margin:10px 0;list-style:none;}
-		.xs ul li{width:50%;height:40px;line-height:40px;font-size:18px;color:#fff;float:left;}
-		.wh{width:20px;height:20px;margin-left:15px;}
-		.right_ico{float:right;font-size:18px;margin:10px;color:#fff;}
-		.right_td{background:rgba(125,120,120,0.34);padding:2px;border-bottom:1px solid #999;text-align:center;color:#fff;}
-		
-    </style>               
-    <div class="xs">
-    	<ul>
-        	<li><img src="../img/dan.png" class="wh">&nbsp;790 只</li>
-           <li class="up-box3" style="width:20%;"><img src="../img/caigou.png" width="35"></li>                               
-            <li class="up-box4"  style="width:20%;"><img src="../img/jqrh.png" width="35"></li>          
-        </ul>
-    </div>
-      
-    <div class="right_ico" style="margin-top:5px; ">
-    	<!--<img src="../img/siliao.png" class="ytb">  parent_id-->
-       <ul style="z-index:6; position:relative;">
-            <li class="right_td" onClick="jiawen('jiawenzj')">恒温/38°C</li>
-            <li class="right_td" onClick="jiawen('jiawen')" style="position:relative;">
-                <samp id="fdcxhd" style=" font-size:40px; color:#F00; position:absolute; left:-12px; top:-25px;">·</samp>帮师父加温</li>
-            <li class="right_td up-box" >放蛋孵化</li>
-            <a href="farm_jyq.htm"><li  class="right_td" style="border:none;">购买鸡蛋</li></a>
-            <li class="right_td up-box1" style="border:none;">"偷蛋"</li>
-            <li style="text-align:right; width:40px; margin-top:10px; margin-left:30px; position:relative;z-index:999;">
-               <a href="farm_jww.php?act=jww"><img  src="../img/jiazi.png"  ></a> 
-            </li>
-           
-       </ul>
-        
-    </div>
-	
-    <div style="position:absolute;width:15%;top:21%;left:15%;">
-        <img src="../img/jidan_3.png" >
-     		       
-    </div>
-                
-    <div style="position:absolute;width:15%;top:21.5%;left:44%;">
-     	<img src="../img/jidan_5.png" >     		       
-    </div>
-                
-    <div style="position:absolute;width:15%;top:21.5%;right:15%;">
-     	<img src="../img/jidan_5.png" >     		       
-    </div>
-                
-    <div style="position:absolute;width:15%;bottom:42%;left:15%;">    	
-        <img src="../img/jidan_6.png" >
-    </div>
-                
-    <div style="position:absolute;width:15%;bottom:41%;left:44%;">
-		<img src="../img/jidan_6.png" >
-    </div>
-                 
-    <div style="position:absolute;width:15%;bottom:41.5%;right:15%;">     	
-        <img src="../img/jidan_6.png" >
-    </div>
-          
-            
-    <div style="position:absolute;width:15%;bottom:10%;left:18%;">
-     	
-        <img src="../img/jidan_6.png" >
-    </div>
-          
-            
-    <div style="position:absolute;width:15%;bottom:10%;left:45%;">
-     	<img src="../img/jidan_6.png" >
-    </div>
-          
-           
-     
-    <div style="position:absolute;bottom:2%;left:10%;z-index:6;">
-        <img src="../img/dog.gif" class="stylie" style="width:66px;height:46px;">
-    </div> 
-                      
-     
-     
-     <!--<div style="position:absolute;top:48%;right: 18%;">
-     	<img src="../img/ck1.gif" style="width:60px;height:60px;">
-     </div>-->
-     
-     <div style="position:absolute;bottom:7%;right:5%; z-index:999;">
-    	 <a href="farm_yjc.php?act=yjc"><img src="../img/yjc_tb.png" style="width:60px;height:60px;"></a>
-     </div>
-     
-     
-
-<style type="text/css">
-
-
-
-.close-up {
-	position: absolute;
-	top: 1rem;
- right: -.5rem;
-	color: blue;
-	background: url(../img/close.png) no-repeat;
-	background-size: 100% 100%;
-	height: 2.2rem;
-	width: 2rem;
-}
-
-.all-gold {
-	padding-top: 3.5rem;
-	padding-left: 1.6rem;
- font-size: .8rem;
-	color: #723308;
-	font-weight: bold;
-}
-.top-gold {
- padding: .6rem 0 .6rem 1.6rem;
- font-size: .8rem;
-	color: #723308;
-	font-weight: bold;
-}
-.top-gold div {
-	float: left;
-}
-.top-gold input {
-	width: 7rem;
-	background: white;
-	border: none
-}
-
-    .popup-box {
-        width: 100%;
-        height: 100%;
-        background: rgba(22,22,22,.3);
-        position: absolute;
-        left: 0;
-        top: 0;
-        overflow: hidden;
-        display: none;
-        z-index: 9;
-    }
-	.popup-box1 {
-        width: 100%;
-        height: 100%;
-        background: rgba(22,22,22,.3);
-        position: absolute;
-        left: 0;
-        top: 0;
-        overflow: hidden;
-        display: none;
-        z-index: 9;
-    }
-	
-
-    .popup {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        margin-top: -40%;
-        margin-left: -45%;
-        width: 90%;
-        height: 40%;
-        min-height: 320px;
-        background: url(../img/shops.png) no-repeat;
-        background-size: 100% 100%;
-        z-index: 9;
-    }
-
-    .close-x {
-        position: absolute;
-        top: -.3rem;
-        right: 0;
-        color: blue;
-        background: url(../img/close.png) no-repeat;
-        background-size: 100% 100%;
-        height: 2.4rem;
-        width: 2rem;
-    }
-	.popup-con{
-		width:80%;
-		margin-left:10%;
-		text-align:center;	
-		position:absolute;
-		top:26%;
-	}
-	.popup-con ul{margin:0px;padding:0px;list-style:none;}
-	.popup-con ul li{width:100%;height:30px;line-height:30px;font-size:18px;}
-	
-
-</style>
-
-    <div class="popup-box">
-        <div class="popup popupimg" style=" position:relative;">
-            <div class="close close-x"></div>
-            <div class="tab-btn">
-                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
-            </div>
-            <div class="popup-con">
-               <ul>
-                    <li style="color:#fff;">放蛋孵化</li>
-                    <li>剩余鸡蛋:0 只</li>
-                    <li>数量：<input type="text" name="number" id="number" placeholder="放入鸡蛋" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;"></li>
-                <li><input type="submit"  onClick="fandan()" value="确定" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
-               </ul>
-            </div>
-   		</div>
- 	
-    </div>
-        
-    
-    <div class="popup-box1">
-        <div class="popup popupimg" style=" position:relative;">
-            <div class="close close-x"></div>
-            <div class="tab-btn">
-                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
-            </div>
-            <div class="popup-con" style="top:28%;">
-               <ul>
-                    <li style="color:#fff;">首次进入需支付20菜票</li>                  
-                    <li>菜票：<input type="text" value="20" name="number" placeholder="20" readonly style="height:30px;line-height:30px;border-radius:5px;text-indent:5px;"></li>
-                    <li><input type="submit" name="number" onClick="cc()" value="立即支付" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
-          		 </ul>
-       		 </div>
-    	</div>
-    </div>
-                   
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script src="../js/swiper.jquery.min.js"></script>
-    <script src="../js/index.js?1.0"></script>
-    <script src="../js/layer.js"></script>
-       
-         
-   <style>
-	 .popup-box3 {
-			width: 100%;
-			height: 100%;
-			background: rgba(22,22,22,.3);
-			position: absolute;
-			left: 0;
-			top: 0;
-			overflow: hidden;
-			display: none;
-			z-index: 999;
-		}
-		.popup-box4 {
-			width: 100%;
-			height: 100%;
-			background: rgba(22,22,22,.3);
-			position: absolute;
-			left: 0;
-			top: 0;
-			overflow: hidden;
-			display: none;
-			z-index: 999;
-		}
- .popup-con-mg{width:80%;
-		margin-left:10%;
-		text-align:center;	
-		position:absolute;
-		top:26%;}
- 
- </style>
- 
- 
-    <div class="popup-box3">
-        <div class="popup popupimg" style=" position:relative;">
-            <div class="close close-x"></div>
-            <div class="tab-btn">
-                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
-            </div>
-            <div style="float:right;padding-top:49px;margin-right:9%;color:#fff;font-size:14px;">到期时间：2018-04-29</div>            
-            <div class="popup-con-mg" style="top:28%;">
-               <ul>
-                    <li style="color:#fff;">买狗看护</li>
-                  	<li style="font-size:14px;line-height:17px;text-align:left;">功能：1、每天16时可自动帮主人收获防止被偷。<br/>功能：2、每天16时自动帮加温鸡蛋喂食鸡（需鸡粮充足，否则无法自动喂食）<br/><!--<span style="color:#F00;">特惠：现在购买90天送10天</span>--></li>
-                    <li style="font-size:14px;line-height:17px;text-align:center;">
-                        <label><input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">20菜票/30天</label><br/>
-                        <label><input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">40菜票/60天</label><br/>
-                        <label><input type="radio" name="RadioGroup1" value="3" id="RadioGroup1_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">60菜票/90天</label>
-                    </li>
-<!--                    <li style="font-size:12px;text-align:center;">菜票：<input type="text" value="" id="caipiao" name="caipiao" placeholder="0" readonly style="background:none;border:none;width:30px;"></li>
--->                    <li><input type="submit" name="number" onClick="mgkh('31')" value="续费" style="width:50%;height:28px;line-height:22px;font-size:18px;border-radius:5px; background:#21EA15;color:#fff;"></li>
-          		 </ul>
-       		 </div>
-    	</div>
-    </div>
-             
-    <div class="popup-box4">
-        <div class="popup popupimg" style=" position:relative;">
-            <div class="close close-x"></div>
-            <div class="tab-btn">
-                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
-            </div>
-            <div class="popup-con-mg" style="top:28%;">
-               <ul>
-                    <li style="color:#fff;">机器人</li>
-                  	<li style="font-size:14px;line-height:17px;text-align:left;">功能：每天15时可自动帮主人收获购买放养挂单加温喂食鸡（需金额充足，否则无法自动操作，也请不要在凌晨0时到15时个人操作）<br/><!--<span style="color:#F00;">特惠：现在购买90天送10天</span>--></li>
-                    <li style="font-size:14px;line-height:17px;text-align:center;">
-                        <label><input type="radio" name="RadioGroup2" value="1" id="RadioGroup2_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">200菜票/30天</label><br/>
-                        <label><input type="radio" name="RadioGroup2" value="2" id="RadioGroup2_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">400菜票/60天</label><br/>
-                        <label><input type="radio" name="RadioGroup2" value="3" id="RadioGroup2_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">600菜票/90天</label>
-                    </li>
-<!--                    <li style="font-size:12px;text-align:center;">菜票：<input type="text" value="" id="caipiao" name="caipiao" placeholder="0" readonly style="background:none;border:none;width:30px;"></li>
--->                 <li><input type="submit" name="number" onClick="mgkh('32')" value="续费" style="width:50%;height:28px;line-height:22px;font-size:18px;border-radius:5px; background:#21EA15;color:#fff;"></li>
-          		</ul>
-       		 </div>
-    	</div>
-    </div>
-	<script>
-	 	//默认显示菜票
-		document.getElementById("caipiao").value=2*'20';
-	 
-	 //购买狗看护	
-	    function mgkh(act){
-			
-			var type=$('input:radio[name="RadioGroup1"]:checked').val();//获取单选按钮的值
-			var type2=$('input:radio[name="RadioGroup2"]:checked').val();//获取单选按钮的值
-			var timess=Date.parse(new Date());
-			$.ajax({
-			url:'farm_jyq.php?act=mgkh',
-			dataType:"JSON",
-			async:false,
-			type:'POST',
-			data:{
-				id:act,
-				type_mg:type,
-				type_csy:type2,
-				timess:timess
-				},
-			success: function(data){
-				if(data.status=='true'){
-					 //提示
-					  layer.open({
-						content: data.content
-						,skin: 'msg'
-						,time: 1.4 //2秒后自动关闭
-					  });
-					 // alert(data.html);
-					 window.location.href=data.html;
-					}
-				else{
-					 //提示
-					  layer.open({
-						content: data.content
-						,skin: 'msg'
-						,time: 1.4 //2秒后自动关闭
-					  });
-					}
-				}
-				});
-			}
-			
-			//乘法解决小数点问题
-		 function accMul(arg1,arg2)  
-		 {  
-			 var m=0,s1=arg1.toString(),s2=arg2.toString();  
-			 try{m+=s1.split(".")[1].length}catch(e){}  
-			 try{m+=s2.split(".")[1].length}catch(e){} 
-			 return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)  
-		 } 
-		 function js(type){
-				if(type==1){document.getElementById("caipiao").value=accMul(1,'20');}
-				if(type==2){document.getElementById("caipiao").value=accMul(2,'20');}
-				if(type==3){document.getElementById("caipiao").value=accMul(3,'20');}
-		}
-	 
-	 
-	 </script> 
-
-
-     
-    <div class="page-footer" style="z-index:999; ">
-	    <div class="tools" style="width:86%;">
-	        <ul class="tool-ul clearfix" style="top:-20%;">
-	            <li class="tools04"><a href="index.htm" tppabs="javascript:;">
-	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>            
-	            <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
-	                <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
-	            <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
-	                <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
-	           <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
-	                <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
-	           <li class="tools04"><a href="user.html" tppabs="javascript:;">
-	                <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
-	          
-	        </ul>
-	    </div>
-	</div>
-
-	<script src="../js/layer.js"></script>
-	
-	<script>
-		function wkf(){
-			 layer.open({
-				content: '正在开发中...'
-				,skin: 'msg'
-				,time: 1 //2秒后自动关闭
-			  });
-		}
-	
-	</script> 
-    </div>
-    
-	<script type="text/javascript">
-	//放蛋孵化
-	function fandan(){
-		var number=$('#number').val();
-		var timess=Date.parse(new Date());
-		if(number==''){
-			 layer.open({
-					content:'请输入您要放养的数量'
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-			}
-		$.ajax({
-			url:'farm_fdc.php',
-			dataType:"JSON",
-			async:false,
-			type:'POST',
-			data:{
-				act:'fudan',
-				number:number,
-				timess:timess,
-				},
-			success: function(data){
-				if(data.status=='true'){
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				window.setTimeout("window.location='"+data.html+"'",1600); 
-				}
-			else{
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				}
-			
-				}
-			});
-		}
-	
-	//偷蛋第一次进入	
-    function cc(){
-		var timess=Date.parse(new Date());
-		$.ajax({
-		url:'farm_fdc.php',
-		dataType:"JSON",
-		async:false,
-		type:'POST',
-		data:{
-			act:'dan',
-			id:'666',
-			timess:timess,
-			},
-		success: function(data){
-			if(data.status=='true'){
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				 // alert(data.html);
-				window.setTimeout("window.location='"+data.html+"'",1600); 
-				}
-			else{
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				}
-			}
-			});
-		}
-		
-		
-	//帮师傅加温-给自己加温
-	 function jiawen(act){
-	 var timess=Date.parse(new Date());
-	$.ajax({
-	url:'farm_fdc.php',
-	dataType:"JSON",
-	async:false,
-	type:'POST',
-	data:{
-		act:act,
-		id:'7',
-		timess:timess,
-		},
-	success: function(data){
-		if(data.status=='true'){
-			 //提示
-			  layer.open({
-				content: data.content
-				,skin: 'msg'
-				,time: 1.4 //2秒后自动关闭
-			  });
-			window.setTimeout("window.location='"+data.html+"'",1600); 
-			}
-		else{
-			
-			 //提示
-			  layer.open({
-				content: data.content
-				,skin: 'msg'
-				,time: 1.4 //2秒后自动关闭
-			  });
-			
-			}
-		}
-		});
-	}
-	
-	
-    </script>
-
-</body>
-
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta name="format-detection" content="telephone=no, address=no, email=no">
+
+	<meta name="renderer" content="webkit">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>孵蛋场</title>
+
+	<link href="../css/qui.css" rel="stylesheet">
+
+	<link href="../css/style.css" rel="stylesheet">
+
+	<link href="../css/ygc.css" rel="stylesheet">
+
+</head>
+
+<body style="overflow-y: auto;">
+
+<div class="warp-page" style=" background:url(../img/farm_fdc_9.jpg) no-repeat; background-size:100% 100%;">
+
+	
+
+     <style>
+
+		.xs{width:64%;float:left;}
+
+		.xs ul{margin:10px 0;list-style:none;}
+
+		.xs ul li{width:50%;height:40px;line-height:40px;font-size:18px;color:#fff;float:left;}
+
+		.wh{width:20px;height:20px;margin-left:15px;}
+
+		.right_ico{float:right;font-size:18px;margin:10px;color:#fff;}
+
+		.right_td{background:rgba(125,120,120,0.34);padding:2px;border-bottom:1px solid #999;text-align:center;color:#fff;}
+
+		
+
+    </style>               
+
+    <div class="xs">
+
+    	<ul>
+
+        	<li><img src="../img/dan.png" class="wh">&nbsp;790 只</li>
+
+           <li class="up-box3" style="width:20%;"><img src="../img/caigou.png" width="35"></li>                               
+
+            <li class="up-box4"  style="width:20%;"><img src="../img/jqrh.png" width="35"></li>          
+
+        </ul>
+
+    </div>
+
+      
+
+    <div class="right_ico" style="margin-top:5px; ">
+
+    	<!--<img src="../img/siliao.png" class="ytb">  parent_id-->
+
+       <ul style="z-index:6; position:relative;">
+
+            <li class="right_td" onClick="jiawen('jiawenzj')">恒温/38°C</li>
+
+            <li class="right_td" onClick="jiawen('jiawen')" style="position:relative;">
+
+                <samp id="fdcxhd" style=" font-size:40px; color:#F00; position:absolute; left:-12px; top:-25px;">·</samp>帮师父加温</li>
+
+            <li class="right_td up-box" >放蛋孵化</li>
+
+            <a href="farm_jyq.htm"><li  class="right_td" style="border:none;">购买鸡蛋</li></a>
+
+            <li class="right_td up-box1" style="border:none;">"偷蛋"</li>
+
+            <li style="text-align:right; width:40px; margin-top:10px; margin-left:30px; position:relative;z-index:999;">
+
+               <a href="farm_jww.php?act=jww"><img  src="../img/jiazi.png"  ></a> 
+
+            </li>
+
+           
+
+       </ul>
+
+        
+
+    </div>
+
+	
+
+    <div style="position:absolute;width:15%;top:21%;left:15%;">
+
+        <img src="../img/jidan_3.png" >
+
+     		       
+
+    </div>
+
+                
+
+    <div style="position:absolute;width:15%;top:21.5%;left:44%;">
+
+     	<img src="../img/jidan_5.png" >     		       
+
+    </div>
+
+                
+
+    <div style="position:absolute;width:15%;top:21.5%;right:15%;">
+
+     	<img src="../img/jidan_5.png" >     		       
+
+    </div>
+
+                
+
+    <div style="position:absolute;width:15%;bottom:42%;left:15%;">    	
+
+        <img src="../img/jidan_6.png" >
+
+    </div>
+
+                
+
+    <div style="position:absolute;width:15%;bottom:41%;left:44%;">
+
+		<img src="../img/jidan_6.png" >
+
+    </div>
+
+                 
+
+    <div style="position:absolute;width:15%;bottom:41.5%;right:15%;">     	
+
+        <img src="../img/jidan_6.png" >
+
+    </div>
+
+          
+
+            
+
+    <div style="position:absolute;width:15%;bottom:10%;left:18%;">
+
+     	
+
+        <img src="../img/jidan_6.png" >
+
+    </div>
+
+          
+
+            
+
+    <div style="position:absolute;width:15%;bottom:10%;left:45%;">
+
+     	<img src="../img/jidan_6.png" >
+
+    </div>
+
+          
+
+           
+
+     
+
+    <div style="position:absolute;bottom:2%;left:10%;z-index:6;">
+
+        <img src="../img/dog.gif" class="stylie" style="width:66px;height:46px;">
+
+    </div> 
+
+                      
+
+     
+
+     
+
+     <!--<div style="position:absolute;top:48%;right: 18%;">
+
+     	<img src="../img/ck1.gif" style="width:60px;height:60px;">
+
+     </div>-->
+
+     
+
+     <div style="position:absolute;bottom:7%;right:5%; z-index:999;">
+
+    	 <a href="farm_yjc.php?act=yjc"><img src="../img/yjc_tb.png" style="width:60px;height:60px;"></a>
+
+     </div>
+
+     
+
+     
+
+
+
+<style type="text/css">
+
+
+
+
+
+
+
+.close-up {
+
+	position: absolute;
+
+	top: 1rem;
+
+ right: -.5rem;
+
+	color: blue;
+
+	background: url(../img/close.png) no-repeat;
+
+	background-size: 100% 100%;
+
+	height: 2.2rem;
+
+	width: 2rem;
+
+}
+
+
+
+.all-gold {
+
+	padding-top: 3.5rem;
+
+	padding-left: 1.6rem;
+
+ font-size: .8rem;
+
+	color: #723308;
+
+	font-weight: bold;
+
+}
+
+.top-gold {
+
+ padding: .6rem 0 .6rem 1.6rem;
+
+ font-size: .8rem;
+
+	color: #723308;
+
+	font-weight: bold;
+
+}
+
+.top-gold div {
+
+	float: left;
+
+}
+
+.top-gold input {
+
+	width: 7rem;
+
+	background: white;
+
+	border: none
+
+}
+
+
+
+    .popup-box {
+
+        width: 100%;
+
+        height: 100%;
+
+        background: rgba(22,22,22,.3);
+
+        position: absolute;
+
+        left: 0;
+
+        top: 0;
+
+        overflow: hidden;
+
+        display: none;
+
+        z-index: 9;
+
+    }
+
+	.popup-box1 {
+
+        width: 100%;
+
+        height: 100%;
+
+        background: rgba(22,22,22,.3);
+
+        position: absolute;
+
+        left: 0;
+
+        top: 0;
+
+        overflow: hidden;
+
+        display: none;
+
+        z-index: 9;
+
+    }
+
+	
+
+
+
+    .popup {
+
+        position: absolute;
+
+        top: 45%;
+
+        left: 50%;
+
+        margin-top: -40%;
+
+        margin-left: -45%;
+
+        width: 90%;
+
+        height: 40%;
+
+        min-height: 320px;
+
+        background: url(../img/shops.png) no-repeat;
+
+        background-size: 100% 100%;
+
+        z-index: 9;
+
+    }
+
+
+
+    .close-x {
+
+        position: absolute;
+
+        top: -.3rem;
+
+        right: 0;
+
+        color: blue;
+
+        background: url(../img/close.png) no-repeat;
+
+        background-size: 100% 100%;
+
+        height: 2.4rem;
+
+        width: 2rem;
+
+    }
+
+	.popup-con{
+
+		width:80%;
+
+		margin-left:10%;
+
+		text-align:center;	
+
+		position:absolute;
+
+		top:26%;
+
+	}
+
+	.popup-con ul{margin:0px;padding:0px;list-style:none;}
+
+	.popup-con ul li{width:100%;height:30px;line-height:30px;font-size:18px;}
+
+	
+
+
+
+</style>
+
+
+
+    <div class="popup-box">
+
+        <div class="popup popupimg" style=" position:relative;">
+
+            <div class="close close-x"></div>
+
+            <div class="tab-btn">
+
+                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
+
+            </div>
+
+            <div class="popup-con">
+
+               <ul>
+
+                    <li style="color:#fff;">放蛋孵化</li>
+
+                    <li>剩余鸡蛋:0 只</li>
+
+                    <li>数量：<input type="text" name="number" id="number" placeholder="放入鸡蛋" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;"></li>
+
+                <li><input type="submit"  onClick="fandan()" value="确定" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
+
+               </ul>
+
+            </div>
+
+   		</div>
+
+ 	
+
+    </div>
+
+        
+
+    
+
+    <div class="popup-box1">
+
+        <div class="popup popupimg" style=" position:relative;">
+
+            <div class="close close-x"></div>
+
+            <div class="tab-btn">
+
+                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
+
+            </div>
+
+            <div class="popup-con" style="top:28%;">
+
+               <ul>
+
+                    <li style="color:#fff;">首次进入需支付20菜票</li>                  
+
+                    <li>菜票：<input type="text" value="20" name="number" placeholder="20" readonly style="height:30px;line-height:30px;border-radius:5px;text-indent:5px;"></li>
+
+                    <li><input type="submit" name="number" onClick="cc()" value="立即支付" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
+
+          		 </ul>
+
+       		 </div>
+
+    	</div>
+
+    </div>
+
+                   
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+
+    <script src="../js/swiper.jquery.min.js"></script>
+
+    <script src="../js/index.js?1.0"></script>
+
+    <script src="../js/layer.js"></script>
+
+       
+
+         
+
+   <style>
+
+	 .popup-box3 {
+
+			width: 100%;
+
+			height: 100%;
+
+			background: rgba(22,22,22,.3);
+
+			position: absolute;
+
+			left: 0;
+
+			top: 0;
+
+			overflow: hidden;
+
+			display: none;
+
+			z-index: 999;
+
+		}
+
+		.popup-box4 {
+
+			width: 100%;
+
+			height: 100%;
+
+			background: rgba(22,22,22,.3);
+
+			position: absolute;
+
+			left: 0;
+
+			top: 0;
+
+			overflow: hidden;
+
+			display: none;
+
+			z-index: 999;
+
+		}
+
+ .popup-con-mg{width:80%;
+
+		margin-left:10%;
+
+		text-align:center;	
+
+		position:absolute;
+
+		top:26%;}
+
+ 
+
+ </style>
+
+ 
+
+ 
+
+    <div class="popup-box3">
+
+        <div class="popup popupimg" style=" position:relative;">
+
+            <div class="close close-x"></div>
+
+            <div class="tab-btn">
+
+                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
+
+            </div>
+
+            <div style="float:right;padding-top:49px;margin-right:9%;color:#fff;font-size:14px;">到期时间：2018-04-29</div>            
+
+            <div class="popup-con-mg" style="top:28%;">
+
+               <ul>
+
+                    <li style="color:#fff;">买狗看护</li>
+
+                  	<li style="font-size:14px;line-height:17px;text-align:left;">功能：1、每天16时可自动帮主人收获防止被偷。<br/>功能：2、每天16时自动帮加温鸡蛋喂食鸡（需鸡粮充足，否则无法自动喂食）<br/><!--<span style="color:#F00;">特惠：现在购买90天送10天</span>--></li>
+
+                    <li style="font-size:14px;line-height:17px;text-align:center;">
+
+                        <label><input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">20菜票/30天</label><br/>
+
+                        <label><input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">40菜票/60天</label><br/>
+
+                        <label><input type="radio" name="RadioGroup1" value="3" id="RadioGroup1_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">60菜票/90天</label>
+
+                    </li>
+
+<!--                    <li style="font-size:12px;text-align:center;">菜票：<input type="text" value="" id="caipiao" name="caipiao" placeholder="0" readonly style="background:none;border:none;width:30px;"></li>
+
+-->                    <li><input type="submit" name="number" onClick="mgkh('31')" value="续费" style="width:50%;height:28px;line-height:22px;font-size:18px;border-radius:5px; background:#21EA15;color:#fff;"></li>
+
+          		 </ul>
+
+       		 </div>
+
+    	</div>
+
+    </div>
+
+             
+
+    <div class="popup-box4">
+
+        <div class="popup popupimg" style=" position:relative;">
+
+            <div class="close close-x"></div>
+
+            <div class="tab-btn">
+
+                <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
+
+            </div>
+
+            <div class="popup-con-mg" style="top:28%;">
+
+               <ul>
+
+                    <li style="color:#fff;">机器人</li>
+
+                  	<li style="font-size:14px;line-height:17px;text-align:left;">功能：每天15时可自动帮主人收获购买放养挂单加温喂食鸡（需金额充足，否则无法自动操作，也请不要在凌晨0时到15时个人操作）<br/><!--<span style="color:#F00;">特惠：现在购买90天送10天</span>--></li>
+
+                    <li style="font-size:14px;line-height:17px;text-align:center;">
+
+                        <label><input type="radio" name="RadioGroup2" value="1" id="RadioGroup2_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">200菜票/30天</label><br/>
+
+                        <label><input type="radio" name="RadioGroup2" value="2" id="RadioGroup2_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">400菜票/60天</label><br/>
+
+                        <label><input type="radio" name="RadioGroup2" value="3" id="RadioGroup2_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">600菜票/90天</label>
+
+                    </li>
+
+<!--                    <li style="font-size:12px;text-align:center;">菜票：<input type="text" value="" id="caipiao" name="caipiao" placeholder="0" readonly style="background:none;border:none;width:30px;"></li>
+
+-->                 <li><input type="submit" name="number" onClick="mgkh('32')" value="续费" style="width:50%;height:28px;line-height:22px;font-size:18px;border-radius:5px; background:#21EA15;color:#fff;"></li>
+
+          		</ul>
+
+       		 </div>
+
+    	</div>
+
+    </div>
+
+	<script>
+
+	 	//默认显示菜票
+
+		document.getElementById("caipiao").value=2*'20';
+
+	 
+
+	 //购买狗看护	
+
+	    function mgkh(act){
+
+			
+
+			var type=$('input:radio[name="RadioGroup1"]:checked').val();//获取单选按钮的值
+
+			var type2=$('input:radio[name="RadioGroup2"]:checked').val();//获取单选按钮的值
+
+			var timess=Date.parse(new Date());
+
+			$.ajax({
+
+			url:'farm_jyq.php?act=mgkh',
+
+			dataType:"JSON",
+
+			async:false,
+
+			type:'POST',
+
+			data:{
+
+				id:act,
+
+				type_mg:type,
+
+				type_csy:type2,
+
+				timess:timess
+
+				},
+
+			success: function(data){
+
+				if(data.status=='true'){
+
+					 //提示
+
+					  layer.open({
+
+						content: data.content
+
+						,skin: 'msg'
+
+						,time: 1.4 //2秒后自动关闭
+
+					  });
+
+					 // alert(data.html);
+
+					 window.location.href=data.html;
+
+					}
+
+				else{
+
+					 //提示
+
+					  layer.open({
+
+						content: data.content
+
+						,skin: 'msg'
+
+						,time: 1.4 //2秒后自动关闭
+
+					  });
+
+					}
+
+				}
+
+				});
+
+			}
+
+			
+
+			//乘法解决小数点问题
+
+		 function accMul(arg1,arg2)  
+
+		 {  
+
+			 var m=0,s1=arg1.toString(),s2=arg2.toString();  
+
+			 try{m+=s1.split(".")[1].length}catch(e){}  
+
+			 try{m+=s2.split(".")[1].length}catch(e){} 
+
+			 return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)  
+
+		 } 
+
+		 function js(type){
+
+				if(type==1){document.getElementById("caipiao").value=accMul(1,'20');}
+
+				if(type==2){document.getElementById("caipiao").value=accMul(2,'20');}
+
+				if(type==3){document.getElementById("caipiao").value=accMul(3,'20');}
+
+		}
+
+	 
+
+	 
+
+	 </script> 
+
+
+
+
+
+     
+
+    <div class="page-footer" style="z-index:999; ">
+
+	    <div class="tools" style="width:86%;">
+
+	        <ul class="tool-ul clearfix" style="top:-20%;">
+
+	            <li class="tools04"><a href="index.html" tppabs="javascript:;">
+
+	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>            
+
+	            <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
+
+	                <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
+
+	            <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
+
+	                <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
+
+	           <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
+
+	                <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
+
+	           <li class="tools04"><a href="user.html" tppabs="javascript:;">
+
+	                <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
+
+	          
+
+	        </ul>
+
+	    </div>
+
+	</div>
+
+
+
+	<script src="../js/layer.js"></script>
+
+	
+
+	<script>
+
+		function wkf(){
+
+			 layer.open({
+
+				content: '正在开发中...'
+
+				,skin: 'msg'
+
+				,time: 1 //2秒后自动关闭
+
+			  });
+
+		}
+
+	
+
+	</script> 
+
+    </div>
+
+    
+
+	<script type="text/javascript">
+
+	//放蛋孵化
+
+	function fandan(){
+
+		var number=$('#number').val();
+
+		var timess=Date.parse(new Date());
+
+		if(number==''){
+
+			 layer.open({
+
+					content:'请输入您要放养的数量'
+
+					,skin: 'msg'
+
+					,time: 1.4 //2秒后自动关闭
+
+				  });
+
+			}
+
+		$.ajax({
+
+			url:'farm_fdc.php',
+
+			dataType:"JSON",
+
+			async:false,
+
+			type:'POST',
+
+			data:{
+
+				act:'fudan',
+
+				number:number,
+
+				timess:timess,
+
+				},
+
+			success: function(data){
+
+				if(data.status=='true'){
+
+				 //提示
+
+				  layer.open({
+
+					content: data.content
+
+					,skin: 'msg'
+
+					,time: 1.4 //2秒后自动关闭
+
+				  });
+
+				window.setTimeout("window.location='"+data.html+"'",1600); 
+
+				}
+
+			else{
+
+				 //提示
+
+				  layer.open({
+
+					content: data.content
+
+					,skin: 'msg'
+
+					,time: 1.4 //2秒后自动关闭
+
+				  });
+
+				}
+
+			
+
+				}
+
+			});
+
+		}
+
+	
+
+	//偷蛋第一次进入	
+
+    function cc(){
+
+		var timess=Date.parse(new Date());
+
+		$.ajax({
+
+		url:'farm_fdc.php',
+
+		dataType:"JSON",
+
+		async:false,
+
+		type:'POST',
+
+		data:{
+
+			act:'dan',
+
+			id:'666',
+
+			timess:timess,
+
+			},
+
+		success: function(data){
+
+			if(data.status=='true'){
+
+				 //提示
+
+				  layer.open({
+
+					content: data.content
+
+					,skin: 'msg'
+
+					,time: 1.4 //2秒后自动关闭
+
+				  });
+
+				 // alert(data.html);
+
+				window.setTimeout("window.location='"+data.html+"'",1600); 
+
+				}
+
+			else{
+
+				 //提示
+
+				  layer.open({
+
+					content: data.content
+
+					,skin: 'msg'
+
+					,time: 1.4 //2秒后自动关闭
+
+				  });
+
+				}
+
+			}
+
+			});
+
+		}
+
+		
+
+		
+
+	//帮师傅加温-给自己加温
+
+	 function jiawen(act){
+
+	 var timess=Date.parse(new Date());
+
+	$.ajax({
+
+	url:'farm_fdc.php',
+
+	dataType:"JSON",
+
+	async:false,
+
+	type:'POST',
+
+	data:{
+
+		act:act,
+
+		id:'7',
+
+		timess:timess,
+
+		},
+
+	success: function(data){
+
+		if(data.status=='true'){
+
+			 //提示
+
+			  layer.open({
+
+				content: data.content
+
+				,skin: 'msg'
+
+				,time: 1.4 //2秒后自动关闭
+
+			  });
+
+			window.setTimeout("window.location='"+data.html+"'",1600); 
+
+			}
+
+		else{
+
+			
+
+			 //提示
+
+			  layer.open({
+
+				content: data.content
+
+				,skin: 'msg'
+
+				,time: 1.4 //2秒后自动关闭
+
+			  });
+
+			
+
+			}
+
+		}
+
+		});
+
+	}
+
+	
+
+	
+
+    </script>
+
+
+
+</body>
+
+
+
 </html>

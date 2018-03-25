@@ -136,10 +136,26 @@
         SELECT
         <include refid="Base_Column_List"></include>
         FROM `t_notice`
-        WHERE user_id = #{userId,jdbcType=BIGINT}
+        WHERE  1=1
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
         ORDER BY add_time DESC
         LIMIT 0,#{num}
     </select>
+
+    <select id="queryNoticeWithUser" resultType="com.hades.farm.core.data.dto.resultDto.NoticeUserResultDto">
+        SELECT
+        t1.user_id userId,t1.remarks,t2.name,t1.type
+        FROM `t_notice` t1 left join t_user t2 on t1.user_id = t2.id
+        WHERE  1=1
+        <if test="userId != null">
+            and t1.user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        ORDER BY t1.add_time DESC
+        LIMIT 0,#{num}
+    </select>
+
 
 
 </mapper>
