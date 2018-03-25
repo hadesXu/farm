@@ -1,6 +1,8 @@
 package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
+import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
+import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.data.entity.TOrders;
 import org.apache.ibatis.annotations.Param;
 
@@ -60,4 +62,6 @@ public interface TOrdersMapper {
     List<TOrders> getUnCachBack();
 
     int updateCashBack(long orderId);
+
+    List<OrderUserResultDto> queryOrderListByCondition(OrderQueryRequestDto requestDto);
 }

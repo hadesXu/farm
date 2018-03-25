@@ -2,8 +2,12 @@ package com.hades.farm.api.controller;
 
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.response.MsgModel;
+import com.hades.farm.api.view.response.OrderIndexModel;
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
+import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
+import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.exception.BizException;
+import com.hades.farm.core.service.OrderQueryService;
 import com.hades.farm.core.service.OrderService;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.utils.NumUtil;
@@ -25,6 +29,9 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderQueryService orderQueryService;
 
     @RequestMapping(value = "/buyFood", method = RequestMethod.POST)
     @Auth
@@ -49,6 +56,42 @@ public class OrderController {
             msgModel.setMessage(e.getErrMessage());
         }
         response.setResult(msgModel);
+        return response;
+    }
+
+    @RequestMapping(value = "/orderIndex", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<OrderIndexModel> orderIndex(@RequestParam long userId){
+        ApiResponse<OrderIndexModel> response = new ApiResponse<OrderIndexModel>();
+        OrderIndexModel orderIndexModel = orderQueryService.orderIndex(userId);
+        response.setResult(orderIndexModel);
+        return response;
+    }
+
+    @RequestMapping(value = "/queryAllOrderList", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<List<OrderUserResultDto>> queryAllOrderList(@RequestParam long userId,@RequestParam String offSet,@RequestParam String pageSize){
+        ApiResponse<List<OrderUserResultDto>> response = new ApiResponse<List<OrderUserResultDto>>();
+        OrderQueryRequestDto requestDto = new OrderQueryRequestDto();
+        requestDto.setPageSize(Integer.parseInt(pageSize));
+        requestDto.setOffSet(Integer.parseInt(offSet));
+        requestDto.setIfExceptSelf(1);//排除自己的记录
+        requestDto.setUserId(userId);
+        List<OrderUserResultDto> allOrderList = orderQueryService.queryOrderList(requestDto);
+        response.setResult(allOrderList);
+        return response;
+    }
+
+    @RequestMapping(value = "/queryMyOrderList", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<List<OrderUserResultDto>> queryMyOrderList(@RequestParam long userId,@RequestParam String offSet,@RequestParam String pageSize){
+        ApiResponse<List<OrderUserResultDto>> response = new ApiResponse<List<OrderUserResultDto>>();
+        OrderQueryRequestDto requestDto = new OrderQueryRequestDto();
+        requestDto.setPageSize(Integer.parseInt(pageSize));
+        requestDto.setOffSet(Integer.parseInt(offSet));
+        requestDto.setUserId(userId);
+        List<OrderUserResultDto> myOrderList = orderQueryService.queryOrderList(requestDto);
+        response.setResult(myOrderList);
         return response;
     }
 

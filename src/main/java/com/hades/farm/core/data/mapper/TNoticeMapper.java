@@ -1,5 +1,6 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.dto.resultDto.NoticeUserResultDto;
 import com.hades.farm.core.data.entity.TNotice;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,6 +63,8 @@ public interface TNoticeMapper {
      */
     List<TNotice> getNoticeByUserId(long userId);
 
-    List<TNotice> getNoticeByUserIdOfnum(@Param("userId") long userId, @Param("num") int num);
+    List<TNotice> getNoticeByUserIdOfnum(@Param("userId") Long userId, @Param("num") int num);
+
+    List<NoticeUserResultDto> queryNoticeWithUser(@Param("userId") Long userId, @Param("num") int num);
 
 }
