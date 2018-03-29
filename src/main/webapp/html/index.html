@@ -98,7 +98,7 @@
                     </a>
                 </li>
                 <li class="tools04">
-                    <a href="v_user.php.htm" tppabs="javascript:;">
+                    <a href="user.html" tppabs="javascript:;">
                         <img src="../img/grxx.png" tppabs="javascript:;">
                     </a>
                 </li>
@@ -131,23 +131,24 @@
 <script src="../js/main.js" tppabs="javascript:;"></script>
 <script language="javascript">
     $(function () {
-       jsonTokenAjax("/api/farm/myfarm", "GET", {}, callBack, errorback);
+        checkLogin();
+        jsonTokenAjax("/api/farm/myfarm", "GET", {}, callBack, errorback);
     });
     function callBack(data) {
-        if(data.status == "1"){
+        if (data.status == "1") {
             var result = data.result;
             var noticeHtml = "";
-            $.each(result, function(index, value, array) {
+            $.each(result, function (index, value, array) {
                 var date = new Date(value.addTime);
-                var datestr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
-                noticeHtml = noticeHtml+datestr+"：<samp>"+value.remarks+"<br>"
+                var datestr = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+                noticeHtml = noticeHtml + datestr + "：<samp>" + value.remarks + "<br>"
             });
             $("#noticeHtml").html(noticeHtml);
         }
     }
     function errorback(msg) {
-        if(msg.status=="0"){
-            window.location.href="user-1.htm?backurl=index.html";
+        if (msg.status == "0") {
+            window.location.href = "user-1.htm?backurl=index.html";
         }
         //alert('error:' + JSON.stringify(msg));
     }

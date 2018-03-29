@@ -74,12 +74,7 @@
 
 
         </javaClientGenerator>
-
-<<<<<<< HEAD
-        <table tableName="t_sms_record"
-=======
         <table tableName="t_back_reward"
->>>>>>> 631b6d0985e0fd1b5d44d94bdb185069f9ddd9b0
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

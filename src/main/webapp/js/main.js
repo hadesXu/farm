@@ -1,11 +1,11 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
-var serverUrl = "http://localhost:8098";
+var serverUrl = "http://120.79.137.135:8098";
 
 //校验登录
 function checkLogin() {
     if (checkNull(userId) || checkNull(token)) {
-        location.href = "user-1.html"
+        location.href = "v_user-login.htm"
     }
 }
 //校验提交
