@@ -4,8 +4,10 @@ import com.hades.farm.api.view.response.OrderIndexModel;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.data.entity.TOrders;
+import com.hades.farm.core.data.entity.TPlatformWarehouse;
 import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.data.mapper.TOrdersMapper;
+import com.hades.farm.core.data.mapper.TPlatformWarehouseMapper;
 import com.hades.farm.core.service.OrderQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
     @Autowired
     private TNoticeMapper tNoticeMapper;
+
+    @Autowired
+    private TPlatformWarehouseMapper tPlatformWarehouseMapper;
 
     @Override
     public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto){
@@ -42,7 +47,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         myOrderCondition.setOffSet(0);
         myOrderCondition.setPageSize(3);
         orderIndexModel.setMyOrderList(tOrdersMapper.queryOrderListByCondition(myOrderCondition));
-        orderIndexModel.setNoticeList(tNoticeMapper.queryNoticeWithUser(null,5));
+        orderIndexModel.setNoticeList(tNoticeMapper.queryNoticeWithUser(null, 5));
+        TPlatformWarehouse platformWarehouse = tPlatformWarehouseMapper.queryPlatformWarehouse();
+        orderIndexModel.setPlatformWarehouse(platformWarehouse);
         return orderIndexModel;
     }
 }

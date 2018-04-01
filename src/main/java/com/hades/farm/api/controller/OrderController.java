@@ -33,6 +33,44 @@ public class OrderController {
     @Autowired
     private OrderQueryService orderQueryService;
 
+    @RequestMapping(value = "/buyGoods", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<MsgModel> buyGoods (@RequestParam long userId,@RequestParam String goodNumStr,@RequestParam String goodTypeStr,@RequestParam String orderIdStr){
+        ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        try {
+            ErrorCode errorCode = NumUtil.validateInteger(goodNumStr);
+            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+                msgModel.setCode(errorCode.getCode());
+                msgModel.setMessage(errorCode.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+            int goodNum =  Integer.parseInt(goodNumStr);
+            int goodType = Integer.parseInt(goodNumStr);
+            long orderId = Long.parseLong(orderIdStr);
+            BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
+            requestDto.setUserId(userId);
+            requestDto.setType(goodType);
+            requestDto.setNum(goodNum);
+            if(orderIdStr == null || orderId <1){
+                if(goodType == 1){
+                    orderService.buyEggFromPlatform(requestDto);
+                }else{
+                    orderService.buyDuckFromPlatform(requestDto);
+                }
+            }else{
+                requestDto.setOrderId(orderId);
+                orderService.buyGoodsFromOrder(requestDto);
+            }
+        }catch (BizException e){
+            msgModel.setCode(e.getErrCode());
+            msgModel.setMessage(e.getErrMessage());
+        }
+        response.setResult(msgModel);
+        return response;
+    }
+
     @RequestMapping(value = "/buyFood", method = RequestMethod.POST)
     @Auth
     public ApiResponse<MsgModel> buyFood(@RequestParam long userId,@RequestParam String foodStr){
@@ -94,5 +132,7 @@ public class OrderController {
         response.setResult(myOrderList);
         return response;
     }
+
+
 
 }

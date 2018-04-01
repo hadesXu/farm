@@ -4,6 +4,7 @@ import com.hades.farm.core.data.dto.resultDto.NoticeUserResultDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.data.entity.TNotice;
 import com.hades.farm.core.data.entity.TOrders;
+import com.hades.farm.core.data.entity.TPlatformWarehouse;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class OrderIndexModel {
     private List<OrderUserResultDto> allOrderList;
     private List<OrderUserResultDto> myOrderList;
     private List<NoticeUserResultDto> noticeList;
+    private TPlatformWarehouse platformWarehouse;
 
     public List<OrderUserResultDto> getAllOrderList() {
         return allOrderList;
@@ -37,5 +39,13 @@ public class OrderIndexModel {
 
     public void setNoticeList(List<NoticeUserResultDto> noticeList) {
         this.noticeList = noticeList;
+    }
+
+    public TPlatformWarehouse getPlatformWarehouse() {
+        return platformWarehouse;
+    }
+
+    public void setPlatformWarehouse(TPlatformWarehouse platformWarehouse) {
+        this.platformWarehouse = platformWarehouse;
     }
 }

@@ -462,12 +462,11 @@
                     <li style="color:#fff;">平台限量售出</li>
                     <li class="ptsc_li">选择类型：
                         <select name="xiangliang" id="xiangliang" onChange="shuliang()" style="width:51%;height:26px;border-radius:5px;">
-                            <option value="1">鸡</option>
-                            <option value="2">蛋</option>
-                            <option value="3">狗</option>
+                            <option value="2">鸭</option>
+                            <option value="1">蛋</option>
                         </select>
                     </li>
-                    <li class="ptsc_li">仓库剩余：<input type="text" name="shengyu" id="shengyu" value="2830" readonly style="border:none;background:none;font-size:18px;width:36%;"></li>
+                    <li class="ptsc_li">仓库剩余：<input type="text" name="shengyu" id="shengyu" value="0" readonly style="border:none;background:none;font-size:18px;width:36%;"></li>
                     <li>购买数量：<input type="number" name="gm_number" id="gm_number" onKeyUp="jisuan()" placeholder="购买数量" maxlength="4" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;font-size:18px;"></li>
                     <li class="ptsc_li">需&nbsp;&nbsp;支&nbsp;&nbsp;付：<input type="text" id="zf_caipiao" name="zf_caipiao" style="width:20%;background:none;border:none;text-align:center;font-size:18px;" readonly placeholder="0"> 菜票</li>
                     <li><input type="button" onClick="ptsc()" value="确定" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
@@ -545,14 +544,19 @@
         //时时计算价格
         var number3 = document.getElementById("gm_number").value;	//购买数量
         var farm_id = document.getElementById("xiangliang").value;
-        if (farm_id == 1) {
-            document.getElementById('zf_caipiao').value = accMul(number3, '2.30');//number3*'2.30'*100/100;
-        }
         if (farm_id == 2) {
-            document.getElementById('zf_caipiao').value = accMul(number3, '2.00');
+            if(number3>platDuckNum){
+                number3 = platDuckNum;
+                $("#gm_number").val(platDuckNum);
+            }
+            document.getElementById('zf_caipiao').value = accMul(number3, '2.40');//number3*'2.30'*100/100;
         }
-        if (farm_id == 3) {
-            document.getElementById('zf_caipiao').value = accMul(number3, '100.00');
+        if (farm_id == 1) {
+            if(number3>platEggNum){
+                number3 = platEggNum;
+                $("#gm_number").val(platEggNum);
+            }
+            document.getElementById('zf_caipiao').value = accMul(number3, '2.10');
         }
     }
     //乘法解决小数点问题
@@ -597,19 +601,17 @@
     function shuliang() {
         var xiangliang = document.getElementById("xiangliang").value; //类型
         jisuan(); //切换类型 更改价格
-        if (xiangliang == 1) {
-            document.getElementById('shengyu').value = '2830' * 100 / 100;
-        }
         if (xiangliang == 2) {
-            document.getElementById('shengyu').value = '4099' * 100 / 100;
+            document.getElementById('shengyu').value = platDuckNum * 100 / 100;
         }
-        if (xiangliang == 3) {
-            document.getElementById('shengyu').value = '0' * 100 / 100;
+        if (xiangliang == 1) {
+            document.getElementById('shengyu').value = platEggNum * 100 / 100;
         }
     }
     //平台售出
     function ptsc() {
         var gm_number = document.getElementById("gm_number").value;
+        var goodType = document.getElementById("xiangliang").value;
         if (gm_number < 10) {
             alert('购买不能小于10');
             return;
@@ -618,6 +620,27 @@
             alert("请输入购买数量！");
             document.getElementById("gm_number").focus();
             return false;
+        }
+        jsonTokenAjax("/api/order/buyGoods", "POST", {"goodNumStr":gm_number,"goodTypeStr":goodType,"orderIdStr":"-1"}, buyGoodsCallBack, errorback);
+
+        function buyGoodsCallBack(data){
+            var result = data.result;
+            if(result.code=='0000'){
+                //提示
+                layer.open({
+                    content: "购买成功"
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+                window.setTimeout("window.location='farm_jyq.htm'",1200);
+            } else{
+                //提示
+                layer.open({
+                    content: result.message
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+            }
         }
     }
     //卖出
@@ -672,6 +695,8 @@
     var myOrderPageSize = 3;
     var allOrderOffSet = 0;
     var myOrderOffSet = 0;
+    platEggNum = 0;
+    platDuckNum = 0;
     function moreAllOrder(){
         jsonTokenAjax("/api/order/queryAllOrderList", "POST", {"offSet":allOrderOffSet,"pageSize":allOrderPageSize}, moreAllOrderCallBack, errorback);
     }
@@ -705,6 +730,10 @@
             createAllOrderHtml(allOrderList);
             createMyOrderHtml(myOrderList);
             createNoticeHtml(noticeList);
+            console.log(result);
+            platEggNum = result.platformWarehouse.eggNum;
+            platDuckNum = result.platformWarehouse.duckNum;
+            shuliang();
         }
     }
     function createMyOrderHtml(myOrderList){
