@@ -436,13 +436,12 @@
                     <li style="color:#fff;">售出</li>
                     <li class="ptsc_li">选择类型：
                         <select name="leixing" id="leixing" onChange="sl()" style="width:50%;height:26px;border-radius:5px;">
-                            <option value="1">鸡</option>
-                            <option value="2">蛋</option>
-                            <option value="3">狗</option>
+                            <option value="2">鸭</option>
+                            <option value="1">蛋</option>
                         </select>
                     </li>
-                    <li class="ptsc_li">鸡：<input type="text" name="cksy" id="cksy" value="0" style="border:none;background:none;font-size:18px;width:36%;"></li>
-                    <li class="ptsc_li">蛋：<input type="text" name="" id="" value="0" style="border:none;background:none;font-size:18px;width:36%;"></li>
+                    <li class="ptsc_li">鸭：<input type="text" name="duckNum" id="duckNum" value="0" style="border:none;background:none;font-size:18px;width:36%;"></li>
+                    <li class="ptsc_li">蛋：<input type="text" name="eggNum" id="eggNum" value="0" style="border:none;background:none;font-size:18px;width:36%;"></li>
                     <li class="ptsc_li">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：<input type="number" name="number" id="number" placeholder="售出数量(最高200)" maxlength="4" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;"></li>
                     <li><input type="button" onClick="mc()" value="确定" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
                 </ul>
@@ -513,7 +512,7 @@
                 <ul>
                     <li style="color:#fff;">平台限量售出</li>
                     <li class="ptsc_li">选择类型：<select name="gm_sllx" id="gm_sllx" style="width:51%;height:26px;border-radius:5px;">
-                        <option value="4">鸡粮</option>
+                        <option value="4">鸭粮</option>
                         <!-- <option value="5" >狗粮</option> -->
                     </select>
                         <input type="hidden" id="timess" name="timess" value="">
@@ -573,7 +572,8 @@
         return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
     }
     function buyOrder(orderId){
-        alert(orderId);
+        //buyGoodsFromOrder
+        jsonTokenAjax("/api/order/buyGoods", "POST", {"goodNumStr":0,"goodTypeStr":0,"orderIdStr":orderId}, buyGoodsCallBack, errorback);
     }
     // 行id 数量 用户 类型
     function mr(id, mcnumber, farm_id) {
@@ -646,8 +646,9 @@
     //卖出
     function mc() {
         var a = document.getElementById("leixing").value;
-        var b = document.getElementById("cksy").value;
-        var c = document.getElementById("number").value;
+        var duckNum = document.getElementById("duckNum").value;
+        var eggNum = document.getElementById("eggNum").value;
+        var c = $("#number").val();
         if (c < 10) {
             alert('售出不能小于10');
             return;
@@ -656,6 +657,43 @@
             alert("请输入售出数量！");
             document.getElementById("number").focus();
             return false;
+        }
+        if(a == '1'){ //蛋
+           if(c>eggNum){
+               $("#number").val(0);
+               alert("您要卖出的数量超过您拥有的数量");
+               document.getElementById("number").focus();
+               return false;
+           }
+        }else{ //鸭
+            if(c>duckNum){
+                $("#number").val(0);
+                alert("您要卖出的数量超过您拥有的数量");
+                document.getElementById("number").focus();
+                return false;
+            }
+        }
+        //调用卖出接口
+
+        jsonTokenAjax("/api/order/sellGoods", "POST", {"goodNumStr":c,"goodTypeStr":a}, sellGoodsCallback, errorback);
+        function sellGoodsCallback(data){
+            var result = data.result;
+            if(result.code=='0000'){
+                //提示
+                layer.open({
+                    content: "成功发布卖单"
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+                window.setTimeout("window.location='farm_jyq.htm'",1200);
+            } else{
+                //提示
+                layer.open({
+                    content: result.message
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+            }
         }
         //alert($("#mc").serialize());//console.log(data.farm_jis); 打印文本 submit 会跳转页面
     }
@@ -733,6 +771,8 @@
             console.log(result);
             platEggNum = result.platformWarehouse.eggNum;
             platDuckNum = result.platformWarehouse.duckNum;
+            $("#duckNum").val(result.duckNum);
+            $("#eggNum").val(result.eggNum);
             shuliang();
         }
     }

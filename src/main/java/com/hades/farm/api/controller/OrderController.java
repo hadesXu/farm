@@ -5,6 +5,7 @@ import com.hades.farm.api.view.response.MsgModel;
 import com.hades.farm.api.view.response.OrderIndexModel;
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
+import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.OrderQueryService;
@@ -33,6 +34,36 @@ public class OrderController {
     @Autowired
     private OrderQueryService orderQueryService;
 
+    @RequestMapping(value = "/sellGoods", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<MsgModel> sellGoods(@RequestParam long userId,@RequestParam String goodNumStr,@RequestParam String goodTypeStr){
+        ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        try {
+
+            ErrorCode errorCode = NumUtil.validateInteger(goodNumStr);
+            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+                msgModel.setCode(errorCode.getCode());
+                msgModel.setMessage(errorCode.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+            int goodNum =  Integer.parseInt(goodNumStr);
+            int goodType = Integer.parseInt(goodTypeStr);
+            PublishOrderRequestDto requestDto = new PublishOrderRequestDto();
+            requestDto.setUserId(userId);
+            requestDto.setNum(goodNum);
+            requestDto.setType(goodType);
+            orderService.publishOrders(requestDto);
+        }catch (BizException e){
+            msgModel.setCode(e.getErrCode());
+            msgModel.setMessage(e.getErrMessage());
+        }
+
+        response.setResult(msgModel);
+        return response;
+    }
+
     @RequestMapping(value = "/buyGoods", method = RequestMethod.POST)
     @Auth
     public ApiResponse<MsgModel> buyGoods (@RequestParam long userId,@RequestParam String goodNumStr,@RequestParam String goodTypeStr,@RequestParam String orderIdStr){
@@ -47,7 +78,7 @@ public class OrderController {
                 return response;
             }
             int goodNum =  Integer.parseInt(goodNumStr);
-            int goodType = Integer.parseInt(goodNumStr);
+            int goodType = Integer.parseInt(goodTypeStr);
             long orderId = Long.parseLong(orderIdStr);
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
             requestDto.setUserId(userId);
@@ -56,8 +87,13 @@ public class OrderController {
             if(orderIdStr == null || orderId <1){
                 if(goodType == 1){
                     orderService.buyEggFromPlatform(requestDto);
-                }else{
+                }else if(goodType == 2){
                     orderService.buyDuckFromPlatform(requestDto);
+                }else{
+                    msgModel.setCode(ErrorCode.GOOD_TYPE_ERROR.getCode());
+                    msgModel.setMessage(ErrorCode.GOOD_TYPE_ERROR.getMessage());
+                    response.setResult(msgModel);
+                    return response;
                 }
             }else{
                 requestDto.setOrderId(orderId);

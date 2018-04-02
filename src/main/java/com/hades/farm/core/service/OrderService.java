@@ -26,18 +26,4 @@ public interface OrderService {
 
     boolean publishOrders(PublishOrderRequestDto requestDto) throws BizException;
 
-    /**
-     * 获取未返现订单
-     *
-     * @return
-     */
-    List<TOrders> getUnCachBack();
-
-    /**
-     * 更新订单状态
-     *
-     * @param orderId
-     * @return
-     */
-    Result<Void> updateCachBackState(long orderId);
 }

@@ -16,6 +16,10 @@ public class OrderIndexModel {
     private List<OrderUserResultDto> myOrderList;
     private List<NoticeUserResultDto> noticeList;
     private TPlatformWarehouse platformWarehouse;
+    //可出售的商品鸭数量
+    private int duckNum;
+    //可出售的商品蛋数量
+    private int eggNum;
 
     public List<OrderUserResultDto> getAllOrderList() {
         return allOrderList;
@@ -47,5 +51,21 @@ public class OrderIndexModel {
 
     public void setPlatformWarehouse(TPlatformWarehouse platformWarehouse) {
         this.platformWarehouse = platformWarehouse;
+    }
+
+    public int getDuckNum() {
+        return duckNum;
+    }
+
+    public void setDuckNum(int duckNum) {
+        this.duckNum = duckNum;
+    }
+
+    public int getEggNum() {
+        return eggNum;
+    }
+
+    public void setEggNum(int eggNum) {
+        this.eggNum = eggNum;
     }
 }

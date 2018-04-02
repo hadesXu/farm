@@ -3,11 +3,11 @@ package com.hades.farm.core.service.impl;
 import com.hades.farm.api.view.response.OrderIndexModel;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
+import com.hades.farm.core.data.entity.TDuckWarehouse;
+import com.hades.farm.core.data.entity.TEggWarehouse;
 import com.hades.farm.core.data.entity.TOrders;
 import com.hades.farm.core.data.entity.TPlatformWarehouse;
-import com.hades.farm.core.data.mapper.TNoticeMapper;
-import com.hades.farm.core.data.mapper.TOrdersMapper;
-import com.hades.farm.core.data.mapper.TPlatformWarehouseMapper;
+import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.service.OrderQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
     @Autowired
     private TPlatformWarehouseMapper tPlatformWarehouseMapper;
+    @Autowired
+    private TDuckWarehouseMapper tDuckWarehouseMapper;
+    @Autowired
+    private TEggWarehouseMapper tEggWarehouseMapper;
 
     @Override
     public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto){
@@ -50,6 +54,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         orderIndexModel.setNoticeList(tNoticeMapper.queryNoticeWithUser(null, 5));
         TPlatformWarehouse platformWarehouse = tPlatformWarehouseMapper.queryPlatformWarehouse();
         orderIndexModel.setPlatformWarehouse(platformWarehouse);
+        //查询商品鸭商品蛋的数量
+        TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(userId);
+        TEggWarehouse eggWarehouse  = tEggWarehouseMapper.selectByUserId(userId);
+        orderIndexModel.setDuckNum(eggWarehouse==null?0:eggWarehouse.getDuck());
+        orderIndexModel.setEggNum(duckWarehouse==null?0:duckWarehouse.getEgg());
         return orderIndexModel;
     }
 }

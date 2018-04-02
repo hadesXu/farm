@@ -59,9 +59,5 @@ public interface TOrdersMapper {
 
     int updateOrderOfBuy(BuyGoodsRequestDto requestDto);
 
-    List<TOrders> getUnCachBack();
-
-    int updateCashBack(long orderId);
-
     List<OrderUserResultDto> queryOrderListByCondition(OrderQueryRequestDto requestDto);
 }

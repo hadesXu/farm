@@ -515,7 +515,6 @@ public class OrderServiceImpl implements OrderService {
         orders.setStatus(1);
         orders.setAddTime(new Date());
         orders.setUpdateTime(new Date());
-        orders.setIfCashback(2);
         updateCount = tOrdersMapper.insertSelective(orders);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
@@ -609,22 +608,4 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
-    @Override
-    public List<TOrders> getUnCachBack() {
-        List<TOrders> tOrdersList = tOrdersMapper.getUnCachBack();
-        if (CollectionUtils.isNotEmpty(tOrdersList)) {
-            return tOrdersList;
-        }
-        return null;
-    }
-
-    @Override
-    public Result<Void> updateCachBackState(long orderId) {
-        Result<Void> result = Result.newResult();
-        int uRes = tOrdersMapper.updateCashBack(orderId);
-        if (uRes == Constant.NUMBER_ZERO) {
-            result.addError(ErrorCode.UPDATE_ERR);
-        }
-        return result;
-    }
 }
