@@ -474,7 +474,7 @@
         </form>
     </div>
 </div>
-<div class="popup-box2">
+<div class="popup-box2" id="popup-box2">
     <div class="popup popupimg" style=" position:relative;">
         <div class="close close-x"></div>
         <div class="tab-btn">
@@ -494,6 +494,7 @@
                     <li style="margin-left:9%;text-align:left;">需&nbsp;&nbsp;支&nbsp;&nbsp;付：<input type="text" id="caipiao" name="caipiao" style="width:20%;background:none;border:none;text-align:center;font-size:18px;" placeholder="0"> 菜票</li>
                     <li><input type="button" name="number" onClick="mairu()" value="立即支付"
                                style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;">
+                        <input type="hidden" id="buyOrderId"/>
                     </li>
                 </ul>
             </div>
@@ -502,7 +503,7 @@
 </div>
 <div class="popup-box3">
     <div class="popup popupimg" style=" position:relative;">
-        <div class="close close-x"></div>
+        <div class="close close-x" ></div>
         <div class="tab-btn">
             <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0"
                   data-target="#StoreControl_tab_conter01"></span>
@@ -571,10 +572,30 @@
         }
         return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
     }
-    function buyOrder(orderId){
+    function buyOrder(orderId,num,type){
         //buyGoodsFromOrder
+        $("#mrnumber").val(num);
+        $("#mcnumber").val(num);
+        var caipiao = 1;
+        if(type=='1'){
+            caipiao = num*2.1;
+        }else{
+            caipiao = num*2.4;
+        }
+        $("#caipiao").val(caipiao);
+        $("#popup-box2").show();
+        $("#buyOrderId").val(orderId);
+        //
+    }
+    //排队买入区买入弹窗
+    function mairu() {
+        orderId = $("#buyOrderId").val();
+
         jsonTokenAjax("/api/order/buyGoods", "POST", {"goodNumStr":0,"goodTypeStr":0,"orderIdStr":orderId}, buyGoodsCallBack, errorback);
     }
+    $(".close").click(function(){
+        $(".popup-box2").hide();
+    });
     // 行id 数量 用户 类型
     function mr(id, mcnumber, farm_id) {
         document.getElementById("farm_id").value = farm_id; //类型
@@ -623,24 +644,24 @@
         }
         jsonTokenAjax("/api/order/buyGoods", "POST", {"goodNumStr":gm_number,"goodTypeStr":goodType,"orderIdStr":"-1"}, buyGoodsCallBack, errorback);
 
-        function buyGoodsCallBack(data){
-            var result = data.result;
-            if(result.code=='0000'){
-                //提示
-                layer.open({
-                    content: "购买成功"
-                    ,skin: 'msg'
-                    ,time: 1 //2秒后自动关闭
-                });
-                window.setTimeout("window.location='farm_jyq.htm'",1200);
-            } else{
-                //提示
-                layer.open({
-                    content: result.message
-                    ,skin: 'msg'
-                    ,time: 1 //2秒后自动关闭
-                });
-            }
+    }
+    function buyGoodsCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "购买成功"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_jyq.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
         }
     }
     //卖出
@@ -697,14 +718,7 @@
         }
         //alert($("#mc").serialize());//console.log(data.farm_jis); 打印文本 submit 会跳转页面
     }
-    //排队买入区买入弹窗
-    function mairu() {
-        if (document.getElementById("mrnumber").value < 1) {
-            alert("请输入购买数量");
-            document.getElementById("mrnumber").focus();
-            return false;
-        }
-    }
+
     //饲料价格
     function sljisuan() {
         var number3 = document.getElementById("sl_number").value;	//购买数量
@@ -828,7 +842,7 @@
                 allOrderHtml = allOrderHtml + '<li style="width:15%;line-height:17px;">'+addTimeStr+'<br>'+ typeStr+'</li>';
                 allOrderHtml = allOrderHtml + '<li style="width:15%">'+value.num+'</li>';
                 if(value.status == 1){
-                    allOrderHtml = allOrderHtml + '<li style="width:15%"><span class="jjsh up-box2" onClick="buyOrder('+value.orderId+')">买入</span></li></ul>';
+                    allOrderHtml = allOrderHtml + '<li style="width:15%"><span class="jjsh up-box2" onClick="buyOrder('+value.orderId+','+value.num+','+value.type+')">买入</span></li></ul>';
                 }else{
                     allOrderHtml = allOrderHtml + '<li style="width:15%"><span class="ddcj" >已售出</span></li></ul>';
                 }

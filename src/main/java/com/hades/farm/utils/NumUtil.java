@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class NumUtil {
     public static final String TWO_DECIMAL_REG = "^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$";
 
-    public static final String INTEGER_REG="^[1-9]+[0-9]*$";
+    public static final String INTEGER_REG="^[0-9]+[0-9]*$";
     /**
      * 校验两位小数
      * @param str

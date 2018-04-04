@@ -341,9 +341,11 @@ public class OrderServiceImpl implements OrderService {
         if (requestDto.getUserId() == order.getUserId()) {
             throw new BizException(ErrorCode.NO_BUY_SELF_ORDER);
         }
-        if (requestDto.getNum() != order.getNum()) {
+        requestDto.setNum(order.getNum());
+        requestDto.setType(order.getType());
+        /*if (requestDto.getNum() != order.getNum()) {
             throw new BizException(ErrorCode.BUY_ALLOF_ORDER);
-        }
+        }*/
         //更新t_orders
         updateCount = tOrdersMapper.updateOrderOfBuy(requestDto);
         if (updateCount != 1) {

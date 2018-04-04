@@ -29,9 +29,9 @@ public class AmountUtil {
             profit = profit.divide(new BigDecimal(Constant.PRODUCE_EGGS)).setScale(5, BigDecimal.ROUND_HALF_DOWN);//除以总共生产的蛋的数量得到单个利润(不考虑死掉的)
             profit = profit.multiply(new BigDecimal(num)).setScale(2,BigDecimal.ROUND_HALF_DOWN);
         }else if(type == GoodsType.DUCK.getType()){
-            profit = Constant.DUCK_PRICE.subtract(Constant.DUCK_PRICE);//总收入
-            profit = profit.subtract(Constant.DUCK_PRICE.multiply(Constant.SELL_DUCK_RATE));//减手续费
-            profit = profit.multiply(new BigDecimal(num)).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+            profit = Constant.DUCK_PRICE.multiply(new BigDecimal(num));//总收入
+            profit = profit.multiply(new BigDecimal("1").subtract(Constant.SELL_DUCK_RATE));//减手续费
+            profit = profit.subtract(new BigDecimal(num).multiply(Constant.EGG_PRICE)).setScale(2,BigDecimal.ROUND_DOWN);
         }
         return profit;
     }
