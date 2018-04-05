@@ -734,10 +734,41 @@
     }
     //购买饲料
     function gmsl() {
-        if (document.getElementById('sl_number').value == '') {
-            alert("请正确输入购买数量！");
-            document.getElementById('sl_number').focus();
-            return false;
+        var number3=document.getElementById("sl_number").value;
+        if(number3==''){
+            layer.open({
+                content:'请输入您要购买的数量'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });return;
+        }else{
+            if(!/^\d+?$/.test(number3)){
+                layer.open({
+                    content:'请输入正整数'
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });return;
+            }
+        }
+        jsonTokenAjax("/api/order/buyFood", "POST", {foodStr:number3}, buyFoodCallBack, errorback);
+    }
+    function buyFoodCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "购买成功"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_jyq.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
         }
     }
 </script>
@@ -760,6 +791,10 @@
             var result = data.result;
             var allOrderList = result;
             createAllOrderHtml(allOrderList);
+            if(allOrderList.length == 0){
+                alert("没有更多");
+                allOrderOffSet = 0;
+            }
         }
     }
     function moreMyOrderCallBack (data){
@@ -767,6 +802,10 @@
             var result = data.result;
             var myOrderList = result;
             createMyOrderHtml(myOrderList);
+            if(myOrderList.length == 0){
+                alert("没有更多");
+                myOrderOffSet = 0;
+            }
         }
     }
 

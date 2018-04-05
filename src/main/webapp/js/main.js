@@ -4,7 +4,7 @@ var userId = localStorage.getItem("userId");
 var serverUrl = "http://127.0.0.1:8098";
 //校验登录
 function checkLogin() {
-    if (checkNull(userId) || checkNull(token)) {
+    if (checkNull(userId) || checkNull(token) || userId<1) {
         location.href = "v_user-login.htm"
     }
 }
@@ -107,10 +107,10 @@ function GetRequest() {
 }
 
 function callBackError(data) {
-    alert(data.error.message)
     if (data.error.code == "1006") {
         location.href = "v_user-login.htm"
     }
+    alert(data.error.message);
 }
 
 function setUser(data) {

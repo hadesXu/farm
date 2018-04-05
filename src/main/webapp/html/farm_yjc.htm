@@ -21,11 +21,7 @@
 
 	<link href="../css/ygc.css" rel="stylesheet">
     <script type="text/javascript" src="../js/main.js"></script>
-    <script language="javascript">
-        $(function () {
-            checkLogin();
-        });
-    </script>
+
 </head>
 
 <body style="overflow-y: auto;">
@@ -1024,8 +1020,8 @@
 </script>
 <script src="../js/main.js" tppabs="javascript:;"></script>
 <script language="javascript">
-
     $(function () {
+        checkLogin();
         jsonTokenAjax("/api/farm/yjcInfo", "GET", {}, callBack, errorback);
     });
     var ifSteal = 2;//否
@@ -1050,11 +1046,11 @@
 
         }
     }
-    function errorback(msg) {
-        if(msg.status=="0"){
-            window.location.href="user-1.htm?backurl=farm_yjc.htm";
+    function errorback(data) {
+        if (data.error.code == "1006") {
+            location.href = "v_user-login.htm"
         }
-        alert('error:' + JSON.stringify(msg));
+        alert('error:' + JSON.stringify(data));
     }
 
     function stealDuck(){
@@ -1087,31 +1083,25 @@
                 });return;
             }
         }
-        jsonTokenAjax("/api/order/buyFood", "POST", {foodStr:number3}, buyFoodCallBack, buyFoodErrorback);
-        function buyFoodCallBack(data){
-            var result = data.result;
-            if(result.code=='0000'){
-                //提示
-                layer.open({
-                    content: "购买成功"
-                    ,skin: 'msg'
-                    ,time: 1 //2秒后自动关闭
-                });
-                window.setTimeout("window.location='farm_yjc.htm'",1200);
-            } else{
-                //提示
-                layer.open({
-                    content: result.message
-                    ,skin: 'msg'
-                    ,time: 1 //2秒后自动关闭
-                });
-            }
-        }
-        function buyFoodErrorback(msg){
-            if(msg.status=="0"){
-                window.location.href="user-1.htm?backurl=farm_yjc.htm";
-            }
-            alert('error:' + JSON.stringify(msg));
+        jsonTokenAjax("/api/order/buyFood", "POST", {foodStr:number3}, buyFoodCallBack, errorback);
+    }
+    function buyFoodCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "购买成功"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_yjc.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
         }
     }
 
