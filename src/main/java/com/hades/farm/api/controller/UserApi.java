@@ -50,9 +50,11 @@ public class UserApi {
     }
 
     @RequestMapping(value = "/login/weChat", method = RequestMethod.GET)
-    public ApiResponse<UserModel> login(@RequestParam(required = false, defaultValue = "0") String wechat) {
+    public ApiResponse<UserModel> loginWeChat(@RequestParam(required = false, defaultValue = "") String wechat,
+                                              @RequestParam(required = false, defaultValue = "") String name,
+                                              @RequestParam(required = false, defaultValue = "") String imgUrl) {
         ApiResponse<UserModel> response = new ApiResponse<>();
-        Result<User> loginRes = userService.login(wechat);
+        Result<User> loginRes = userService.login(wechat, name, imgUrl);
         if (!loginRes.isSuccess()) {
             response.addError(loginRes.getErrorCodes());
             return response;

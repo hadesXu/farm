@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我爱微集市</title>
+    <script type="text/javascript" src="../js/jquery.js" tppabs="javaScript:;"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            jsonAjax("/api/weChat/config", "GET", callBack, errorback);
+        });
+        function callBack(data) {
+            if (data.status == 1) {
+                appAuthorize(data.result.appId, data.result.redirectUri);
+            } else {
+                alert(data.error.message);
+            }
+        }
+        function errorback(msg) {
+            alert('error:' + JSON.stringify(msg));
+        }
+        function appAuthorize(appid, redirectUri) {
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + redirectUri +
+                '&response_type=code&scope=snsapi_userinfo&state=personInfo#wechat_redirect';
+            /* scope参数中的snsapi_base和snsapi_userinfo
+             由于授权操作安全等级较高，所以在发起授权请求时，微信会对授权链接做正则强匹配校验，如果链接的参数顺序不对，授权页面将无法正常访问  */
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

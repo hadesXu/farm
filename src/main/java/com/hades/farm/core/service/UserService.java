@@ -32,7 +32,7 @@ public interface UserService {
      * @param wechat
      * @return
      */
-    Result<User> login(String wechat);
+    Result<User> login(String wechat, String name, String imgUrl);
 
     /**
      * 自动登录

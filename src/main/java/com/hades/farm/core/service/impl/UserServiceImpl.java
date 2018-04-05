@@ -66,13 +66,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<User> login(String wechat) {
+    public Result<User> login(String wechat, String name, String imgUrl) {
         Result<User> result = Result.newResult();
         User user = userMapper.getUserByWeChat(wechat);
         if (user == null) {
             result.addError(ErrorCode.USER_NOT_EXIST);
             return result;
         }
+        userMapper.updateNameAndImgUrl(user.getId(), name, imgUrl);
+        user.setImgUrl(imgUrl);
+        user.setName(name);
+        result.setData(user);
         return result;
     }
 
@@ -172,22 +176,27 @@ public class UserServiceImpl implements UserService {
                         user.setGroupBossId(parentUser.getGroupBossId());
                     }
                 }
-                if (parentUser.getParentId() != Constant.DEFAULT_ID) {
-                    user.setParents(user.getParents() + "," + parentUser.getParentId());
-                }
-                parentUser = userMapper.getUserById(parentUser.getParentId());
-                if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                if (parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                     user.setParents(user.getParents() + "," + parentUser.getParentId());
                     parentUser = userMapper.getUserById(parentUser.getParentId());
                     if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                         user.setParents(user.getParents() + "," + parentUser.getParentId());
+                        parentUser = userMapper.getUserById(parentUser.getParentId());
+                        if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                            user.setParents(user.getParents() + "," + parentUser.getParentId());
+                        }
                     }
                 }
             }
         }
         user.setWechat(request.getWechat());
         user.setTelephone(request.getPhone());
-        user.setName(NickUtil.randomNick());
+        if (request.getName() != null) {
+            user.setName(request.getName());
+        } else {
+            user.setName(NickUtil.randomNick());
+        }
+        user.setImgUrl(request.getImgUrl());
         return user;
     }
 

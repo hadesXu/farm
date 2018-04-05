@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我爱微集市</title>
+    <script type="text/javascript" src="../js/jquery.js" tppabs="javaScript:;"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript">
+        var theRequest = GetRequest();
+        var wechat = theRequest.openId;
+        var name = theRequest.nickName;
+        var imgUrl = theRequest.headImgUrl;
+        $(function () {
+            jsonAjax("/api/user/login/weChat?wechat=" + wechat + "&name=" + name + "&imgUrl=" + imgUrl, "GET", callBack, errorback);
+        });
+
+        function callBack(data) {
+            if (data.status == 1) {
+                localStorage.clear();
+                localStorage.setItem("userId", data.result.userId);
+                localStorage.setItem("nickName", data.result.nick);
+                localStorage.setItem("token", decodeURIComponent(data.result.token));
+                localStorage.setItem("phone", data.result.phone);
+                location.href = "index.html"
+            } else {
+                localStorage.clear();
+                localStorage.setItem("wechat", wechat);
+                localStorage.setItem("name", name);
+                localStorage.setItem("imgUrl", imgUrl);
+                location.href = "register.php.htm"
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

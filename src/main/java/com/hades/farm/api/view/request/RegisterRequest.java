@@ -31,6 +31,16 @@ public class RegisterRequest {
     private String wechat;
 
     /**
+     * 昵称
+     */
+    private String name;
+
+    /**
+     * 图片
+     */
+    private String imgUrl;
+
+    /**
      * 父ID
      */
     private Long parentId;
@@ -73,5 +83,21 @@ public class RegisterRequest {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

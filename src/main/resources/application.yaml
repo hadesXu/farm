@@ -33,13 +33,12 @@ mybatis:
   configLocation: classpath:mybatis/mybatis.xml
   mapperLocations: classpath:mybatis/sql/*.xml
 
-emchat:
-  schema: https
-  host: a1.easemob.com
-  password: 123456
-  appkey: pingke#yungo-test
-  clientId: YXA6Rc6j0Hz5EeanSeU_LEl1aQ
-  secret: YXA6NuO-NjzTOgXe444wxLbgAtZG6Vg
+wechat:
+  appId: wx91d44661b7c82f7d
+  appSecret: 45bd3a8f81fde7d645fbd8d45a6699fd
+  authUrl: https://open.weixin.qq.com/connect/oauth2/authorize
+  redirectUri: http://api.chirs.top/api/weChat/callback
+  serverUrl: http://app.chirs.top/
 
 server:
   port: 8098

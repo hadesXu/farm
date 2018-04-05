@@ -88,6 +88,13 @@
         WHERE id = #{userId,jdbcType=BIGINT}
     </update>
 
+    <update id="updateNameAndImgUrl">
+        UPDATE t_user
+        SET name =#{name},
+       img_url= #{imgUrl}
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
     <select id="getApprentice" resultMap="user">
         SELECT
         <include refid="user_columns"></include>

@@ -28,6 +28,9 @@ public interface UserMapper {
 
     int updatePwd(@Param("userId") long userId, @Param("pwd") String pwd);
 
+
+    int updateNameAndImgUrl(@Param("userId") long userId, @Param("name") String name, @Param("imgUrl") String imgUrl);
+
     /**
      * 获取徒弟
      *
