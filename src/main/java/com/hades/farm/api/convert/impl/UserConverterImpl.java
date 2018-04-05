@@ -5,8 +5,10 @@ import com.hades.farm.api.view.response.UserModel;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.result.Result;
+import com.hades.farm.web.config.WeChatConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -21,6 +23,8 @@ public class UserConverterImpl implements UserConverter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private TokenManager tokenManager;
+    @Autowired
+    private WeChatConfig weChatConfig;
 
     @Override
     public UserModel convert(User user, boolean newToken) {
@@ -29,6 +33,8 @@ public class UserConverterImpl implements UserConverter {
         userModel.setPhone(user.getTelephone());
         userModel.setFace(user.getImgUrl());
         userModel.setNick(user.getName());
+        userModel.setParentId(user.getParentId());
+        userModel.setShareUrl(weChatConfig.getServerUrl() + "index.html?source=" + user.getId());
         if (newToken) {
             Result<String> tokenRes = tokenManager.generateToken(user.getId(), true);
             if (tokenRes.isSuccess()) {

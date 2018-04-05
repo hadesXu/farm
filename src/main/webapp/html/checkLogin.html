@@ -16,14 +16,8 @@
 
         function callBack(data) {
             if (data.status == 1) {
-                localStorage.clear();
-                localStorage.setItem("userId", data.result.userId);
-                localStorage.setItem("nickName", data.result.nick);
-                localStorage.setItem("token", decodeURIComponent(data.result.token));
-                localStorage.setItem("phone", data.result.phone);
-                location.href = "index.html"
+                setUser(data);
             } else {
-                localStorage.clear();
                 localStorage.setItem("wechat", wechat);
                 localStorage.setItem("name", name);
                 localStorage.setItem("imgUrl", imgUrl);

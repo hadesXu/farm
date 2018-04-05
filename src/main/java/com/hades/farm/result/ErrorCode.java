@@ -13,6 +13,7 @@ public enum ErrorCode {
     ARGUMENTS_NULL(1004, "参数不能为空"),
     GOOD_TYPE_ERROR(1005, "物品类型错误"),
     ARGUMENTS_ERROR(1005, "参数错误"),
+    NO_LOGIN(1006, "当前用户登录异常,请重新登录"),
 
 
     EGG_NO_ENOUGH(2000, "鸭蛋数量不足"),

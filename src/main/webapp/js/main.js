@@ -71,7 +71,7 @@ function mergeJsonObject(jsonbject1, jsonbject2) {
     return resultJsonObject;
 };
 function checkNull(object) {
-    return object == null || object == undefined || object == '';
+    return object == null || object == undefined || object == '' || object == "undefined";
 }
 
 function randomString(len) {
@@ -86,11 +86,11 @@ function randomString(len) {
 }
 
 function errorback(msg) {
+    alert('error:' + JSON.stringify(msg));
     if (msg.status == "0") {
         localStorage.clear();
         checkLogin();
     }
-    //alert('error:' + JSON.stringify(msg));
 }
 
 function GetRequest() {
@@ -104,6 +104,26 @@ function GetRequest() {
         }
     }
     return theRequest;
+}
+
+function callBackError(data) {
+    alert(data.error.message)
+    if (data.error.code) {
+        location.href = "v_user-login.htm"
+    }
+}
+
+function setUser(data) {
+    localStorage.clear();
+    localStorage.setItem("userId", data.result.userId);
+    localStorage.setItem("nickName", data.result.nick);
+    localStorage.setItem("token", decodeURIComponent(data.result.token));
+    localStorage.setItem("phone", data.result.phone);
+    localStorage.setItem("face", data.result.face);
+    localStorage.setItem("shareUrl", data.result.shareUrl);
+    localStorage.setItem("parentId", data.result.parentId);
+    location.href = "index.html"
+
 }
 
 

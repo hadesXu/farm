@@ -27,6 +27,16 @@ public class UserModel {
      */
     private String token;
 
+    /**
+     * 分享的URL
+     */
+    private String shareUrl;
+
+    /**
+     * 父ID
+     */
+    private Long parentId;
+
     public long getUserId() {
         return userId;
     }
@@ -65,5 +75,21 @@ public class UserModel {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }
