@@ -3,8 +3,12 @@ package com.hades.farm.api.controller;
 import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.request.RegisterRequest;
+import com.hades.farm.api.view.response.HomeInfoModel;
+import com.hades.farm.core.data.entity.TAccountIntegral;
+import com.hades.farm.core.data.entity.TAccountTicket;
 import com.hades.farm.core.data.entity.TNotice;
 import com.hades.farm.core.data.entity.User;
+import com.hades.farm.core.service.AccountService;
 import com.hades.farm.core.service.NoticeService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.result.Result;
@@ -28,6 +32,8 @@ public class UserApi {
     private NoticeService noticeService;
     @Resource
     private UserConverter userConverter;
+    @Resource
+    private AccountService accountService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ApiResponse<UserModel> login(RegisterRequest request) {
@@ -94,6 +100,18 @@ public class UserApi {
         return response;
     }
 
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ApiResponse<UserModel> get(@RequestParam(required = false, defaultValue = "0") long userId) {
+        ApiResponse<UserModel> response = new ApiResponse<>();
+        Result<User> loginRes = userService.get(userId);
+        if (!loginRes.isSuccess()) {
+            response.addError(loginRes.getErrorCodes());
+            return response;
+        }
+        response.setResult(userConverter.convert(loginRes.getData(), false));
+        return response;
+    }
+
     @RequestMapping(value = "/notice", method = RequestMethod.GET)
     @Auth
     public ApiResponse getNotice(@RequestParam long userId,
@@ -121,6 +139,27 @@ public class UserApi {
             return response;
         }
         response.setResult(result.getData());
+        return response;
+    }
+
+    @RequestMapping(value = "/home/info", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse getBreedNotice(@RequestParam long userId) {
+        ApiResponse response = new ApiResponse<>();
+        HomeInfoModel infoModel = new HomeInfoModel();
+        Result<TAccountTicket> result = accountService.getAccount(userId);
+        if (!result.isSuccess()) {
+            response.setResult(infoModel);
+            return response;
+        }
+        Result<TAccountIntegral> integralResult = accountService.getAccountIntegral(userId);
+        if (!integralResult.isSuccess()) {
+            response.setResult(infoModel);
+            return response;
+        }
+        infoModel.setBalance(result.getData().getBalance());
+        infoModel.setIntegral(integralResult.getData().getBalance());
+        response.setResult(infoModel);
         return response;
     }
 }

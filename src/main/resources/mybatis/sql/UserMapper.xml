@@ -30,7 +30,7 @@
     </sql>
 
     <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"
-            keyProperty="userId">
+            keyProperty="id">
         insert into t_user ( id,telephone,name,password,wechat,parent_id,parents,grade,is_trainee,
         s_egg,s_duck, active,img_url,qr_code,add_time,update_time)
         values (#{id},#{telephone},#{name},#{password},#{wechat},#{parentId},#{parents},#{grade},#{isTrainee},

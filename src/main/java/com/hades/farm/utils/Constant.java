@@ -13,7 +13,6 @@ public class Constant {
     public static final int NUMBER_ONE = 1;//数字1
     public static final int NUMBER_TWO = 2;//数字2
 
-
     //菜票对人民币倍数
     public static final int TICKET_CNY = 1;
     //最少购买蛋的数量

@@ -130,6 +130,7 @@
         <include refid="Base_Column_List"></include>
         FROM `t_notice`
         WHERE user_id = #{userId,jdbcType=BIGINT}
+        ORDER BY  add_time DESC
         LIMIT #{offset}, #{size}
     </select>
 
@@ -139,6 +140,7 @@
         FROM `t_notice`
         WHERE user_id = #{userId,jdbcType=BIGINT}
         and `type` in(10,11,12,13,14,15)
+        ORDER BY  add_time DESC
         LIMIT #{offset}, #{size}
     </select>
 

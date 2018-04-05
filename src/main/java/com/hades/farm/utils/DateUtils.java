@@ -20,14 +20,14 @@ public class DateUtils {
     public static ThreadLocal<DateFormat> YYYY_MM_DD = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
-            return  new SimpleDateFormat("yyyy-MM-dd");
+            return new SimpleDateFormat("yyyy-MM-dd");
         }
     };
 
     public static ThreadLocal<DateFormat> YYYY_MM = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
-            return  new SimpleDateFormat("yyyy-MM");
+            return new SimpleDateFormat("yyyy-MM");
         }
     };
 
@@ -59,14 +59,14 @@ public class DateUtils {
         }
     };
 
-    public static ThreadLocal<DateFormat> HHMMSS = new ThreadLocal<DateFormat>(){
+    public static ThreadLocal<DateFormat> HHMMSS = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
             return new SimpleDateFormat("HHmmss");
         }
     };
 
-    public static ThreadLocal<DateFormat> HHMMSS2 = new ThreadLocal<DateFormat>(){
+    public static ThreadLocal<DateFormat> HHMMSS2 = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
             return new SimpleDateFormat("HH:mm:ss");
@@ -79,7 +79,7 @@ public class DateUtils {
      * @param date
      * @return
      */
-    public static  String dateToString(Date date) {
+    public static String dateToString(Date date) {
         return YYYY_MM_DD_MM_HH_SS.get().format(date);
     }
 
@@ -95,16 +95,17 @@ public class DateUtils {
 
     public static String fmDate(Date date) {
         String datefm = YYYY_MM_DD_MM_HH_SS.get().format(date);
-        return datefm.substring(11,13)+"时"+datefm.substring(14,16)+"分";
+        return datefm.substring(11, 13) + "时" + datefm.substring(14, 16) + "分";
     }
 
     /**
      * 判断两个时间
+     *
      * @param date1
      * @param date2
      * @return
      */
-    public static boolean isDateBefore(String date1,String date2){
+    public static boolean isDateBefore(String date1, String date2) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         try {
             Date dt1 = df.parse(date1);
@@ -126,12 +127,13 @@ public class DateUtils {
 
     /**
      * 判断两个时间
+     *
      * @param date1
      * @param date2
-     * @return  date1 晚于 date2  返回true
+     * @return date1 晚于 date2  返回true
      */
-    public static boolean isDateBefore2(String date1,String date2){
-        if("".equals(date1) || "".equals(date2)) {
+    public static boolean isDateBefore2(String date1, String date2) {
+        if ("".equals(date1) || "".equals(date2)) {
             return false;
         }
 
@@ -164,8 +166,8 @@ public class DateUtils {
 
     public static String dateToYYMMDDStr(Date d) {
         String s = null;
-        if(d != null){
-            s =  YYYY_MM_DD.get().format(d) ;
+        if (d != null) {
+            s = YYYY_MM_DD.get().format(d);
         }
         return s;
     }
@@ -186,6 +188,7 @@ public class DateUtils {
         days = (end - start) / 86400000;
         return days;
     }
+
     /**
      * 计算两个时间之间相差的小时数
      *
@@ -362,12 +365,13 @@ public class DateUtils {
 
     /**
      * 获取当前周的周一时间
+     *
      * @return
      * @throws ParseException
      */
     public static String getWeekTime()
             throws ParseException {
-        Calendar cal =Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); //获取本周一的日期
         return df.format(cal.getTime());
@@ -375,12 +379,13 @@ public class DateUtils {
 
     /**
      * 获取当前周的周日时间
+     *
      * @return
      * @throws ParseException
      */
     public static String getMonthTime()
             throws ParseException {
-        Calendar cal =Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         //这种输出的是上个星期周日的日期，因为老外那边把周日当成第一天
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
@@ -395,25 +400,26 @@ public class DateUtils {
 
     /**
      * 获取长中短期时间
+     *
      * @param startDate
      * @param endDate
      * @return
      * @throws Exception
      */
     public static String getLongMiddleShortFlag(String startDate, String endDate) throws Exception {
-        startDate = startDate.substring(0,10)+" 00:00:00";
-        endDate = endDate.substring(0,10)+" 00:00:00";
+        startDate = startDate.substring(0, 10) + " 00:00:00";
+        endDate = endDate.substring(0, 10) + " 00:00:00";
         Date start = YYYY_MM_DD_MM_HH_SS.get().parse(startDate);
         Date end = YYYY_MM_DD_MM_HH_SS.get().parse(endDate);
 
         long diffDays = DateUtils.diffDays(start, end);
 
         String flag = "";
-        if(diffDays > 90) {
+        if (diffDays > 90) {
             flag = "l";
-        }else if(diffDays > 40 && diffDays <= 90) {
+        } else if (diffDays > 40 && diffDays <= 90) {
             flag = "m";
-        }else if(diffDays <= 40) {
+        } else if (diffDays <= 40) {
             flag = "s";
         }
         return flag;
@@ -421,21 +427,22 @@ public class DateUtils {
 
     /**
      * 两日期间的天数计算
+     *
      * @param startDate
      * @param endDate
      * @return
      * @throws Exception
      */
     public static Long diffDaysString(String startDate, String endDate) throws Exception {
-        startDate = startDate.substring(0,10)+" 00:00:00";
-        endDate = endDate.substring(0,10)+" 00:00:00";
+        startDate = startDate.substring(0, 10) + " 00:00:00";
+        endDate = endDate.substring(0, 10) + " 00:00:00";
         Date start = YYYY_MM_DD_MM_HH_SS.get().parse(startDate);
         Date end = YYYY_MM_DD_MM_HH_SS.get().parse(endDate);
         Long diffDays = DateUtils.diffDays(start, end);
         return diffDays;
     }
 
-    public static Calendar getFirstDayOfWeek(Date date){
+    public static Calendar getFirstDayOfWeek(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.setFirstDayOfWeek(Calendar.SATURDAY);
@@ -443,7 +450,7 @@ public class DateUtils {
         return cal;
     }
 
-    public static Calendar getFirstDayOfWeekInfo(Date date){
+    public static Calendar getFirstDayOfWeekInfo(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.setFirstDayOfWeek(Calendar.FRIDAY);
@@ -451,41 +458,41 @@ public class DateUtils {
         return cal;
     }
 
-    public static  Calendar getLastDayOfWeek(Date date){
+    public static Calendar getLastDayOfWeek(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.setFirstDayOfWeek(Calendar.SATURDAY);
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6)    ;
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6);
         return cal;
     }
 
-    public static  Calendar getLastDayOfWeekInfo(Date date){
+    public static Calendar getLastDayOfWeekInfo(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.setFirstDayOfWeek(Calendar.FRIDAY);
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6)    ;
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek() + 6);
         return cal;
     }
 
-    public static Calendar getFirstDayOfMonth(Date date){
+    public static Calendar getFirstDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.DAY_OF_MONTH,1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
 
         return cal;
     }
 
-    public static Calendar getLastDayOfMonth(Date date){
+    public static Calendar getLastDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.DAY_OF_MONTH,1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.add(Calendar.MONTH, 1);
         cal.add(Calendar.DATE, -1);
 
         return cal;
     }
 
-    public static String getDateStr(Date d , String format){
+    public static String getDateStr(Date d, String format) {
         SimpleDateFormat dsf = new SimpleDateFormat(format);
         return dsf.format(d);
     }
@@ -498,8 +505,16 @@ public class DateUtils {
 
     public static String getDayStr(Date date) {
         String s = null;
-        if(date != null){
-            s =  YYYYMMDD.get().format(date) ;
+        if (date != null) {
+            s = YYYYMMDD.get().format(date);
+        }
+        return s;
+    }
+
+    public static String getDayYYYY_MM_DDStr(Date date) {
+        String s = null;
+        if (date != null) {
+            s = YYYY_MM_DD.get().format(date);
         }
         return s;
     }
@@ -507,15 +522,16 @@ public class DateUtils {
 
     /**
      * 计算n个工作日后的日期
+     *
      * @param n
      * @param inDate
      * @return
      */
-    public static String workDayOffset(int n,Date inDate){
+    public static String workDayOffset(int n, Date inDate) {
         Calendar c1 = Calendar.getInstance();
         int workDay = n;
         c1.setTime(inDate);
-        if(workDay > 0){
+        if (workDay > 0) {
 
             for (int i = 0; i < workDay; i++) {
                 // 判断当天是否为周末，如果是周末加1
@@ -532,14 +548,14 @@ public class DateUtils {
                     continue;
                 }
             }
-        }else{
+        } else {
             for (int i = 0; i > workDay; i--) {
                 // 判断当天是否为周末，如果是周末加1
                 if (Calendar.SUNDAY == c1.get(Calendar.DAY_OF_WEEK)) {
                     workDay = workDay - 1;
                     c1.set(Calendar.DATE, c1.get(Calendar.DATE) - 1);
                     continue;
-                }else if(Calendar.SATURDAY == c1.get(Calendar.SATURDAY)){
+                } else if (Calendar.SATURDAY == c1.get(Calendar.SATURDAY)) {
                     c1.set(Calendar.DATE, c1.get(Calendar.DATE) - 1);
                     continue;
                 }
@@ -549,7 +565,7 @@ public class DateUtils {
                     workDay = workDay - 1;
                     c1.set(Calendar.DATE, c1.get(Calendar.DATE) - 1);
                     continue;
-                }else if(Calendar.SATURDAY == c1.get(Calendar.SATURDAY)){
+                } else if (Calendar.SATURDAY == c1.get(Calendar.SATURDAY)) {
                     c1.set(Calendar.DATE, c1.get(Calendar.DATE) - 1);
                     continue;
                 }

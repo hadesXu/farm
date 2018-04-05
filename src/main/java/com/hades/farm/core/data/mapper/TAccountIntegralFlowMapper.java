@@ -1,6 +1,10 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.entity.TAccountIntegral;
 import com.hades.farm.core.data.entity.TAccountIntegralFlow;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TAccountIntegralFlowMapper {
     /**
@@ -50,4 +54,14 @@ public interface TAccountIntegralFlowMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TAccountIntegralFlow record);
+
+    /**
+     * 获取积分记录
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<TAccountIntegralFlow> findAccountRecord(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
 }

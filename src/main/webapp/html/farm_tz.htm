@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../js/main.js"></script>
     <script>
         $(function () {
+            checkLogin();
             jsonTokenAjax("/api/user/notice", "GET", {}, callBack, errorback);
         });
         function callBack(data) {

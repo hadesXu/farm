@@ -4,6 +4,8 @@ import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.result.Result;
 
+import java.util.List;
+
 /**
  * Created by xiaoxu on 2018/3/4.
  */
@@ -59,5 +61,17 @@ public interface UserService {
      * @return
      */
     Result<Void> updatePwd(String phone, String code, String pwd);
+
+
+    /**
+     * 获取自己的徒弟
+     *
+     * @param userId
+     * @param page
+     * @param num
+     * @return
+     */
+    Result<List<User>> getApprentice(long userId, int page, int num);
+
 
 }

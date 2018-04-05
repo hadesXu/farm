@@ -1,6 +1,9 @@
 package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.entity.TAccountTicketFlow;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TAccountTicketFlowMapper {
     /**
@@ -50,4 +53,25 @@ public interface TAccountTicketFlowMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TAccountTicketFlow record);
+
+    /**
+     * 获取佣金记录
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<TAccountTicketFlow> findTicketRecord(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
+     * 获取交易记录
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<TAccountTicketFlow> findAccountRecord(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
 }

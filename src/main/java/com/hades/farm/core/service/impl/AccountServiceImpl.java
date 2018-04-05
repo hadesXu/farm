@@ -1,8 +1,8 @@
 package com.hades.farm.core.service.impl;
 
-import com.hades.farm.core.data.entity.TAccountTicket;
-import com.hades.farm.core.data.entity.TAccountTicketFlow;
-import com.hades.farm.core.data.entity.TOrders;
+import com.hades.farm.core.data.entity.*;
+import com.hades.farm.core.data.mapper.TAccountIntegralFlowMapper;
+import com.hades.farm.core.data.mapper.TAccountIntegralMapper;
 import com.hades.farm.core.data.mapper.TAccountTicketFlowMapper;
 import com.hades.farm.core.data.mapper.TAccountTicketMapper;
 import com.hades.farm.core.exception.BizException;
@@ -11,6 +11,7 @@ import com.hades.farm.enums.AcctOpreType;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.Constant;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xiaoxu on 2018/3/24.
@@ -32,13 +34,34 @@ public class AccountServiceImpl implements AccountService {
     private TAccountTicketMapper tAccountTicketMapper;
     @Resource
     private TAccountTicketFlowMapper tAccountTicketFlowMapper;
+    @Resource
+    private TAccountIntegralFlowMapper tAccountIntegralFlowMapper;
+    @Resource
+    private TAccountIntegralMapper tAccountIntegralMapper;
 
 
     @Override
 
     public Result<TAccountTicket> getAccount(long userId) {
         Result<TAccountTicket> result = Result.newResult();
-        result.setData(tAccountTicketMapper.queryAccountByUserId(userId));
+        TAccountTicket tAccountTicket = tAccountTicketMapper.queryAccountByUserId(userId);
+        if (tAccountTicket == null) {
+            result.addError(ErrorCode.SYSTEM_ERROR);
+            return result;
+        }
+        result.setData(tAccountTicket);
+        return result;
+    }
+
+    @Override
+    public Result<TAccountIntegral> getAccountIntegral(long userId) {
+        Result<TAccountIntegral> result = Result.newResult();
+        TAccountIntegral tAccountIntegral = tAccountIntegralMapper.selectByPrimaryKey(userId);
+        if (tAccountIntegral == null) {
+            result.addError(ErrorCode.SYSTEM_ERROR);
+            return result;
+        }
+        result.setData(tAccountIntegral);
         return result;
     }
 
@@ -101,6 +124,37 @@ public class AccountServiceImpl implements AccountService {
                     throw new BizException(ErrorCode.ADD_ERR);
                 }
             }
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<TAccountIntegralFlow>> findIntegralRecord(long userId, int page, int num) {
+        Result<List<TAccountIntegralFlow>> result = Result.newResult();
+        List<TAccountIntegralFlow> integrals = tAccountIntegralFlowMapper.findAccountRecord(userId, page, num);
+        if (CollectionUtils.isNotEmpty(integrals)) {
+            result.setData(integrals);
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<TAccountTicketFlow>> findTicketRecord(long userId, int page, int num) {
+        Result<List<TAccountTicketFlow>> result = Result.newResult();
+
+        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findTicketRecord(userId, page, num);
+        if (CollectionUtils.isNotEmpty(flows)) {
+            result.setData(flows);
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<TAccountTicketFlow>> findAccountRecord(long userId, int page, int num) {
+        Result<List<TAccountTicketFlow>> result = Result.newResult();
+        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findAccountRecord(userId, page, num);
+        if (CollectionUtils.isNotEmpty(flows)) {
+            result.setData(flows);
         }
         return result;
     }

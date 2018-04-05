@@ -1,7 +1,11 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.api.view.request.RegisterRequest;
+import com.hades.farm.core.data.entity.TAccountIntegral;
+import com.hades.farm.core.data.entity.TAccountTicket;
 import com.hades.farm.core.data.entity.User;
+import com.hades.farm.core.data.mapper.TAccountIntegralMapper;
+import com.hades.farm.core.data.mapper.TAccountTicketMapper;
 import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.service.CodeService;
 import com.hades.farm.core.service.UserService;
@@ -11,6 +15,7 @@ import com.hades.farm.result.Result;
 import com.hades.farm.utils.AccountValidatorUtil;
 import com.hades.farm.utils.Constant;
 import com.hades.farm.utils.NickUtil;
+import com.hades.farm.utils.SystemUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +23,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xiaoxu on 2018/3/4.
@@ -28,6 +35,10 @@ public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private TAccountIntegralMapper tAccountIntegralMapper;
+    @Resource
+    private TAccountTicketMapper tAccountTicketMapper;
     @Resource
     private CodeService codeService;
 
@@ -45,6 +56,10 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.ADD_ERR);
             return result;
         }
+        //初始化账户
+        tAccountTicketMapper.insert(new TAccountTicket(user.getId(), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, new Date()));
+        //初始化积分账户
+        tAccountIntegralMapper.insert(new TAccountIntegral(user.getId(), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, new Date()));
         result.setData(user);
         return result;
     }
@@ -147,16 +162,23 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.PHONE_EXIST);
             return result;
         }
-        user = userMapper.getUserByWeChat(request.getWechat());
-        if (user != null) {
-            result.addError(ErrorCode.WECHAT_EXIST);
-            return result;
+        if (!SystemUtil.isNull(request.getWechat())) {
+            user = userMapper.getUserByWeChat(request.getWechat());
+            if (user != null) {
+                result.addError(ErrorCode.WECHAT_EXIST);
+                return result;
+            }
         }
         Result<Void> voidResult = codeService.validPhoneCode(request.getPhone(), request.getCode());
         if (!voidResult.isSuccess()) {
             return voidResult;
         }
         return result;
+    }
+
+    @Override
+    public Result<List<User>> getApprentice(long userId, int page, int num) {
+        return null;
     }
 
     private User generateUser(RegisterRequest request) {
@@ -189,14 +211,18 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        user.setWechat(request.getWechat());
+        if (!SystemUtil.isNull(request.getWechat())) {
+            user.setWechat(request.getWechat());
+        }
         user.setTelephone(request.getPhone());
-        if (request.getName() != null) {
+        if (!SystemUtil.isNull(request.getName())) {
             user.setName(request.getName());
         } else {
             user.setName(NickUtil.randomNick());
         }
-        user.setImgUrl(request.getImgUrl());
+        if (!SystemUtil.isNull(request.getImgUrl())) {
+            user.setImgUrl(request.getImgUrl());
+        }
         return user;
     }
 
