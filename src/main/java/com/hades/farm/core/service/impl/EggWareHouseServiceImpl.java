@@ -41,4 +41,8 @@ public class EggWareHouseServiceImpl implements WareHouseService{
             throw new BizException(ErrorCode.ADD_ERR);
         }
     }
+
+    public TEggWarehouse queryEggWareHouse(long userId){
+        return tEggWarehouseMapper.selectByUserId(userId);
+    }
 }

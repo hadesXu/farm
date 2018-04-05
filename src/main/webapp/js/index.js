@@ -58,8 +58,8 @@ $(document).ready(function () {
     TanWind("up-box", "close", "popup-box");	//商店弹窗
 	TanWind("up-box1", "close", "popup-box1");	//商店弹窗
 	//TanWind("up-box2", "close", "popup-box2");	//商店弹窗
-	TanWind("up-box3", "close", "popup-box3");	//商店弹窗
-	TanWind("up-box4", "close", "popup-box4");	//商店弹窗
+	//TanWind("up-box3", "close", "popup-box3");	//商店弹窗
+	//TanWind("up-box4", "close", "popup-box4");	//商店弹窗
 	
     TanWind("up-buy", "up-buy01", "buy-box");  //购买弹窗
     TanWind("up-buy01", "up-buy", "buy01-box"); //切换购买弹窗

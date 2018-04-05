@@ -1,5 +1,6 @@
-package com.hades.farm.core.service.impl;
+package com.hades.farm.core.service;
 
+import com.hades.farm.api.view.response.FdcInfoModel;
 import com.hades.farm.api.view.response.YjcInfoModel;
 import com.hades.farm.core.exception.BizException;
 
@@ -8,4 +9,5 @@ import com.hades.farm.core.exception.BizException;
  */
 public interface FarmService {
     public YjcInfoModel queryYjcInfo(long userId) throws BizException;
+    public FdcInfoModel queryFdcInfo(long userId) throws BizException;
 }

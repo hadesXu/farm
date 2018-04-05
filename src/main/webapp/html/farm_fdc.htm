@@ -47,7 +47,7 @@
 
     	<ul>
 
-        	<li><img src="../img/dan.png" class="wh">&nbsp;790 只</li>
+        	<li><img src="../img/dan.png" class="wh">&nbsp;<span id="eggSum">0</span> 只</li>
 
            <li class="up-box3" style="width:20%;"><img src="../img/caigou.png" width="35"></li>                               
 
@@ -75,7 +75,7 @@
 
             <a href="farm_jyq.htm"><li  class="right_td" style="border:none;">购买鸡蛋</li></a>
 
-            <li class="right_td up-box1" style="border:none;">"偷蛋"</li>
+            <li class="right_td up-box2" style="border:none;">"偷蛋"</li>
 
             <li style="text-align:right; width:40px; margin-top:10px; margin-left:30px; position:relative;z-index:999;">
 
@@ -297,7 +297,7 @@
 
     }
 
-	.popup-box1 {
+	.popup-box2 {
 
         width: 100%;
 
@@ -415,9 +415,9 @@
 
                     <li style="color:#fff;">放蛋孵化</li>
 
-                    <li>剩余鸡蛋:0 只</li>
+                    <li>剩余鸭蛋:<span id="eggNum">0</span> 只</li>
 
-                    <li>数量：<input type="text" name="number" id="number" placeholder="放入鸡蛋" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;"></li>
+                    <li>数量：<input type="text" name="number" id="number" placeholder="放入鸭蛋" style="height:30px; width:50%; line-height:30px;border-radius:5px;text-indent:5px;"></li>
 
                 <li><input type="submit"  onClick="fandan()" value="确定" style="width:50%;height:28px;line-height:22px;font-size:18px;margin-top:10px;border-radius:5px; background:#21EA15;color:#fff;"></li>
 
@@ -435,7 +435,7 @@
 
     
 
-    <div class="popup-box1">
+    <div class="popup-box2">
 
         <div class="popup popupimg" style=" position:relative;">
 
@@ -716,9 +716,6 @@
 				});
 
 			}
-
-			
-
 			//乘法解决小数点问题
 
 		 function accMul(arg1,arg2)  
@@ -734,339 +731,224 @@
 			 return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)  
 
 		 } 
-
 		 function js(type){
-
 				if(type==1){document.getElementById("caipiao").value=accMul(1,'20');}
-
 				if(type==2){document.getElementById("caipiao").value=accMul(2,'20');}
-
 				if(type==3){document.getElementById("caipiao").value=accMul(3,'20');}
-
 		}
 
-	 
-
-	 
-
-	 </script> 
-
-
-
-
-
-     
-
+	 </script>
     <div class="page-footer" style="z-index:999; ">
-
 	    <div class="tools" style="width:86%;">
-
 	        <ul class="tool-ul clearfix" style="top:-20%;">
-
 	            <li class="tools04"><a href="index.html" tppabs="javascript:;">
-
-	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>            
-
+	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>
 	            <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
-
 	                <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
 
 	            <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
-
 	                <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
-
 	           <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
-
 	                <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
-
 	           <li class="tools04"><a href="user.html" tppabs="javascript:;">
-
 	                <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
-
-	          
-
 	        </ul>
-
 	    </div>
-
 	</div>
-
-
-
 	<script src="../js/layer.js"></script>
-
-	
-
 	<script>
-
 		function wkf(){
-
 			 layer.open({
-
 				content: '正在开发中...'
-
 				,skin: 'msg'
-
 				,time: 1 //2秒后自动关闭
-
 			  });
-
 		}
-
-	
-
-	</script> 
-
+	</script>
     </div>
-
-    
-
 	<script type="text/javascript">
-
 	//放蛋孵化
-
-	function fandan(){
-
-		var number=$('#number').val();
-
-		var timess=Date.parse(new Date());
-
-		if(number==''){
-
-			 layer.open({
-
-					content:'请输入您要放养的数量'
-
-					,skin: 'msg'
-
-					,time: 1.4 //2秒后自动关闭
-
-				  });
-
-			}
-
-		$.ajax({
-
-			url:'farm_fdc.php',
-
-			dataType:"JSON",
-
-			async:false,
-
-			type:'POST',
-
-			data:{
-
-				act:'fudan',
-
-				number:number,
-
-				timess:timess,
-
-				},
-
-			success: function(data){
-
-				if(data.status=='true'){
-
-				 //提示
-
-				  layer.open({
-
-					content: data.content
-
-					,skin: 'msg'
-
-					,time: 1.4 //2秒后自动关闭
-
-				  });
-
-				window.setTimeout("window.location='"+data.html+"'",1600); 
-
-				}
-
-			else{
-
-				 //提示
-
-				  layer.open({
-
-					content: data.content
-
-					,skin: 'msg'
-
-					,time: 1.4 //2秒后自动关闭
-
-				  });
-
-				}
-
-			
-
-				}
-
-			});
-
-		}
-
-	
-
-	//偷蛋第一次进入	
-
+function fandan(){
+    var eggNum = $("#eggNum").html()*1;
+    var number=$('#number').val();
+    var timess=Date.parse(new Date());
+    if(number==''){
+         layer.open({
+                content:'请输入您要放养的数量'
+                ,skin: 'msg'
+                ,time: 1.4 //2秒后自动关闭
+              });
+    }else{
+        if(!/^\d+?$/.test(number)){
+            layer.open({
+                content:'请输入正整数'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });return;
+        }
+        if(number%10!=0){
+            layer.open({
+                content:'请输入10的整数倍'
+                ,skin: 'msg'
+                ,time: 2 //2秒后自动关闭
+            });return;
+        }
+    }
+    if(eggNum < number){
+        layer.open({
+            content:'剩余鸭蛋数量不足'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });return;
+    }
+    jsonTokenAjax("/api/farm/eggBreeding", "POST", {"eggNum":number}, eggBreedingCallBack, errorback);
+}
+    function eggBreedingCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "成功放蛋孵化"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_fdc.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+        }
+    }
+	//偷蛋第一次进入
     function cc(){
-
 		var timess=Date.parse(new Date());
-
 		$.ajax({
-
 		url:'farm_fdc.php',
-
 		dataType:"JSON",
-
 		async:false,
-
 		type:'POST',
-
 		data:{
-
 			act:'dan',
-
 			id:'666',
-
 			timess:timess,
-
 			},
-
 		success: function(data){
-
 			if(data.status=='true'){
-
 				 //提示
-
 				  layer.open({
-
 					content: data.content
-
 					,skin: 'msg'
-
 					,time: 1.4 //2秒后自动关闭
-
 				  });
-
 				 // alert(data.html);
-
-				window.setTimeout("window.location='"+data.html+"'",1600); 
-
+				window.setTimeout("window.location='"+data.html+"'",1600);
 				}
-
 			else{
-
 				 //提示
-
 				  layer.open({
-
 					content: data.content
-
 					,skin: 'msg'
-
 					,time: 1.4 //2秒后自动关闭
-
 				  });
-
 				}
-
 			}
-
 			});
-
 		}
+//帮师傅加温-给自己加温
+function jiawen(act){
+    var warmWho = 2;//给师傅加温
+    if("jiawenzj" == act){//给自己加温
+        warmWho = 1;
+    }
+    jsonTokenAjax("/api/farm/warm", "POST", {"warmWho":warmWho}, warmCallBack, errorback);
+}
+function warmCallBack(data){
+    var result = data.result;
+    if(result.code=='0000'){
+        //提示
+        layer.open({
+            content: "加温成功"
+            ,skin: 'msg'
+            ,time: 1 //2秒后自动关闭
+        });
+        window.setTimeout("window.location='farm_fdc.htm'",1200);
+    } else{
+        //提示
+        layer.open({
+            content: result.message
+            ,skin: 'msg'
+            ,time: 1 //2秒后自动关闭
+        });
+    }
+}
 
-		
-
-		
-
-	//帮师傅加温-给自己加温
-
-	 function jiawen(act){
-
-	 var timess=Date.parse(new Date());
-
-	$.ajax({
-
-	url:'farm_fdc.php',
-
-	dataType:"JSON",
-
-	async:false,
-
-	type:'POST',
-
-	data:{
-
-		act:act,
-
-		id:'7',
-
-		timess:timess,
-
-		},
-
-	success: function(data){
-
-		if(data.status=='true'){
-
-			 //提示
-
-			  layer.open({
-
-				content: data.content
-
-				,skin: 'msg'
-
-				,time: 1.4 //2秒后自动关闭
-
-			  });
-
-			window.setTimeout("window.location='"+data.html+"'",1600); 
-
-			}
-
-		else{
-
-			
-
-			 //提示
-
-			  layer.open({
-
-				content: data.content
-
-				,skin: 'msg'
-
-				,time: 1.4 //2秒后自动关闭
-
-			  });
-
-			
-
-			}
-
-		}
-
-		});
-
-	}
-
-	
-
-	
 
     </script>
 
+<script src="../js/main.js" tppabs="javascript:;"></script>
+<script language="javascript">
+    $(function () {
+        checkLogin();
+        jsonTokenAjax("/api/farm/fdcInfo", "GET", {}, callBack, errorback);
+    });
 
+    var ifSteal = 2;//否(今日是否可偷)
+    var sEgg = 1;//是（是否有偷蛋权限）
 
+    function callBack(data) {
+        if(data.status == "1"){
+            var result = data.result;
+            ifSteal = result.ifSteal;
+            sEgg = result.sEgg;
+            console.log(result);
+            $("#eggSum").html(result.eggDoing);
+            $("#eggNum").html(result.egg);
+            if(result.hasDog == 2){
+                TanWind("up-box3", "close", "popup-box3");	//商店弹窗
+            }
+            if(result.hasRobot == 2){
+                TanWind("up-box4", "close", "popup-box4");	//商店弹窗
+            }
+            if(result.sEgg !=2){
+                TanWind("up-box2", "close", "popup-box2");	//商店弹窗
+            }
+        }else{
+
+        }
+    }
+
+    function errorback(data) {
+        if (data.error.code == "1006") {
+            location.href = "v_user-login.htm"
+        }
+        alert('error:' + JSON.stringify(data));
+    }
+
+    //弹窗
+    function TanWind(oid, cid, sid) {
+
+        var $oid = $("." + oid),
+                $cid = $("." + cid),
+                $sid = $("." + sid);
+        $oid.click(function () {
+            var $this = $(this);
+            var price = $this.data("price");
+            var productid = $this.data("productid");
+            if (price != null && productid != null) {
+                $this.addClass("shop-li02").siblings(".shop-li02").removeClass('shop-li02');
+                $('#product_price').text(price);
+                $('#productid').val(productid);
+                $('#input_num').val(1);
+            }
+            $sid.show();
+        });
+        $cid.click(function () {
+            $sid.hide();
+        })
+    };
+</script>
 </body>
-
-
-
 </html>

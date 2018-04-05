@@ -1025,7 +1025,7 @@
         jsonTokenAjax("/api/farm/yjcInfo", "GET", {}, callBack, errorback);
     });
     var ifSteal = 2;//否
-    var sDuck = 2;//是
+    var sDuck = 1;//是
 
     function callBack(data) {
         if(data.status == "1"){
@@ -1138,7 +1138,7 @@
                 ,time: 2 //2秒后自动关闭
             });return;
         }
-        jsonTokenAjax("/api/farm/duckBreeding", "POST", {duckNum:number1}, duckBreedingCallBack, duckBreedingErrorback);
+        jsonTokenAjax("/api/farm/duckBreeding", "POST", {duckNum:number1}, duckBreedingCallBack, errorback);
 
         function duckBreedingCallBack(data){
             var result = data.result;
