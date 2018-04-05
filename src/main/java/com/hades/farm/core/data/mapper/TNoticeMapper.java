@@ -61,7 +61,17 @@ public interface TNoticeMapper {
      * @param userId
      * @return
      */
-    List<TNotice> getNoticeByUserId(long userId);
+    List<TNotice> findNoticeByUserId(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
+     * 获取养殖记录
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<TNotice> findBreedNotice(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
 
     List<TNotice> getNoticeByUserIdOfnum(@Param("userId") Long userId, @Param("num") int num);
 

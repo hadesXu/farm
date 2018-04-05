@@ -16,8 +16,18 @@ public interface NoticeService {
      * @param userId
      * @return
      */
-    Result<List<TNotice>> getNotice(long userId);
+    Result<List<TNotice>> getNotice(long userId, int page, int num);
 
-    public List<TNotice> getNumNotice(long userId,int num);
+    /**
+     * 获取养殖记录
+     *
+     * @param userId
+     * @param page
+     * @param num
+     * @return
+     */
+    Result<List<TNotice>> getBreedNotice(long userId, int page, int num);
+
+    public List<TNotice> getNumNotice(long userId, int num);
 
 }

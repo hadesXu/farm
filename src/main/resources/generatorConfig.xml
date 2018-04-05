@@ -74,7 +74,7 @@
 
 
         </javaClientGenerator>
-        <table tableName="t_back_reward"
+        <table tableName="t_account_integral_flow"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

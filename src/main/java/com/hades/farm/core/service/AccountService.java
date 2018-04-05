@@ -27,4 +27,8 @@ public interface AccountService {
      * @return
      */
     Result<TAccountTicket> updateAccount(TAccountTicket accountTicket, AcctOpreType type) throws BizException;
+
+
+
+
 }

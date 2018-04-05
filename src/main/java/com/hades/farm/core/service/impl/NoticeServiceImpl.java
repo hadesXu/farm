@@ -24,9 +24,10 @@ public class NoticeServiceImpl implements NoticeService {
     private TNoticeMapper tNoticeMapper;
 
     @Override
-    public Result<List<TNotice>> getNotice(long userId) {
+    public Result<List<TNotice>> getNotice(long userId, int page, int num) {
         Result<List<TNotice>> result = Result.newResult();
-        List<TNotice> tNotices = tNoticeMapper.getNoticeByUserId(userId);
+        int offset = (page - 1) * num;
+        List<TNotice> tNotices = tNoticeMapper.findNoticeByUserId(userId, offset, num);
         if (CollectionUtils.isNotEmpty(tNotices)) {
             result.setData(tNotices);
         }
@@ -34,7 +35,18 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<TNotice> getNumNotice(long userId,int num){
+    public Result<List<TNotice>> getBreedNotice(long userId, int page, int num) {
+        Result<List<TNotice>> result = Result.newResult();
+        int offset = (page - 1) * num;
+        List<TNotice> tNotices = tNoticeMapper.findBreedNotice(userId, offset, num);
+        if (CollectionUtils.isNotEmpty(tNotices)) {
+            result.setData(tNotices);
+        }
+        return result;
+    }
+
+    @Override
+    public List<TNotice> getNumNotice(long userId, int num) {
         List<TNotice> tNotices = tNoticeMapper.getNoticeByUserIdOfnum(userId, num);
         return tNotices;
     }

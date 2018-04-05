@@ -1,7 +1,7 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
-var serverUrl = "http://120.79.137.135:8098";
-
+// var serverUrl = "http://120.79.137.135:8098";
+var serverUrl = "http://127.0.0.1:8098";
 //校验登录
 function checkLogin() {
     if (checkNull(userId) || checkNull(token)) {
@@ -108,7 +108,7 @@ function GetRequest() {
 
 function callBackError(data) {
     alert(data.error.message)
-    if (data.error.code) {
+    if (data.error.code == "1006") {
         location.href = "v_user-login.htm"
     }
 }
@@ -122,8 +122,24 @@ function setUser(data) {
     localStorage.setItem("face", data.result.face);
     localStorage.setItem("shareUrl", data.result.shareUrl);
     localStorage.setItem("parentId", data.result.parentId);
-    location.href = "index.html"
-
+    location.href = "index.html";
 }
+
+function formatDateTime(inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    // return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    return m + '-' + d + ' ' + h + ':' + minute;
+};
 
 

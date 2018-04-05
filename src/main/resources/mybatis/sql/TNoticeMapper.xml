@@ -125,18 +125,28 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="getNoticeByUserId" resultMap="BaseResultMap">
+    <select id="findNoticeByUserId" resultType="com.hades.farm.core.data.entity.TNotice">
         SELECT
         <include refid="Base_Column_List"></include>
         FROM `t_notice`
         WHERE user_id = #{userId,jdbcType=BIGINT}
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="findBreedNotice" resultType="com.hades.farm.core.data.entity.TNotice">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM `t_notice`
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+        and `type` in(10,11,12,13,14,15)
+        LIMIT #{offset}, #{size}
     </select>
 
     <select id="getNoticeByUserIdOfnum" resultType="com.hades.farm.core.data.entity.TNotice">
         SELECT
         <include refid="Base_Column_List"></include>
         FROM `t_notice`
-        WHERE  1=1
+        WHERE 1=1
         <if test="userId != null">
             and user_id = #{userId,jdbcType=BIGINT}
         </if>
@@ -148,14 +158,13 @@
         SELECT
         t1.user_id userId,t1.remarks,t2.name,t1.type
         FROM `t_notice` t1 left join t_user t2 on t1.user_id = t2.id
-        WHERE  1=1
+        WHERE 1=1
         <if test="userId != null">
             and t1.user_id = #{userId,jdbcType=BIGINT}
         </if>
         ORDER BY t1.add_time DESC
         LIMIT 0,#{num}
     </select>
-
 
 
 </mapper>

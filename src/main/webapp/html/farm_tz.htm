@@ -1,443 +1,283 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 
-<meta name="Generator" content="ECSHOP v2.7.3" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><meta name="format-detection" content="telephone=no, address=no, email=no">
+    <meta name="Generator" content="ECSHOP v2.7.3"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
 
-<meta name="renderer" content="webkit">
+    <meta name="renderer" content="webkit">
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>系统通知</title>
-
-
-
-
-
-<link href="../css/qui.css" tppabs="javascript:;" rel="stylesheet">
-
-<link href="../css/style.css" tppabs="javascript:;" rel="stylesheet">
-
-<style>
-
-	.wdck{width:90%;height:auto;position:fixed;top:8%;left:4%;color:#fff;font-size:14px;}
-
-	.wdck ul{margin:0;padding:0;list-style:none;}
-
-	.wdck ul li{height:68px;line-height:68px;float:left;text-align:center;}
-
-	.wdck ul li a{color:#fff;}
-
-	.clear{clear:both;}
-
-	.block{display:block;text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-
-	.jjsh{width:86%;height:30px;line-height:30px;margin-top:20px;border-radius:5px;display:block;background:rgba(184,33,10,0.92);}
-
-	.tx{width:60px;border-radius:100%;background:#fff;}	
-
-	.yjjl_nr{width:89%;margin-top:30%;margin-left:4%;font-size:14px;margin-bottom:30%;}
-
-	.yjjl_nr ul{margin:0;padding:0;list-style:none;}
-
-	.yjjl_nr ul li{float:left; min-height:45px; max-height:85px;line-height:22px;text-align:center;color:#fff;}
-
-	.yjjl_1{width:28%;}.yjjl_2{width:49%;}.yjjl_3{width:23%;}
+    <title>系统通知</title>
 
 
+    <link href="../css/qui.css" tppabs="javascript:;" rel="stylesheet">
 
-</style>
+    <link href="../css/style.css" tppabs="javascript:;" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script>
+        $(function () {
+            jsonTokenAjax("/api/user/notice", "GET", {}, callBack, errorback);
+        });
+        function callBack(data) {
+            if (data.status == "1") {
+                var result = data.result;
+                var noticeHtml = "";
+                if (checkNull(result)) {
+                    noticeHtml += "<ul>";
+                    noticeHtml += "<div>";
+                    noticeHtml += "<li style='text-align:center; width:100%; color:#868686;'>没有更多记录</li>";
+                    noticeHtml += "</div>";
+                    noticeHtml += "</ul>";
+                } else {
+                    $.each(result, function (index, value, array) {
+                        noticeHtml += "<ul>";
+                        noticeHtml += "<li class='yjjl_1'>" + formatDateTime(value.addTime) + "</li>";
+                        noticeHtml += "<li class='yjjl_2' style='width:70%;'>" + value.remarks + "</li>";
+                        noticeHtml += "</ul>";
+                    });
+                }
+                $("#noticeHtml").html(noticeHtml);
+            } else {
+                callBackError(data);
+            }
+        }
+    </script>
 
-   
+    <style>
+
+        .wdck {
+            width: 90%;
+            height: auto;
+            position: fixed;
+            top: 8%;
+            left: 4%;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .wdck ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wdck ul li {
+            height: 68px;
+            line-height: 68px;
+            float: left;
+            text-align: center;
+        }
+
+        .wdck ul li a {
+            color: #fff;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .block {
+            display: block;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .jjsh {
+            width: 86%;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 20px;
+            border-radius: 5px;
+            display: block;
+            background: rgba(184, 33, 10, 0.92);
+        }
+
+        .tx {
+            width: 60px;
+            border-radius: 100%;
+            background: #fff;
+        }
+
+        .yjjl_nr {
+            width: 89%;
+            margin-top: 30%;
+            margin-left: 4%;
+            font-size: 14px;
+            margin-bottom: 30%;
+        }
+
+        .yjjl_nr ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .yjjl_nr ul li {
+            float: left;
+            min-height: 45px;
+            max-height: 85px;
+            line-height: 22px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .yjjl_1 {
+            width: 28%;
+        }
+
+        .yjjl_2 {
+            width: 49%;
+        }
+
+        .yjjl_3 {
+            width: 23%;
+        }
+
+
+    </style>
+
 
 </head>
 
 <body style="overflow-y: auto;">
 
-    <div class="warp-page" style=" background:url(../img/listbox.jpg) no-repeat; background-size:100% 100%;">
+<div class="warp-page" style=" background:url(../img/listbox.jpg) no-repeat; background-size:100% 100%;">
 
-       <!-- <div  style=" background:url(themesmobile/68ecshopcom_mobile/farmimg/wdck_top.png) no-repeat;width:98%; background-size:98% 98%;margin-left:2%;height:10%;
+    <!-- <div  style=" background:url(themesmobile/68ecshopcom_mobile/farmimg/wdck_top.png) no-repeat;width:98%; background-size:98% 98%;margin-left:2%;height:10%;
 
-        position:absolute;top:0;z-index:999;">
+     position:absolute;top:0;z-index:999;">
 
-		</div>-->
+     </div>-->
 
-        <div class="warp-page" style=" background:url(../img/wdjf_bg.png) no-repeat; background-size:98% 98%;margin-left:2%;">
+    <div class="warp-page"
+         style=" background:url(../img/wdjf_bg.png) no-repeat; background-size:98% 98%;margin-left:2%;">
 
-			
-
-        
 
         <div style="position:fixed;top:6px;text-align:center;right:0;z-index:999;">
 
-        	<a href="javascript:history.back(-1)"><img src="../img/close.png" tppabs="javascript:;" style="width:40px;height:40px;margin-right:10px;"></a>
+            <a href="javascript:history.back(-1)"><img src="../img/close.png" tppabs="javascript:;"
+                                                       style="width:40px;height:40px;margin-right:10px;"></a>
 
         </div>
 
         <div style="position:fixed;">
 
- 			<img src="../img/bg_top.png" tppabs="javascript:;" style="width:100%;">
-
-  		</div>
-
-        <div style="position:fixed;">
-
-        	  <img src="../img/xttz_top.png" tppabs="javascript:;" style="width:97.7%;margin-right:10px;">
+            <img src="../img/bg_top.png" tppabs="javascript:;" style="width:100%;">
 
         </div>
 
-            
+        <div style="position:fixed;">
 
-            
+            <img src="../img/xttz_top.png" tppabs="javascript:;" style="width:97.7%;margin-right:10px;">
 
-            <div class="wdck">
+        </div>
 
-                <ul>
 
-                	<li style="width:28%">时间</li>
+        <div class="wdck">
 
-                    <li style="width:70%;">类型</li>
+            <ul>
 
-                   <!-- <li style="width:23%;">积分</li>-->
+                <li style="width:28%">时间</li>
 
-                </ul>
+                <li style="width:70%;">类型</li>
 
-                
+                <!-- <li style="width:23%;">积分</li>-->
 
-            </div>
+            </ul>
 
-             <div class="yjjl_nr">
 
-                               <ul>
+        </div>
 
-                    <li class="yjjl_1">2018-01-18</li>
+        <div class="yjjl_nr" id="noticeHtml">
+            <!--<ul>-->
 
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
+            <!--<li class="yjjl_1">2018-01-18</li>-->
 
-                 <!--   <li class="yjjl_3">+1</li>-->
+            <!--<li class="yjjl_2" style="width:70%;">偷到1只鸭</li>-->
 
-                </ul>
+            <!--&lt;!&ndash;   <li class="yjjl_3">+1</li>&ndash;&gt;-->
 
-                                <ul>
+            <!--</ul>-->
 
-                    <li class="yjjl_1">2018-01-17</li>
 
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
+            <!--<ul>-->
+            <!--<div>-->
+            <!--<li style="text-align:center; width:100%; color:#868686;">没有更多记录</li>-->
+            <!--</div>-->
+            <!--</ul>-->
+        </div>
 
-                 <!--   <li class="yjjl_3">+1</li>-->
 
-                </ul>
+    </div>
 
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-15</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-13</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-11</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-11</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-10</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-10</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2018-01-09</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-12-01</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到1只鸭</li>
-
-                 <!--   <li class="yjjl_3">+1</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-12-01</li>
-
-                    <li class="yjjl_2" style="width:70%;">偷到2只鸭</li>
-
-                 <!--   <li class="yjjl_3">+2</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-30</li>
-
-                    <li class="yjjl_2" style="width:70%;">恭喜您在招商会现场中奖获得100积分！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-05</li>
-
-                    <li class="yjjl_2" style="width:70%;">您的狗粮不足，无法自动喂养！</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-05</li>
-
-                    <li class="yjjl_2" style="width:70%;">喂食狗+11</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-05</li>
-
-                    <li class="yjjl_2" style="width:70%;">喂食鸭+30</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                                <ul>
-
-                    <li class="yjjl_1">2017-09-05</li>
-
-                    <li class="yjjl_2" style="width:70%;">喂食鸭+70</li>
-
-                 <!--   <li class="yjjl_3">+0</li>-->
-
-                </ul>
-
-                <ul><div><li style="text-align:center; width:100%; color:#868686;">没有更多记录</li></div></ul>
-
-
-
-            </div>
-
-                                                        
-
-        </div>   	
-
-    
-
-     
 
     <div class="page-footer" style="z-index:999; ">
 
-	    <div class="tools" style="width:86%;">
+        <div class="tools" style="width:86%;">
 
-	        <ul class="tool-ul clearfix" style="top:-20%;">
+            <ul class="tool-ul clearfix" style="top:-20%;">
 
-	            <li class="tools04"><a href="index.html" tppabs="javascript:;">
+                <li class="tools04"><a href="index.html" tppabs="javascript:;">
 
-	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>            
+                    <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>
 
-	            <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
+                <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
 
-	                <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
+                    <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
 
-	            <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
+                <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
 
-	                <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
+                    <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
 
-	           <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
+                <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
 
-	                <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
+                    <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
 
-	           <li class="tools04"><a href="user.html" tppabs="javascript:;">
+                <li class="tools04"><a href="v_user.html" tppabs="javascript:;">
 
-	                <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
-
-	          
-
-	        </ul>
-
-	    </div>
-
-	</div>
+                    <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
 
 
+            </ul>
 
-<script src="../js/layer.js" tppabs="javascript:;"></script>
+        </div>
 
-
-
-<script>
-
-	function wkf(){
-
-		 layer.open({
-
-			content: '正在开发中...'
-
-			,skin: 'msg'
-
-			,time: 1 //2秒后自动关闭
-
-		  });
-
-	}
+    </div>
 
 
+    <script src="../js/layer.js" tppabs="javascript:;"></script>
 
-</script> 
+
+    <script>
+
+        function wkf() {
+
+            layer.open({
+
+                content: '正在开发中...'
+
+                , skin: 'msg'
+
+                , time: 1 //2秒后自动关闭
+
+            });
+
+        }
+
+
+    </script>
 
 </div>
 
-
-
-  
 
 </body>
 
