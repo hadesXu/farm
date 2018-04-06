@@ -47,7 +47,7 @@ public class WithdrawServiceImpl implements WithdrawService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void withdraw(WithdrawRequest request) throws BizException {
-        if (WithdrawType.valid(request.getType())) {
+        if (!WithdrawType.valid(request.getType())) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
         }
         if (request.getAmount().compareTo(BigDecimal.ZERO) <= Constant.NUMBER_ZERO) {

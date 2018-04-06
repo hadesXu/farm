@@ -6,6 +6,7 @@ import com.hades.farm.core.data.entity.TPayItem;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.RechargeService;
 import com.hades.farm.core.service.WithdrawService;
+import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +61,8 @@ public class PayApi {
         try {
             withdrawService.withdraw(request);
         } catch (BizException e) {
-            e.printStackTrace();
+            response.addError(ErrorCode.get(e.getErrCode()));
+            return response;
         }
         return response;
     }
