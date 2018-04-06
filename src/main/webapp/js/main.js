@@ -142,6 +142,21 @@ function formatDateTime(inputTime) {
     return m + '-' + d + ' ' + h + ':' + minute;
 };
 
+function formatDateYear(inputTime) {
+    var date = new Date(inputTime);
+    return date.getFullYear();
+}
+function formatDateMonth(inputTime) {
+    var date = new Date(inputTime);
+    return date.getMonth() + 1;
+}
+
+function formatDateDay(inputTime) {
+    var date = new Date(inputTime);
+    var d = date.getDate();
+    return d < 10 ? ('0' + d) : d;
+}
+
 function footerHtml() {
     var innerHtml = "";
     innerHtml += "<div class='tools' style='width:86%;'>";
@@ -175,6 +190,12 @@ function footerHtml() {
     innerHtml += "</div> ";
     return innerHtml;
 
+}
+
+function getTimestamp(dateStr) {
+    date = dateStr.substring(0, 19);
+    date = dateStr.replace(/-/g, '/');
+    return new Date(date).getTime();
 }
 
 

@@ -1,6 +1,7 @@
 package com.hades.farm.core.service;
 
 import com.hades.farm.api.view.request.RegisterRequest;
+import com.hades.farm.api.view.request.UpdateUserRequest;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.result.Result;
 
@@ -62,6 +63,23 @@ public interface UserService {
      */
     Result<Void> updatePwd(String phone, String code, String pwd);
 
+    /**
+     * 更新密码
+     *
+     * @param oldPwd
+     * @param pwd
+     * @return
+     */
+    Result<Void> updatePwd(long userId, String oldPwd, String pwd);
+
+    /**
+     * 更新用户
+     *
+     * @param request
+     * @return
+     */
+    Result<Void> updateUser(UpdateUserRequest request);
+
 
     /**
      * 获取自己的徒弟
@@ -72,6 +90,50 @@ public interface UserService {
      * @return
      */
     Result<List<User>> getApprentice(long userId, int page, int num);
+
+    /**
+     * 获取徒弟数量
+     *
+     * @param userId
+     * @return
+     */
+    int getApprenticeCount(long userId);
+
+    /**
+     * 获取徒子
+     *
+     * @param userId
+     * @param page
+     * @param num
+     * @return
+     */
+    Result<List<User>> getSon(long userId, int page, int num);
+
+    /**
+     * 获取徒子数量
+     *
+     * @param userId
+     * @return
+     */
+    int getSonCount(long userId);
+
+    /**
+     * 获取徒孙
+     *
+     * @param userId
+     * @param page
+     * @param num
+     * @return
+     */
+    Result<List<User>> getDisciple(long userId, int page, int num);
+
+    /**
+     * 获取徒孙数量
+     *
+     * @param userId
+     * @return
+     */
+    int getDiscipleCount(long userId);
 
 
 }

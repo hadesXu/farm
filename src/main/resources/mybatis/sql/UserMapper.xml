@@ -91,6 +91,23 @@
         WHERE id = #{userId,jdbcType=BIGINT}
     </update>
 
+    <update id="updateUser">
+        UPDATE t_user
+        <set>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="qq != null">
+                qq = #{qq},
+            </if>
+        </set>
+
+        WHERE id = #{userId,jdbcType=BIGINT}
+    </update>
+
     <update id="updateNameAndImgUrl">
         UPDATE t_user
         SET name =#{name},
@@ -102,14 +119,73 @@
         SELECT
         <include refid="user_columns"></include>
         FROM `t_user`
-        WHERE id = #{userId,jdbcType=BIGINT}
+        WHERE parent_id = #{userId,jdbcType=BIGINT}
     </select>
 
     <select id="getApprenticeCount" resultType="int">
         SELECT
         COALESCE(COUNT(*),0)
         FROM `t_user`
-        WHERE id = #{userId,jdbcType=BIGINT}
+        WHERE parent_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getApprenticeOffset" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE parent_id = #{userId,jdbcType=BIGINT}
+        ORDER BY add_time DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+
+    <select id="getSon" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE parent_id IN(
+        SELECT
+        id
+        FROM `t_user` WHERE
+        parent_id = #{userId,jdbcType=BIGINT}
+        )
+        ORDER BY add_time DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="getSonCount" resultType="int">
+        SELECT
+          COALESCE(COUNT(*),0)
+        FROM `t_user`
+        WHERE parent_id IN(
+        SELECT
+        id
+        FROM `t_user` WHERE
+         parent_id = #{userId,jdbcType=BIGINT}
+        )
+    </select>
+
+
+    <select id="getDisciple" resultMap="user">
+        SELECT
+        <include refid="user_columns"></include>
+        FROM `t_user`
+        WHERE parent_id IN(SELECT id FROM `t_user` WHERE parent_id IN(
+        SELECT id FROM `t_user` WHERE
+        parent_id = #{userId,jdbcType=BIGINT})
+        )
+        ORDER BY add_time DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="getDiscipleCount" resultType="int">
+        SELECT
+        COALESCE(COUNT(*),0)
+        FROM `t_user`
+         WHERE parent_id IN(SELECT id FROM `t_user` WHERE parent_id IN(
+        SELECT id FROM `t_user` WHERE
+        parent_id = #{userId,jdbcType=BIGINT})
+        )
     </select>
 
 </mapper>

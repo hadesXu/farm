@@ -642,7 +642,7 @@ a.bnt_1{ text-align:center; color:#fff}
 .Personal .innercontent1 .name1 span{width:25%; display:block; float:left}
 .name1 ul { width:70%; float:left; height:50px;}
 .name1 ul li { float: left; width:33.3%}
-.name1 ul li input{ display:none}
+/*.name1 ul li input{ display:none}*/
 .name1 ul li label { padding-left: 22px; display: block; height:50px; line-height:50px; background: url(../img/category/select2.png) 0 17px no-repeat; background-size: 15px 87px; color: #989da2; font-size:14px;}
 .name1 ul li.on label { background-position: 0 -27px; }
 

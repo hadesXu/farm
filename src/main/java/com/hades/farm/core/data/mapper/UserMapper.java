@@ -28,6 +28,8 @@ public interface UserMapper {
 
     int updatePwd(@Param("userId") long userId, @Param("pwd") String pwd);
 
+    int updateUser(@Param("userId") long userId, @Param("birth") Long birth, @Param("sex") Integer sex, @Param("qq") String qq);
+
 
     int updateNameAndImgUrl(@Param("userId") long userId, @Param("name") String name, @Param("imgUrl") String imgUrl);
 
@@ -40,10 +42,57 @@ public interface UserMapper {
     List<User> getApprentice(long userId);
 
     /**
+     * 获取徒弟
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<User> getApprenticeOffset(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
      * 获取徒弟数量
      *
      * @param userId
      * @return
      */
     int getApprenticeCount(long userId);
+
+    /**
+     * 获取徒弟
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<User> getSon(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
+     * 获取徒子的数量
+     *
+     * @param userId
+     * @return
+     */
+    int getSonCount(long userId);
+
+    /**
+     * 获取徒孙
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<User> getDisciple(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
+     * 获取徒孙数量
+     *
+     * @param userId
+     * @return
+     */
+    int getDiscipleCount(long userId);
+
 }

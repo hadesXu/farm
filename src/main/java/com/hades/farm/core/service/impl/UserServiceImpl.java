@@ -1,6 +1,7 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.api.view.request.RegisterRequest;
+import com.hades.farm.api.view.request.UpdateUserRequest;
 import com.hades.farm.core.data.entity.TAccountIntegral;
 import com.hades.farm.core.data.entity.TAccountTicket;
 import com.hades.farm.core.data.entity.User;
@@ -18,6 +19,7 @@ import com.hades.farm.utils.Constant;
 import com.hades.farm.utils.NickUtil;
 import com.hades.farm.utils.SystemUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,6 +144,89 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public Result<Void> updatePwd(long userId, String oldPwd, String pwd) {
+        Result<Void> result = Result.newResult();
+        if (!AccountValidatorUtil.isPassword(pwd)) {
+            result.addError(ErrorCode.PWD_FORMAT_ERROR);
+            return result;
+        }
+        User user = userMapper.getUserById(userId);
+        if (user == null) {
+            result.addError(ErrorCode.USER_NOT_EXIST);
+            return result;
+        }
+        if (!StringUtils.equals(user.getPassword(), DigestUtils.md5Hex(oldPwd))) {
+            result.addError(ErrorCode.PASSWORD_INVALID);
+            return result;
+        }
+        int uRes = userMapper.updatePwd(userId, DigestUtils.md5Hex(pwd));
+        if (uRes != Constant.NUMBER_ONE) {
+            result.addError(ErrorCode.UPDATE_ERR);
+            return result;
+        }
+        return result;
+    }
+
+    @Override
+    public Result<Void> updateUser(UpdateUserRequest request) {
+        Result<Void> result = Result.newResult();
+        int uRes = userMapper.updateUser(request.getUserId(), request.getBirth(), Sex.getType(request.getSex()).type, request.getQq());
+        if (uRes != Constant.NUMBER_ONE) {
+            result.addError(ErrorCode.UPDATE_ERR);
+            return result;
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<User>> getApprentice(long userId, int page, int num) {
+        Result<List<User>> result = Result.newResult();
+        int offset = (page - 1) * num;
+        List<User> userList = userMapper.getApprenticeOffset(userId, offset, num);
+        if (CollectionUtils.isNotEmpty(userList)) {
+            result.setData(userList);
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<User>> getSon(long userId, int page, int num) {
+        Result<List<User>> result = Result.newResult();
+        int offset = (page - 1) * num;
+        List<User> userList = userMapper.getSon(userId, offset, num);
+        if (CollectionUtils.isNotEmpty(userList)) {
+            result.setData(userList);
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<User>> getDisciple(long userId, int page, int num) {
+        Result<List<User>> result = Result.newResult();
+        int offset = (page - 1) * num;
+        List<User> userList = userMapper.getDisciple(userId, offset, num);
+        if (CollectionUtils.isNotEmpty(userList)) {
+            result.setData(userList);
+        }
+        return result;
+    }
+
+    @Override
+    public int getApprenticeCount(long userId) {
+        return userMapper.getApprenticeCount(userId);
+    }
+
+    @Override
+    public int getSonCount(long userId) {
+        return userMapper.getSonCount(userId);
+    }
+
+    @Override
+    public int getDiscipleCount(long userId) {
+        return userMapper.getDiscipleCount(userId);
+    }
+
     /**
      * 注册前检查
      *
@@ -175,11 +260,6 @@ public class UserServiceImpl implements UserService {
             return voidResult;
         }
         return result;
-    }
-
-    @Override
-    public Result<List<User>> getApprentice(long userId, int page, int num) {
-        return null;
     }
 
     private User generateUser(RegisterRequest request) {
@@ -228,6 +308,4 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
-
 }

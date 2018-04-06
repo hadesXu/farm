@@ -13,12 +13,12 @@ public class UpdateUserRequest {
     /**
      * 生日
      */
-    private long birth;
+    private Long birth;
 
     /**
      * 性别
      */
-    private int sex;
+    private Integer sex;
 
     /**
      * QQ号
@@ -33,19 +33,19 @@ public class UpdateUserRequest {
         this.userId = userId;
     }
 
-    public long getBirth() {
+    public Long getBirth() {
         return birth;
     }
 
-    public void setBirth(long birth) {
+    public void setBirth(Long birth) {
         this.birth = birth;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

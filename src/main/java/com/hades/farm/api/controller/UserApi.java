@@ -3,6 +3,8 @@ package com.hades.farm.api.controller;
 import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.request.RegisterRequest;
+import com.hades.farm.api.view.request.UpdateUserRequest;
+import com.hades.farm.api.view.response.ApprenticeModel;
 import com.hades.farm.api.view.response.HomeInfoModel;
 import com.hades.farm.api.view.response.UserDetailModel;
 import com.hades.farm.core.data.entity.TAccountIntegral;
@@ -14,6 +16,7 @@ import com.hades.farm.core.service.NoticeService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.result.Result;
 import com.hades.farm.api.view.response.UserModel;
+import com.hades.farm.utils.Constant;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,11 +92,35 @@ public class UserApi {
     }
 
     @RequestMapping(value = "/update/pwd", method = RequestMethod.POST)
-    public ApiResponse login(@RequestParam(required = false, defaultValue = "") String phone,
-                             @RequestParam(required = false, defaultValue = "") String code,
-                             @RequestParam(required = false, defaultValue = "") String pwd) {
+    public ApiResponse updatePwd(@RequestParam(required = false, defaultValue = "") String phone,
+                                 @RequestParam(required = false, defaultValue = "") String code,
+                                 @RequestParam(required = false, defaultValue = "") String pwd) {
         ApiResponse response = new ApiResponse<>();
         Result<Void> registerRes = userService.updatePwd(phone, code, pwd);
+        if (!registerRes.isSuccess()) {
+            response.addError(registerRes.getErrorCodes());
+            return response;
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/update/pwd2", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse duckBreeding(@RequestParam long userId, @RequestParam String oldPwd, @RequestParam String pwd) {
+        ApiResponse response = new ApiResponse<>();
+        Result<Void> registerRes = userService.updatePwd(userId, oldPwd, pwd);
+        if (!registerRes.isSuccess()) {
+            response.addError(registerRes.getErrorCodes());
+            return response;
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/update/user", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse duckBreeding(UpdateUserRequest request) {
+        ApiResponse response = new ApiResponse<>();
+        Result<Void> registerRes = userService.updateUser(request);
         if (!registerRes.isSuccess()) {
             response.addError(registerRes.getErrorCodes());
             return response;
@@ -175,4 +202,42 @@ public class UserApi {
         response.setResult(userConverter.convert(loginRes.getData()));
         return response;
     }
+
+
+    @RequestMapping(value = "/apprentice", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse getApprentice(@RequestParam long userId,
+                                     @RequestParam(required = false, defaultValue = "1") int page,
+                                     @RequestParam(required = false, defaultValue = "20") int num,
+                                     @RequestParam(required = false, defaultValue = "0") int type) {
+        ApiResponse response = new ApiResponse<>();
+        Result<List<User>> result = null;
+        if (type == Constant.NUMBER_ZERO) {
+            result = userService.getApprentice(userId, page, num);
+        } else if (type == Constant.NUMBER_ONE) {
+            result = userService.getSon(userId, page, num);
+        } else {
+            result = userService.getDisciple(userId, page, num);
+        }
+        if (!result.isSuccess()) {
+            response.addError(result.getErrorCodes());
+            return response;
+        }
+        response.setResult(result.getData());
+        return response;
+    }
+
+    @RequestMapping(value = "/apprentice/count", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse getApprentice(@RequestParam long userId) {
+        ApiResponse response = new ApiResponse<>();
+        ApprenticeModel model = new ApprenticeModel();
+        model.setCount(userService.getApprenticeCount(userId));
+        model.setSonCount(userService.getSonCount(userId));
+        model.setDiscipleCount(userService.getDiscipleCount(userId));
+        response.setResult(model);
+        return response;
+    }
+
+
 }
