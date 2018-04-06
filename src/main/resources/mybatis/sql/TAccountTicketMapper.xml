@@ -227,7 +227,7 @@
        SET  balance= balance - #{amount},
                  frozen = frozen + #{amount}
        where user_id = #{userId}
-                and (balance - #{balance,jdbcType=DECIMAL}) >0
+                and (balance - #{amount,jdbcType=DECIMAL}) >0
     </update>
 
 </mapper>

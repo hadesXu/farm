@@ -5,6 +5,7 @@ import com.hades.farm.api.view.request.CodeRequest;
 import com.hades.farm.core.service.CodeService;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.NetUtils;
+import com.langu.authorization.annotation.Auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +53,18 @@ public class CodeApi {
             , @RequestParam(required = false, defaultValue = "0") String code) {
         ApiResponse<Void> response = new ApiResponse<>();
         Result<Void> sendRes = codeService.validPhoneCode(phone, code);
+        if (!sendRes.isSuccess()) {
+            response.addError(sendRes.getErrorCodes());
+            return response;
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/user/code", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse<Void> sendPhoneCode(@RequestParam(required = false, defaultValue = "0") long userId) {
+        ApiResponse<Void> response = new ApiResponse<>();
+        Result<String> sendRes = codeService.getAndSendPhoneCode(userId);
         if (!sendRes.isSuccess()) {
             response.addError(sendRes.getErrorCodes());
             return response;
