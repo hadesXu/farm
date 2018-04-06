@@ -22,6 +22,9 @@ public enum NoticeType {
     ORDER_SELL_DUCK(16,"挂单出售商品鸭","挂单出售num个鸭"),
     ORDER_SELL_EGG(17,"挂单出售商品蛋","挂单出售num个鸭蛋"),
     MASTER_EGG_HOT(18,"给师父蛋加温","成功给师父蛋加温"),
+
+    PAY_STEAL_EGG(19,"支付偷蛋费用","成功支付偷蛋费用"),
+    PAY_STEAL_DUCK(20,"支付偷鸭费用","成功支付偷鸭费用"),
     ;
     private int type;
     private String desc;

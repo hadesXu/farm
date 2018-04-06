@@ -14,7 +14,9 @@ public enum AcctOpreType {
     BROKER_CHARGES(8,"佣金"),
     BUY_DOG(9,"购买看门狗"),
     BUY_ROBOT(10,"购买机器人"),
-    EXCHANGE_GRADE(11,"兑换积分")
+    EXCHANGE_GRADE(11,"兑换积分"),
+    PAY_STEAL_EGG(19,"支付偷蛋费用"),
+    PAY_STEAL_DUCK(20,"支付偷鸭费用")
     ;
     private int type;
     private String desc;

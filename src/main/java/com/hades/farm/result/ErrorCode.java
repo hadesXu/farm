@@ -36,6 +36,7 @@ public enum ErrorCode {
     HAS_FEED(2017, "今日已喂养"),
     BALANCE_NOT_ERR(2018, "您的余额不足哦~"),
     NUM_ILLEGAL(2019, "输入数量非法"),
+    HAS_PAY(2020, "已经支付"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),

@@ -75,7 +75,7 @@
 
             <a href="farm_jyq.htm"><li  class="right_td" style="border:none;">购买鸡蛋</li></a>
 
-            <li class="right_td up-box2" style="border:none;">"偷蛋"</li>
+            <li class="right_td up-box2" style="border:none;" onclick="stealEgg()">"偷蛋"</li>
 
             <li style="text-align:right; width:40px; margin-top:10px; margin-left:30px; position:relative;z-index:999;">
 
@@ -567,12 +567,12 @@
 
                     <li style="font-size:14px;line-height:17px;text-align:center;">
 
-                        <label><input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">20菜票/30天</label><br/>
+                        <label><input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">25菜票/30天</label><br/>
 
-                        <label><input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">40菜票/60天</label><br/>
+                        <label><input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">50菜票/60天</label><br/>
 
-                        <label><input type="radio" name="RadioGroup1" value="3" id="RadioGroup1_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">60菜票/90天</label>
-
+                        <label><input type="radio" name="RadioGroup1" value="3" id="RadioGroup1_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">75菜票/90天</label>
+                        <input type="hidden" id="caipiao">
                     </li>
 
 <!--                    <li style="font-size:12px;text-align:center;">菜票：<input type="text" value="" id="caipiao" name="caipiao" placeholder="0" readonly style="background:none;border:none;width:30px;"></li>
@@ -611,11 +611,11 @@
 
                     <li style="font-size:14px;line-height:17px;text-align:center;">
 
-                        <label><input type="radio" name="RadioGroup2" value="1" id="RadioGroup2_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">200菜票/30天</label><br/>
+                        <label><input type="radio" name="RadioGroup2" value="1" id="RadioGroup2_0" style="width:16px;height:16px; vertical-align:text-bottom;" onFocus="js(1)">40菜票/30天</label><br/>
 
-                        <label><input type="radio" name="RadioGroup2" value="2" id="RadioGroup2_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">400菜票/60天</label><br/>
+                        <label><input type="radio" name="RadioGroup2" value="2" id="RadioGroup2_1" style="width:16px;height:16px;vertical-align:text-bottom;" checked  onFocus="js(2)">80菜票/60天</label><br/>
 
-                        <label><input type="radio" name="RadioGroup2" value="3" id="RadioGroup2_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">600菜票/90天</label>
+                        <label><input type="radio" name="RadioGroup2" value="3" id="RadioGroup2_2" style="width:16px;height:16px;vertical-align:text-bottom;" onFocus="js(3)">120菜票/90天</label>
 
                     </li>
 
@@ -634,90 +634,39 @@
 	<script>
 
 	 	//默认显示菜票
-
-		document.getElementById("caipiao").value=2*'20';
-
-	 
-
+		document.getElementById("caipiao").value=2*'25';
 	 //购买狗看护	
 
 	    function mgkh(act){
-
-			
-
-			var type=$('input:radio[name="RadioGroup1"]:checked').val();//获取单选按钮的值
-
-			var type2=$('input:radio[name="RadioGroup2"]:checked').val();//获取单选按钮的值
-
-			var timess=Date.parse(new Date());
-
-			$.ajax({
-
-			url:'farm_jyq.php?act=mgkh',
-
-			dataType:"JSON",
-
-			async:false,
-
-			type:'POST',
-
-			data:{
-
-				id:act,
-
-				type_mg:type,
-
-				type_csy:type2,
-
-				timess:timess
-
-				},
-
-			success: function(data){
-
-				if(data.status=='true'){
-
-					 //提示
-
-					  layer.open({
-
-						content: data.content
-
-						,skin: 'msg'
-
-						,time: 1.4 //2秒后自动关闭
-
-					  });
-
-					 // alert(data.html);
-
-					 window.location.href=data.html;
-
-					}
-
-				else{
-
-					 //提示
-
-					  layer.open({
-
-						content: data.content
-
-						,skin: 'msg'
-
-						,time: 1.4 //2秒后自动关闭
-
-					  });
-
-					}
-
-				}
-
-				});
-
-			}
-			//乘法解决小数点问题
-
+            if("31" == act){ //狗看护
+                var monthStr =$('input:radio[name="RadioGroup1"]:checked').val();//获取单选按钮的值
+                jsonTokenAjax("/api/order/buyDoorDogOrRobot", "POST", {"monthStr":monthStr,"type":1}, buyDoorDogOrRobotCallBack, errorback);
+            }else if("32" == act){
+                var monthStr=$('input:radio[name="RadioGroup2"]:checked').val();//获取单选按钮的值
+                jsonTokenAjax("/api/order/buyDoorDogOrRobot", "POST", {"monthStr":monthStr,"type":2}, buyDoorDogOrRobotCallBack, errorback);
+            }else{
+                return false;
+            }
+        }
+       function buyDoorDogOrRobotCallBack(data){
+           var result = data.result;
+           if(result.code=='0000'){
+               //提示
+               layer.open({
+                   content: "购买成功"
+                   ,skin: 'msg'
+                   ,time: 1 //2秒后自动关闭
+               });
+               window.setTimeout("window.location='farm_fdc.htm'",1200);
+           } else{
+               //提示
+               layer.open({
+                   content: result.message
+                   ,skin: 'msg'
+                   ,time: 1 //2秒后自动关闭
+               });
+           }
+       }
 		 function accMul(arg1,arg2)  
 
 		 {  
@@ -732,9 +681,9 @@
 
 		 } 
 		 function js(type){
-				if(type==1){document.getElementById("caipiao").value=accMul(1,'20');}
-				if(type==2){document.getElementById("caipiao").value=accMul(2,'20');}
-				if(type==3){document.getElementById("caipiao").value=accMul(3,'20');}
+				if(type==1){document.getElementById("caipiao").value=accMul(1,'25');}
+				if(type==2){document.getElementById("caipiao").value=accMul(2,'25');}
+				if(type==3){document.getElementById("caipiao").value=accMul(3,'25');}
 		}
 
 	 </script>
@@ -824,39 +773,27 @@ function fandan(){
     }
 	//偷蛋第一次进入
     function cc(){
-		var timess=Date.parse(new Date());
-		$.ajax({
-		url:'farm_fdc.php',
-		dataType:"JSON",
-		async:false,
-		type:'POST',
-		data:{
-			act:'dan',
-			id:'666',
-			timess:timess,
-			},
-		success: function(data){
-			if(data.status=='true'){
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				 // alert(data.html);
-				window.setTimeout("window.location='"+data.html+"'",1600);
-				}
-			else{
-				 //提示
-				  layer.open({
-					content: data.content
-					,skin: 'msg'
-					,time: 1.4 //2秒后自动关闭
-				  });
-				}
-			}
-			});
-		}
+        jsonTokenAjax("/api/order/payStealDuckOrEgg", "POST", {"type":1}, payStealEggCallBack, errorback);
+    }
+    function payStealEggCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "支付成功"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_fdc.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+        }
+    }
 //帮师傅加温-给自己加温
 function jiawen(act){
     var warmWho = 2;//给师傅加温
@@ -906,18 +843,31 @@ function warmCallBack(data){
             console.log(result);
             $("#eggSum").html(result.eggDoing);
             $("#eggNum").html(result.egg);
-            if(result.hasDog == 2){
+            TanWind("up-box3", "close", "popup-box3");	//商店弹窗
+            TanWind("up-box4", "close", "popup-box4");	//商店弹窗
+
+            /*if(result.hasDog == 2){
                 TanWind("up-box3", "close", "popup-box3");	//商店弹窗
             }
             if(result.hasRobot == 2){
                 TanWind("up-box4", "close", "popup-box4");	//商店弹窗
-            }
+            }*/
             if(result.sEgg !=2){
                 TanWind("up-box2", "close", "popup-box2");	//商店弹窗
             }
         }else{
 
         }
+    }
+
+    function stealEgg(){
+       if(sEgg == 2){
+           if(ifSteal ==1){
+               alert("跳转到偷蛋列表");
+           }else{
+               alert("今日已偷");
+           }
+       }
     }
 
     function errorback(data) {

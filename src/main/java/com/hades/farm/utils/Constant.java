@@ -6,6 +6,7 @@ import java.math.BigDecimal;
  * Created by xiaoxu on 2018/3/7.
  */
 public class Constant {
+
     public static final int DEFAULT_AGE = 25;
 
     public static final long DEFAULT_ID = 0L;//默认ID
@@ -50,6 +51,10 @@ public class Constant {
     public static final BigDecimal SELL_EGG_RATE = new BigDecimal("0.05");
     //一只鸭的产蛋量
     public static final int PRODUCE_EGGS = 3;
+    //偷蛋需要支付的价格
+    public static final BigDecimal STEAL_EGG_PRICE = new BigDecimal("20");
+    //偷鸭需要支付的价格
+    public static final BigDecimal STEAL_DUCK_PRICE = new BigDecimal("20");
 
 
     public static final String DEFAULT_CODE = "0000";//默认code

@@ -85,12 +85,12 @@ public class User {
     /**
      * 是否有偷蛋权限 值为1（否）、2（是）。默认为否。
      */
-    private int sEgg;
+    private Integer sEgg;
 
     /**
      * 是否有偷鸭权限 值为1（否）、2（是）。默认为否。
      */
-    private int sDuck;
+    private Integer sDuck;
 
     /**
      * 是否有效 值为1（无效）、2（有效）。默认为有效。
@@ -241,19 +241,19 @@ public class User {
         this.isTrainee = isTrainee;
     }
 
-    public int getsEgg() {
+    public Integer getsEgg() {
         return sEgg;
     }
 
-    public void setsEgg(int sEgg) {
+    public void setsEgg(Integer sEgg) {
         this.sEgg = sEgg;
     }
 
-    public int getsDuck() {
+    public Integer getsDuck() {
         return sDuck;
     }
 
-    public void setsDuck(int sDuck) {
+    public void setsDuck(Integer sDuck) {
         this.sDuck = sDuck;
     }
 

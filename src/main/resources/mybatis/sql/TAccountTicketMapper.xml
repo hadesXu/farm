@@ -192,13 +192,13 @@
             balance = balance + #{balance,jdbcType=DECIMAL},
         </if>
         <if test="acctOpreType == 1 or acctOpreType == 2 or acctOpreType == 7
-      or acctOpreType == 9 or acctOpreType == 10 ">
+      or acctOpreType == 9 or acctOpreType == 10 or acctOpreType == 12 or acctOpreType == 13">
             balance = balance - #{balance,jdbcType=DECIMAL},
         </if>
         update_time = now()
         where user_id = #{userId,jdbcType=BIGINT}
         <if test="acctOpreType == 1 or acctOpreType == 2 or acctOpreType == 7
-      or acctOpreType == 9 or acctOpreType == 10 ">
+      or acctOpreType == 9 or acctOpreType == 10 or acctOpreType == 12 or acctOpreType == 13">
             and balance &gt;= #{balance,jdbcType=DECIMAL}
         </if>
     </update>

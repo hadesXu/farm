@@ -26,4 +26,5 @@ public interface OrderService {
 
     boolean publishOrders(PublishOrderRequestDto requestDto) throws BizException;
 
+    boolean payStealDuckOrEgg(long userId,int type) throws BizException;
 }

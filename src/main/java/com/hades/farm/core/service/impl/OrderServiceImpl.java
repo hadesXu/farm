@@ -239,7 +239,7 @@ public class OrderServiceImpl implements OrderService {
         UpdateAccountTicketRequestDto updateAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         updateAccountTicketRequestDto.setUserId(requestDto.getUserId());
         updateAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_DOG.getType());
-        BigDecimal balance = Constant.DOG_PRICE.multiply(new BigDecimal(requestDto.getNum())).divide(new BigDecimal(30));
+        BigDecimal balance = Constant.DOG_PRICE.multiply(new BigDecimal(requestDto.getNum())).divide(new BigDecimal("30"));
         updateAccountTicketRequestDto.setBalance(balance);
         updateCount = tAccountTicketMapper.updateAccountTicket(updateAccountTicketRequestDto);
         if (updateCount != 1) {
@@ -602,6 +602,96 @@ public class OrderServiceImpl implements OrderService {
         tNotice.setUserId(requestDto.getUserId());
         tNotice.setType(NoticeType.BUY_FEED.getType());
         tNotice.setRemarks(NoticeType.BUY_FEED.getRemarks().replace("num", requestDto.getFeedNum() + ""));
+        tNotice.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tNotice);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @param userId
+     * @param type:1-偷蛋费用，2-偷鸭费用
+     * @return
+     * @throws BizException
+     */
+    @Override
+    public boolean payStealDuckOrEgg(long userId,int type) throws BizException{
+        int updateCount = 0;
+        //1.更新t_user
+        User user = userMapper.getUserById(userId);
+        if(type == 1){
+            if(user.getsEgg() == 2){
+                throw new BizException(ErrorCode.HAS_PAY.getCode(),ErrorCode.HAS_PAY.getMessage());
+            }
+        }else{
+            if(user.getsDuck() == 2){
+                throw new BizException(ErrorCode.HAS_PAY.getCode(),ErrorCode.HAS_PAY.getMessage());
+            }
+        }
+        User updateUser = new User();
+        updateUser.setId(userId);
+        if(type == 1){
+            updateUser.setsEgg(2);
+        }else{
+            updateUser.setsDuck(2);
+        }
+        updateCount = userMapper.updateSduckEgg(updateUser);
+        if (updateCount < 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //2.更新账户表
+        TAccountTicket accountTicketBefore = tAccountTicketMapper.queryAccountByUserId(userId);
+        UpdateAccountTicketRequestDto updateAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
+        updateAccountTicketRequestDto.setUserId(userId);
+        BigDecimal balance = null;
+        int operType = 0;
+        String remark = "";
+        if(type == 1){
+            balance = Constant.STEAL_EGG_PRICE;
+            operType = AcctOpreType.PAY_STEAL_EGG.getType();
+            remark = "支付偷蛋费用花费菜票："+balance;
+            updateAccountTicketRequestDto.setBalance(balance);
+            updateAccountTicketRequestDto.setAcctOpreType(operType);
+        }else if(type ==2){
+            balance = Constant.STEAL_DUCK_PRICE;
+            operType = AcctOpreType.PAY_STEAL_DUCK.getType();
+            remark = "支付偷鸭费用花费菜票："+balance;
+            updateAccountTicketRequestDto.setBalance(balance);
+            updateAccountTicketRequestDto.setAcctOpreType(operType);
+        }else{
+            throw new BizException(-1,"类型错误");
+        }
+        updateCount = tAccountTicketMapper.updateAccountTicket(updateAccountTicketRequestDto);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.TICKET_NO_ENOUGH);
+        }
+        //3.账户流水
+        TAccountTicketFlow accountTicketFlow = new TAccountTicketFlow();
+        accountTicketFlow.setUserId(userId);
+        accountTicketFlow.setType(operType);
+        accountTicketFlow.setAmount(balance);
+        accountTicketFlow.setAmountBefore(accountTicketBefore.getBalance());
+        accountTicketFlow.setAmountAfter(accountTicketBefore.getBalance().subtract(balance));
+        accountTicketFlow.setRemarks(remark);
+        accountTicketFlow.setAddTime(new Date());
+        updateCount = tAccountTicketFlowMapper.insertSelective(accountTicketFlow);
+        if (updateCount < 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //4.t_notice
+        TNotice tNotice = new TNotice();
+        tNotice.setUserId(userId);
+
+        if(type == 1){
+            tNotice.setType(NoticeType.PAY_STEAL_EGG.getType());
+            tNotice.setRemarks(NoticeType.PAY_STEAL_EGG.getRemarks());
+        }else{
+            tNotice.setType(NoticeType.PAY_STEAL_DUCK.getType());
+            tNotice.setRemarks(NoticeType.PAY_STEAL_DUCK.getRemarks());
+        }
         tNotice.setAddTime(new Date());
         updateCount = tNoticeMapper.insertSelective(tNotice);
         if (updateCount != 1) {

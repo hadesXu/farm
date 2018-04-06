@@ -188,4 +188,19 @@
         )
     </select>
 
+    <update id="updateSduckEgg" parameterType="com.hades.farm.core.data.entity.User">
+        update  t_user
+        set
+        <if test="sDuck != null">
+            s_duck = #{sDuck,jdbcType=INTEGER},
+        </if>
+        <if test="sEgg != null">
+            s_egg = #{sEgg,jdbcType=INTEGER},
+        </if>
+        update_time = now()
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+
 </mapper>

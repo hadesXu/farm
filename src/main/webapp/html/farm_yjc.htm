@@ -1057,6 +1057,7 @@
         if(sDuck == 2){
            if(ifSteal ==1){
               //跳转到偷鸭页面
+               alert("跳转偷鸭页面");
            }else{
               alert("今日已偷");
            }
@@ -1173,8 +1174,31 @@
         if(act == 'wy'){
             //喂养
             jsonTokenAjax("/api/farm/feeding", "POST", {}, feedingCallBack, feedingErrorback);
+        }else if(act == "tjc"){
+            jsonTokenAjax("/api/order/payStealDuckOrEgg", "POST", {"type":2}, payStealDuckCallBack, errorback);
         }
     }
+
+    function payStealDuckCallBack(data){
+        var result = data.result;
+        if(result.code=='0000'){
+            //提示
+            layer.open({
+                content: "支付成功"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+            window.setTimeout("window.location='farm_fdc.htm'",1200);
+        } else{
+            //提示
+            layer.open({
+                content: result.message
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
+        }
+    }
+
     function feedingCallBack(data){
         var result = data.result;
         if(result.code=='0000'){

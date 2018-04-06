@@ -95,4 +95,6 @@ public interface UserMapper {
      */
     int getDiscipleCount(long userId);
 
+    int updateSduckEgg(User user);
+
 }

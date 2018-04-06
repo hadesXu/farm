@@ -169,6 +169,68 @@ public class OrderController {
         return response;
     }
 
+    @RequestMapping(value = "/buyDoorDogOrRobot", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<MsgModel> buyDoorDogOrRobot(@RequestParam long userId,@RequestParam String monthStr,@RequestParam String type){
+        ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        try {
+            //校验month
+            ErrorCode errorCode = NumUtil.validateInteger(monthStr);
+            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+                msgModel.setCode(errorCode.getCode());
+                msgModel.setMessage(errorCode.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+            if(!"1".equals(monthStr) && !"2".equals(monthStr) && !"3".equals(monthStr)){
+                msgModel.setCode(ErrorCode.NUM_ILLEGAL.getCode());
+                msgModel.setMessage(ErrorCode.NUM_ILLEGAL.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+            BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
+            requestDto.setNum(Integer.parseInt(monthStr)*30);//天数
+            requestDto.setUserId(userId);
+            if("1".equals(type)){
+                orderService.buyDoorDog(requestDto);
+            }else{
+                orderService.buyRobot(requestDto);
+            }
+        }catch (BizException e){
+            msgModel.setCode(e.getErrCode());
+            msgModel.setMessage(e.getErrMessage());
+        }
+        response.setResult(msgModel);
+        return response;
+    }
 
+    /**
+     * 支付偷蛋或偷鸭费用
+     * @param userId
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "/payStealDuckOrEgg", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<MsgModel> payStealDuckOrEgg(@RequestParam long userId,@RequestParam String type){
+        ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        try {
+            ErrorCode errorCode = NumUtil.validateInteger(type);
+            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+                msgModel.setCode(errorCode.getCode());
+                msgModel.setMessage(errorCode.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+             orderService.payStealDuckOrEgg(userId,Integer.parseInt(type));
+        }catch (BizException e){
+            msgModel.setCode(e.getErrCode());
+            msgModel.setMessage(e.getErrMessage());
+        }
+        response.setResult(msgModel);
+        return response;
+    }
 
 }
