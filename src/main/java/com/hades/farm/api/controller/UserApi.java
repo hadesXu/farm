@@ -4,6 +4,7 @@ import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.api.view.response.HomeInfoModel;
+import com.hades.farm.api.view.response.UserDetailModel;
 import com.hades.farm.core.data.entity.TAccountIntegral;
 import com.hades.farm.core.data.entity.TAccountTicket;
 import com.hades.farm.core.data.entity.TNotice;
@@ -160,6 +161,18 @@ public class UserApi {
         infoModel.setBalance(result.getData().getBalance());
         infoModel.setIntegral(integralResult.getData().getBalance());
         response.setResult(infoModel);
+        return response;
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ApiResponse<UserDetailModel> getDetail(@RequestParam(required = false, defaultValue = "0") long userId) {
+        ApiResponse<UserDetailModel> response = new ApiResponse<>();
+        Result<User> loginRes = userService.get(userId);
+        if (!loginRes.isSuccess()) {
+            response.addError(loginRes.getErrorCodes());
+            return response;
+        }
+        response.setResult(userConverter.convert(loginRes.getData()));
         return response;
     }
 }

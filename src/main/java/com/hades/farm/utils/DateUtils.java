@@ -10,6 +10,11 @@ import java.util.Date;
  * Created by zhengzl on 2018/3/14.
  */
 public class DateUtils {
+    public static final long SECOND = 1000;
+    public static final long MINUTES = SECOND * 60;
+    public static final long HOUR = 60 * MINUTES;
+    public static final long DAY = 24 * HOUR;
+    public static final long YEAR = 365 * DAY;
     public static ThreadLocal<DateFormat> YYYY_MM_DD_MM_HH_SS = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {

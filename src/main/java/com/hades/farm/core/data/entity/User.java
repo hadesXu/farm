@@ -28,6 +28,21 @@ public class User {
     private String password;
 
     /**
+     * 性别
+     */
+    private int sex;
+
+    /**
+     * 生日
+     */
+    private long birth;
+
+    /**
+     * QQ
+     */
+    private String qq;
+
+    /**
      * 微信key
      */
     private String wechat;
@@ -136,6 +151,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public long getBirth() {
+        return birth;
+    }
+
+    public void setBirth(long birth) {
+        this.birth = birth;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 
     public String getWechat() {

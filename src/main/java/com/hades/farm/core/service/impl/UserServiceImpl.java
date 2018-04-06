@@ -10,6 +10,7 @@ import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.service.CodeService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.enums.Grade;
+import com.hades.farm.enums.Sex;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.AccountValidatorUtil;
@@ -186,6 +187,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(DigestUtils.md5Hex(request.getPwd()));
         user.setGrade(Grade.APPRENTICE.getType());
         user.setAddTime(new Date());
+        user.setSex(Sex.UNDEFINED.type);
+        user.setBirth(SystemUtil.defaultBirth());
         if (request.getParentId() != null) {
             User parentUser = userMapper.getUserById(request.getParentId());
             if (parentUser != null) {

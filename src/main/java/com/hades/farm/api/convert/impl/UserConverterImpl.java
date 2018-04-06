@@ -1,10 +1,12 @@
 package com.hades.farm.api.convert.impl;
 
 import com.hades.farm.api.convert.UserConverter;
+import com.hades.farm.api.view.response.UserDetailModel;
 import com.hades.farm.api.view.response.UserModel;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.result.Result;
+import com.hades.farm.utils.SystemUtil;
 import com.hades.farm.web.config.WeChatConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,5 +50,17 @@ public class UserConverterImpl implements UserConverter {
             }
         }
         return userModel;
+    }
+
+    @Override
+    public UserDetailModel convert(User user) {
+        UserDetailModel model = new UserDetailModel();
+        model.setBirth(user.getBirth());
+        model.setSex(user.getSex());
+        model.setName(user.getName());
+        model.setQq(user.getQq());
+        model.setTelephone(SystemUtil.replacePhone(user.getTelephone()));
+        model.setUserId(user.getId());
+        return model;
     }
 }

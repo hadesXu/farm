@@ -6,6 +6,7 @@ import java.math.BigDecimal;
  * Created by xiaoxu on 2018/3/7.
  */
 public class Constant {
+    public static final int DEFAULT_AGE = 25;
 
     public static final long DEFAULT_ID = 0L;//默认ID
     public static final int NUMBER_MINUS_ONE = -1;//数字-1
