@@ -2,6 +2,9 @@ package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.dto.requestDto.UpdateAccountTicketRequestDto;
 import com.hades.farm.core.data.entity.TAccountTicket;
+import org.apache.ibatis.annotations.Param;
+
+import java.math.BigDecimal;
 
 public interface TAccountTicketMapper {
     /**
@@ -57,4 +60,6 @@ public interface TAccountTicketMapper {
     TAccountTicket queryAccountByUserId(long userId);
 
     int incUserAccount(TAccountTicket record);
+
+    int withdraw(@Param("userId") long userId, @Param("amount") BigDecimal amount);
 }

@@ -222,4 +222,12 @@
                 and (balance + #{balance,jdbcType=DECIMAL}) >0
   </update>
 
+    <update id="withdraw">
+       UPDATE t_account_ticket
+       SET  balance= balance - #{amount},
+                 frozen = frozen + #{amount}
+       where user_id = #{userId}
+                and (balance - #{balance,jdbcType=DECIMAL}) >0
+    </update>
+
 </mapper>
