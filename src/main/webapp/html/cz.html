@@ -1,163 +1,1 @@
-<!DOCTYPE html >
-<html>
-<head>
-	<meta name="Generator" content="ECSHOP v2.7.3" />
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>充值</title>
-	<meta name="Keywords" content="" />
-	<meta name="Description" content="" />
-	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-	
-	<link href="../css/qui.css" rel="stylesheet">
-	<link href="../css/style.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="../css/public.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/user.css"/> 
-	<script type="text/javascript" src="../js/jquery.js"></script>
-	<script type="text/javascript" src="../js/jquery.more.js"></script>
-	<script type="text/javascript" src="../js/jquery.json.js"></script>
-	<script type="text/javascript" src="../js/transport.js"></script>
-	<script type="text/javascript" src="../js/common.js"></script>
-	<script type="text/javascript" src="../js/utils.js"></script>
-	<script type="text/javascript" src="../js/shopping_flow.js"></script>
-</head>
-<body class="body_bj">
-
-<style>
-	.e_detail header ul{width:89%;margin-left:4%;background:none;}
-	.m-desc{width:89%;margin-left:4%;}
-	.Member_more{background:none;}
-	.Member_more dd p{height:60px;line-height:50px;color:#fff;}
-	.yjjl{width:89%;margin-top:16%;margin-left:4%;position:fixed;font-size:14px;}
-	.yjjl ul{margin:0;padding:0;list-style:none;}
-	.yjjl ul li{float:left;height:40px;line-height:40px;text-align:center;color:#fff;}
-	
-	.yjjl_nr{width:89%;margin-top:30%;margin-left:4%;font-size:14px;}
-	.yjjl_nr ul{margin:0;padding:0;list-style:none;}
-	.yjjl_nr ul li{float:left;height:40px;line-height:40px;text-align:center;color:#fff;}
-	.yjjl_1{width:35%;}.yjjl_2{width:45%;}.yjjl_3{width:20%;}
-	.td{width:87%;height:85%;position:absolute;top:9%;margin-left:5%;}
-</style>
-<div class="warp-page" style=" background:url(../img/listbox.jpg) no-repeat; background-size:100% 100%;">
- 		
-    <div class="warp-page" style=" background:url(../img/jyjl_bg.png) no-repeat; background-size:98% 98%;margin-left:2%;">
-             
-        <div style="position:fixed;z-index:999;">
-            <img src="../img/bg_top.png" style="width:100%;">
-        </div>
-       
-        <div style="position:fixed;z-index:999;">
-              <img src="../img/cz_top.png" style="width:97.7%;margin-right:10px;">
-        </div>
-   
-                
-                <div style="position:fixed;top:6px;text-align:center;right:0;z-index:999;">
-            <a href="javascript:history.back(-1)"><img src="../img/close.png" style="width:40px;height:40px;margin-right:10px;"></a>
-        </div>
-			
-	    <header>
-	      	<div class="tab_nav">
-	       		<div class="header">
-	          		<div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
-	         		 <div class="h-mid">在线充值</div>
-			        <div class="h-right">
-			            <aside class="top_bar">
-			              <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
-			            </aside>
-			        </div>
-	        	</div>
-	        </div>
-	    </header>
-      
-      
-       	<script type="text/javascript" src="../js/mobile.js" ></script>
-		<div class="goods_nav hid" id="menu">
-	        <div class="Triangle">
-	          <h2></h2>
-	        </div>
-	        <ul>
-	          <li><a href="farm_shopping.php"><span class="menu1"></span><i>首页</i></a></li>
-	          <!--<li><a href="catalog.php"><span class="menu2"></span><i>分类</i></a></li>
-	          <li><a href="flow.php"><span class="menu3"></span><i>购物车</i></a></li>-->
-	          <li style=" border:0;"><a href="user.php"><span class="menu4"></span><i>个人信息</i></a></li>
-	        </ul>
-        </div> 
-		<div id="tbh5v0"   class="profile td" >																						                                
-	        <style>
-				.profile{top:12% !important;z-index:999;}
-			</style>
-			<form name="formSurplus" method="post" action="user.php" onSubmit="return submitSurplus()">
-		
-			<div class="recharge">
-				<dl class="re_one">
-					<dt>充值金额:</dt>
-					<dd>
-						<input type="text" name="amount" value="" placeholder="今日单次最高10000" />
-						<font style=" font-size:14px; color:#666"></font>
-					</dd>
-				</dl>
-			<!--<dl class="re_two">
-			<dt>会员备注:</dt>
-			<dd><textarea name="user_note" rows="6"></textarea></dd>
-			</dl>-->
-				<div class="re_st">
-					<h2>支付方式:</h2>
-					<!--<a href="farm_openid.php">充值前请先点击获取微信openid</a>-->
-					<!--<dt><i><input type="radio" name="payment_id" class="f_checkbox_t" readonly value="30" /></i>微信支付3.0<em>&nbsp;&nbsp;</em></dt>
-					-->
-					<!--<dt><i><input type="radio" name="payment_id" class="f_checkbox_t" checked="checked" value="96" /></i>微信转账充值1.0<em>&nbsp;&nbsp;</em></dt>
-					
-					-->
-					<dt style=""><i><input  type="radio" name="payment_id" class="f_checkbox_t" checked="checked"   value="31" /></i>微信支付3.0 <em>&nbsp;&nbsp;</em></dt>
-					<!--
-					<dt style="display:none;"><i><input  type="radio" name="payment_id" class="f_checkbox_t"   value="30" /></i>微信支付3.0  <em>&nbsp;&nbsp;</em></dt>
-					-->
-					<dl>
-					<dt style="display:none;"><i><input type="radio" name="payment_id" class="f_checkbox_t" value="7" /></i><em>微信支付&nbsp;&nbsp;</em></dt>
-					
-					
-					</dl>
-					<span>
-						<input type="hidden" name="surplus_type" value="0" />
-						<input type="hidden" name="rec_id" value="" />
-						<input type="hidden" name="act" value="act_account2" />
-						<input type="submit" class="bnt_1" name="submit" value="提交申请" />
-						<input type="reset" class="bnt_1" name="reset" value="重置表单" />
-					</span>
-				</div>						
-				<div style="margin:20px; font-size:12px; text-align:center; color:#8a8a8a;">
-				    <span >忘记写ID请在公众号截图ID和充值记录联系客服。</span><br/>   
-				</div>			 			 
-			</div>
-		</form>
-		 
-		  
-		
-		 
-		
-			<script>
-				function goTop(){
-					$('html,body').animate({'scrollTop':0},600);
-				}
-			</script>
-		<!-- 返回图标  <a href="javascript:goTop();" class="gotop"><img src="../img/topup.png"></a> -->                               
-		                		                                                		                
-		</div>
-
-	</div>
-</div>
-
-<script language="javascript">
-$(function(){ 
-$('input[type=text],input[type=password]').bind({ 
-focus:function(){ 
- $(".global-nav").css("display",'none'); 
-}, 
-blur:function(){ 
- $(".global-nav").css("display",'flex'); 
-} 
-}); 
-}) 
-</script>
-</body>
-</html>
+<!DOCTYPE html ><html><head>    <meta name="Generator" content="ECSHOP v2.7.3"/>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width">    <title>充值</title>    <meta name="Keywords" content=""/>    <meta name="Description" content=""/>    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>    <link href="../css/qui.css" rel="stylesheet">    <link href="../css/style.css" rel="stylesheet">    <link rel="stylesheet" type="text/css" href="../css/public.css"/>    <link rel="stylesheet" type="text/css" href="../css/user.css"/>    <script type="text/javascript" src="../js/jquery.js"></script>    <script type="text/javascript" src="../js/jquery.more.js"></script>    <script type="text/javascript" src="../js/jquery.json.js"></script>    <script type="text/javascript" src="../js/transport.js"></script>    <script type="text/javascript" src="../js/common.js"></script>    <script type="text/javascript" src="../js/utils.js"></script>    <script type="text/javascript" src="../js/shopping_flow.js"></script>    <script type="text/javascript" src="../js/jquery.js"></script>    <script type="text/javascript" src="../js/main.js"></script>    <script>        $(function () {            checkLogin();            jsonTokenAjax("/api/pay/item", "GET", {}, callBack, errorback);            $("#checkRecharge").click(function () {                var itemId = $('#payItem').find('option:selected').attr('selected', 'selected').val();                if (checkNull(itemId)) {                    alert("请选择充值面额!");                    return;                }                jsonTokenAjax("/api/pay/place", "GET", {"itemId": itemId}, callBackRecharge, errorback);            });        });        function callBackRecharge(data) {            if (data.status == 1) {                alert("申请成功");                location.href = "v_user.html"            } else {                callBackError(data);            }        }        function callBack(data) {            if (data.status == 1) {                var innerHtml = "";                $.each(data.result, function (index, value, array) {                    innerHtml += "<option value='" + value.itemId + "'>" + value.price + "元&nbsp;&nbsp;" + value.remarks + "</option>";                });                $("#payItem").append(innerHtml);            } else {                callBackError(data);            }        }    </script></head><body class="body_bj"><style>    .e_detail header ul {        width: 89%;        margin-left: 4%;        background: none;    }    .m-desc {        width: 89%;        margin-left: 4%;    }    .Member_more {        background: none;    }    .Member_more dd p {        height: 60px;        line-height: 50px;        color: #fff;    }    .yjjl {        width: 89%;        margin-top: 16%;        margin-left: 4%;        position: fixed;        font-size: 14px;    }    .yjjl ul {        margin: 0;        padding: 0;        list-style: none;    }    .yjjl ul li {        float: left;        height: 40px;        line-height: 40px;        text-align: center;        color: #fff;    }    .yjjl_nr {        width: 89%;        margin-top: 30%;        margin-left: 4%;        font-size: 14px;    }    .yjjl_nr ul {        margin: 0;        padding: 0;        list-style: none;    }    .yjjl_nr ul li {        float: left;        height: 40px;        line-height: 40px;        text-align: center;        color: #fff;    }    .yjjl_1 {        width: 35%;    }    .yjjl_2 {        width: 45%;    }    .yjjl_3 {        width: 20%;    }    .td {        width: 87%;        height: 85%;        position: absolute;        top: 9%;        margin-left: 5%;    }</style><div class="warp-page" style=" background:url(../img/listbox.jpg) no-repeat; background-size:100% 100%;">    <div class="warp-page"         style=" background:url(../img/jyjl_bg.png) no-repeat; background-size:98% 98%;margin-left:2%;">        <div style="position:fixed;z-index:999;">            <img src="../img/bg_top.png" style="width:100%;">        </div>        <div style="position:fixed;z-index:999;">            <img src="../img/cz_top.png" style="width:97.7%;margin-right:10px;">        </div>        <div style="position:fixed;top:6px;text-align:center;right:0;z-index:999;">            <a href="javascript:history.back(-1)"><img src="../img/close.png"                                                       style="width:40px;height:40px;margin-right:10px;"></a>        </div>        <header>            <div class="tab_nav">                <div class="header">                    <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>                    <div class="h-mid">在线充值</div>                    <div class="h-right">                        <aside class="top_bar">                            <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a                                    href="javascript:;"></a></div>                        </aside>                    </div>                </div>            </div>        </header>        <script type="text/javascript" src="../js/mobile.js"></script>        <div class="goods_nav hid" id="menu">            <div class="Triangle">                <h2></h2>            </div>            <ul>                <li><a href="farm_shopping.php"><span class="menu1"></span><i>首页</i></a></li>                <!--<li><a href="catalog.php"><span class="menu2"></span><i>分类</i></a></li>                <li><a href="flow.php"><span class="menu3"></span><i>购物车</i></a></li>-->                <li style=" border:0;"><a href="user.php"><span class="menu4"></span><i>个人信息</i></a></li>            </ul>        </div>        <div id="tbh5v0" class="profile td">            <style>                .profile {                    top: 12% !important;                    z-index: 999;                }            </style>            <div class="recharge">                <dl class="re_one">                    <dt>充值金额:</dt>                    <dd>                        <select name="payItem" id="payItem">                            <option value="">请选择充值面额</option>                        </select>                    </dd>                </dl>                <!--<dl class="re_two">                <dt>会员备注:</dt>                <dd><textarea name="user_note" rows="6"></textarea></dd>                </dl>-->                <div class="re_st">                    <h2>支付方式:</h2>                    <!--<a href="farm_openid.php">充值前请先点击获取微信openid</a>-->                    <!--<dt><i><input type="radio" name="payment_id" class="f_checkbox_t" readonly value="30" /></i>微信支付3.0<em>&nbsp;&nbsp;</em></dt>                    -->                    <!--<dt><i><input type="radio" name="payment_id" class="f_checkbox_t" checked="checked" value="96" /></i>微信转账充值1.0<em>&nbsp;&nbsp;</em></dt>                    -->                    <dt style=""><i><input type="radio" name="payment_id" class="f_checkbox_t" checked="checked"                                           value="31"/></i>微信支付3.0 <em>&nbsp;&nbsp;</em></dt>                    <!--                    <dt style="display:none;"><i><input  type="radio" name="payment_id" class="f_checkbox_t"   value="30" /></i>微信支付3.0  <em>&nbsp;&nbsp;</em></dt>                    -->                    <dl>                        <dt style="display:none;"><i><input type="radio" name="payment_id" class="f_checkbox_t"                                                            value="7"/></i><em>微信支付&nbsp;&nbsp;</em></dt>                    </dl>                    <span>						<input type="hidden" name="surplus_type" value="0"/>						<input type="hidden" name="rec_id" value=""/>						<input type="hidden" name="act" value="act_account2"/>						<input type="button" class="bnt_1" name="submit" value="提交申请" id="checkRecharge"/>                        <!--<input type="reset" class="bnt_1" name="reset" value="重置表单"/>-->					</span>                </div>                <div style="margin:20px; font-size:12px; text-align:center; color:#8a8a8a;">                    <span>忘记写ID请在公众号截图ID和充值记录联系客服。</span><br/>                </div>            </div>            <script>                function goTop() {                    $('html,body').animate({'scrollTop': 0}, 600);                }            </script>            <!-- 返回图标  <a href="javascript:goTop();" class="gotop"><img src="../img/topup.png"></a> -->        </div>    </div></div><script language="javascript">    $(function () {        $('input[type=text],input[type=password]').bind({            focus: function () {                $(".global-nav").css("display", 'none');            },            blur: function () {                $(".global-nav").css("display", 'flex');            }        });    })</script></body></html>

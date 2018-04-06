@@ -43,10 +43,11 @@ public enum ErrorCode {
     PHONE_EXIST(3003, "手机号已注册"),
     WECHAT_EXIST(3004, "微信号已注册"),
     PHONE_CODE_REQUEST_FREQ(3005, "验证码请求太频繁"),
-    PHONE_CODE_INVALID(10007, "验证码错误"),
-    USER_NOT_EXIST(10008, "用户不存在"),
-    PASSWORD_INVALID(10009, "密码不正确"),
-    RELATION_NOT_EXIST(10010, "关系不存在"),
+    PHONE_CODE_INVALID(3006, "验证码错误"),
+    USER_NOT_EXIST(3007, "用户不存在"),
+    PASSWORD_INVALID(3008, "密码不正确"),
+    RELATION_NOT_EXIST(3009, "关系不存在"),
+    ITEM_NOT_EXIST(3007, "商品不存在"),
 
 
     SUCCESS(0000, "成功");
