@@ -163,7 +163,7 @@
     <select id="findAccountRecord" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from t_account_integral
+        from t_account_integral_flow
         WHERE
         user_id = #{userId,jdbcType=BIGINT}
         ORDER BY add_time DESC

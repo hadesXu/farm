@@ -11,6 +11,11 @@ public class DealRecordModel {
     private String timeStr;
 
     /**
+     * 类型
+     */
+    private String typeStr;
+
+    /**
      * 值描述
      */
     private String valueStr;
@@ -26,6 +31,14 @@ public class DealRecordModel {
 
     public void setTimeStr(String timeStr) {
         this.timeStr = timeStr;
+    }
+
+    public String getTypeStr() {
+        return typeStr;
+    }
+
+    public void setTypeStr(String typeStr) {
+        this.typeStr = typeStr;
     }
 
     public String getValueStr() {

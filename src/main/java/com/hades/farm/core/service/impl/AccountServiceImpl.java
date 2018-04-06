@@ -131,7 +131,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Result<List<TAccountIntegralFlow>> findIntegralRecord(long userId, int page, int num) {
         Result<List<TAccountIntegralFlow>> result = Result.newResult();
-        List<TAccountIntegralFlow> integrals = tAccountIntegralFlowMapper.findAccountRecord(userId, page, num);
+        int offset = (page - 1) * num;
+        List<TAccountIntegralFlow> integrals = tAccountIntegralFlowMapper.findAccountRecord(userId, offset, num);
         if (CollectionUtils.isNotEmpty(integrals)) {
             result.setData(integrals);
         }
@@ -141,8 +142,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Result<List<TAccountTicketFlow>> findTicketRecord(long userId, int page, int num) {
         Result<List<TAccountTicketFlow>> result = Result.newResult();
-
-        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findTicketRecord(userId, page, num);
+        int offset = (page - 1) * num;
+        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findTicketRecord(userId, offset, num);
         if (CollectionUtils.isNotEmpty(flows)) {
             result.setData(flows);
         }
@@ -152,7 +153,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Result<List<TAccountTicketFlow>> findAccountRecord(long userId, int page, int num) {
         Result<List<TAccountTicketFlow>> result = Result.newResult();
-        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findAccountRecord(userId, page, num);
+        int offset = (page - 1) * num;
+        List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findAccountRecord(userId, offset, num);
         if (CollectionUtils.isNotEmpty(flows)) {
             result.setData(flows);
         }

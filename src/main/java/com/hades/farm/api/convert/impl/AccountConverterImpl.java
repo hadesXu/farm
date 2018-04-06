@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,11 +57,14 @@ public class AccountConverterImpl implements AccountConverter {
         if (CollectionUtils.isEmpty(tAccountTicketFlows)) return null;
         List<DealRecordModel> models = new ArrayList<>();
         DealRecordModel model = null;
+        BigDecimal bigDecimal = BigDecimal.ZERO;
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new DealRecordModel();
             model.setTimeStr(DateUtils.getDayYYYY_MM_DDStr(tAccountTicketFlow.getAddTime()));
             model.setDesc(tAccountTicketFlow.getRemarks());
-            model.setValueStr(tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore()).toString());
+            bigDecimal = tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore());
+            model.setTypeStr(bigDecimal.compareTo(BigDecimal.ZERO) >= 0 ? "增加" : "扣除");
+            model.setValueStr(bigDecimal.toString());
             models.add(model);
         }
         return models;
