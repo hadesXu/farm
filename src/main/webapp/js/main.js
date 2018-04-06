@@ -4,7 +4,7 @@ var userId = localStorage.getItem("userId");
 var serverUrl = "http://127.0.0.1:8098";
 //校验登录
 function checkLogin() {
-    if (checkNull(userId) || checkNull(token) || userId<1) {
+    if (checkNull(userId) || checkNull(token) || userId < 1) {
         location.href = "v_user-login.htm"
     }
 }
@@ -141,5 +141,40 @@ function formatDateTime(inputTime) {
     // return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
     return m + '-' + d + ' ' + h + ':' + minute;
 };
+
+function footerHtml() {
+    var innerHtml = "";
+    innerHtml += "<div class='tools' style='width:86%;'>";
+    innerHtml += " <ul class='tool-ul clearfix' style='top:-20%;'>";
+    innerHtml += "   <li class='tools04'>";
+    innerHtml += "      <a href='index.html' tppabs='javascript:;'>";
+    innerHtml += "           <img src='../img/wdnc.png' tppabs='javascript:;'>";
+    innerHtml += "        </a>";
+    innerHtml += "   </li>";
+    innerHtml += "    <li class='tools04'>";
+    innerHtml += "       <a href='farm_ck.html'>";
+    innerHtml += "           <img src='../img/wdck.png' tppabs='javascript:;'>";
+    innerHtml += "        </a>";
+    innerHtml += "     </li>";
+    innerHtml += "     <li class='tools04 up-open'>";
+    innerHtml += "     <a href='farm_jyq.htm'>";
+    innerHtml += "           <img src='../img/jyq.png' tppabs='javascript:;'>";
+    innerHtml += "        </a>";
+    innerHtml += "     </li>";
+    innerHtml += "     <li class='tools04'>";
+    innerHtml += "     <a href='javascript:;'>";
+    innerHtml += "           <img src='../img/gwsc.png' tppabs='javascript:;'>";
+    innerHtml += "        </a>";
+    innerHtml += "    </li>";
+    innerHtml += "    <li class='tools04'> ";
+    innerHtml += "        <a href='v_user.html' tppabs='javascript:;'>  ";
+    innerHtml += "            <img src='../img/grxx.png' tppabs='javascript:;'> ";
+    innerHtml += "           </a> ";
+    innerHtml += "    </li> ";
+    innerHtml += "  </ul> ";
+    innerHtml += "</div> ";
+    return innerHtml;
+
+}
 
 

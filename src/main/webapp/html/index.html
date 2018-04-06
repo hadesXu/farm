@@ -72,38 +72,7 @@
         </div>
 
     </div>
-
-
-    <div class="page-footer" style="z-index:999; ">
-        <div class="tools" style="width:86%;">
-            <ul class="tool-ul clearfix" style="top:-20%;">
-                <li class="tools04">
-                    <a href="#" tppabs="javascript:;">
-                        <img src="../img/wdnc.png" tppabs="javascript:;">
-                    </a>
-                </li>
-                <li class="tools04">
-                    <a href="farm_ck.html">
-                        <img src="../img/wdck.png" tppabs="javascript:;">
-                    </a>
-                </li>
-                <li class="tools04 up-open">
-                    <a href="farm_jyq.htm">
-                        <img src="../img/jyq.png" tppabs="javascript:;">
-                    </a>
-                </li>
-                <li class="tools04">
-                    <a href="javascript:;">
-                        <img src="../img/gwsc.png" tppabs="javascript:;">
-                    </a>
-                </li>
-                <li class="tools04">
-                    <a href="v_user.html" tppabs="javascript:;">
-                        <img src="../img/grxx.png" tppabs="javascript:;">
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="page-footer" style="z-index:999; " id="page-footer">　
     </div>
     <script src="../js/layer.js" tppabs="JavaScript:;"></script>
     <!--<script>
@@ -131,6 +100,7 @@
 <script src="../js/main.js" tppabs="javascript:;"></script>
 <script language="javascript">
     $(function () {
+        $("#page-footer").html(footerHtml())
         var theRequest = GetRequest();
         if (theRequest != null) {
             if (!checkNull(theRequest.source)) {

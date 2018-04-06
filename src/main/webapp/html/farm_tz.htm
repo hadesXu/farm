@@ -24,6 +24,7 @@
     <script>
         $(function () {
             checkLogin();
+            $("#page-footer").html(footerHtml());
             jsonTokenAjax("/api/user/notice", "GET", {}, callBack, errorback);
         });
         function callBack(data) {
@@ -220,38 +221,7 @@
 
     </div>
 
-
-    <div class="page-footer" style="z-index:999; ">
-
-        <div class="tools" style="width:86%;">
-
-            <ul class="tool-ul clearfix" style="top:-20%;">
-
-                <li class="tools04"><a href="index.html" tppabs="javascript:;">
-
-                    <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>
-
-                <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
-
-                    <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
-
-                <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
-
-                    <img src="../img/jyq.png" tppabs="javascript:;"></a></li>
-
-                <li class="tools04"><a href="farm_shopping.php-act=list.htm" tppabs="javascript:;">
-
-                    <img src="../img/gwsc.png" tppabs="javascript:;"></a></li>
-
-                <li class="tools04"><a href="v_user.html" tppabs="javascript:;">
-
-                    <img src="../img/grxx.png" tppabs="javascript:;"></a></li>
-
-
-            </ul>
-
-        </div>
-
+    <div class="page-footer" style="z-index:999; " id="page-footer">　
     </div>
 
 
