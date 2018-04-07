@@ -170,4 +170,32 @@ public class TAccountIntegral {
     public Date getUpdateTime() {
         return updateTime;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setAccGain(BigDecimal accGain) {
+        this.accGain = accGain;
+    }
+
+    public void setAccConsume(BigDecimal accConsume) {
+        this.accConsume = accConsume;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

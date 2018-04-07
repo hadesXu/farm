@@ -50,4 +50,8 @@ public interface TAccountIntegralMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TAccountIntegral record);
+
+    TAccountIntegral queryByUserId(long userId);
+
+    int updateIntegralByUserId(TAccountIntegral accountIntegral);
 }

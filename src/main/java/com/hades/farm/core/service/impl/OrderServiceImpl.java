@@ -49,6 +49,11 @@ public class OrderServiceImpl implements OrderService {
     private TPlatformWarehouseFlowMapper tPlatformWarehouseFlowMapper;
 
     @Autowired
+    private TAccountIntegralMapper tAccountIntegralMapper;
+    @Autowired
+    private TAccountIntegralFlowMapper tAccountIntegralFlowMapper;
+
+    @Autowired
     @Qualifier("duckWareHouseServiceImpl")
     private WareHouseService duckWareHouseServiceImpl;
 
@@ -352,44 +357,58 @@ public class OrderServiceImpl implements OrderService {
             throw new BizException(ErrorCode.ORDER_STATUS_ERROR);
         }
         //更新卖家账户表、账户流水表、仓库表、t_notice
+        BigDecimal sellFee = new BigDecimal("0");
         BigDecimal amount = null;
         if (GoodsType.EGG.getType() == order.getType()) {
+            sellFee = Constant.EGG_PRICE.multiply(new BigDecimal(requestDto.getNum())).multiply(Constant.SELL_EGG_RATE);
             amount = Constant.EGG_PRICE.multiply(new BigDecimal(requestDto.getNum()));
         } else if (GoodsType.DUCK.getType() == order.getType()) {
+            sellFee = Constant.DUCK_PRICE.multiply(new BigDecimal(requestDto.getNum())).multiply(Constant.SELL_EGG_RATE);
             amount = Constant.DUCK_PRICE.multiply(new BigDecimal(requestDto.getNum()));
         } else {
             //TODO 狗
         }
+        //卖家手续费
+
         long sellUserId = order.getUserId();
         long buyUserId = requestDto.getUserId();
         TAccountTicket sellAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(sellUserId);
         TAccountTicket buyAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(buyUserId);
-        TAccountTicketFlow sellAccountTicketFlow = new TAccountTicketFlow();
+        TAccountTicketFlow sellAccountTicketFlow = new TAccountTicketFlow();//卖出流水
+        TAccountTicketFlow sellFeeTicketFlow = new TAccountTicketFlow();//手续费流水
         TAccountTicketFlow buyAccountTicketFlow = new TAccountTicketFlow();
         TNotice tSellNotice = new TNotice();
         TNotice tbuyNotice = new TNotice();
         UpdateAccountTicketRequestDto updateSellAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         UpdateAccountTicketRequestDto updateBuyAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         updateSellAccountTicketRequestDto.setUserId(sellUserId);
-        updateSellAccountTicketRequestDto.setBalance(amount);
+        updateSellAccountTicketRequestDto.setBalance(amount.add(sellFee));//扣除手续费
         updateBuyAccountTicketRequestDto.setUserId(buyUserId);
         updateBuyAccountTicketRequestDto.setBalance(amount);
+
         if (GoodsType.EGG.getType() == order.getType()) {
+
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_EGG.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_EGG.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_EGG.getType());
             sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount);
+            sellFeeTicketFlow.setType(AcctOpreType.SELL_EGG_FEE.getType());
+            sellFeeTicketFlow.setRemarks("出售鸭蛋支付手续费：" + sellFee);
             buyAccountTicketFlow.setType(AcctOpreType.BUY_EGG.getType());
             buyAccountTicketFlow.setRemarks("买鸭蛋花费菜票:" + amount);
             tSellNotice.setType(NoticeType.SELL_EGG.getType());
             tSellNotice.setRemarks(NoticeType.SELL_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
             tbuyNotice.setType(NoticeType.BUY_EGG.getType());
             tbuyNotice.setRemarks(NoticeType.BUY_EGG.getRemarks().replace("num", requestDto.getNum() + ""));
+
         } else if (GoodsType.DUCK.getType() == order.getType()) {
+
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_DUCK.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_DUCK.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_DUCK.getType());
             sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount);
+            sellFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_FEE.getType());
+            sellFeeTicketFlow.setRemarks("出售鸭支付手续费："+sellFee);
             buyAccountTicketFlow.setType(AcctOpreType.BUY_DUCK.getType());
             buyAccountTicketFlow.setRemarks("买鸭花费菜票:" + amount);
             tSellNotice.setType(NoticeType.SELL_DUCK.getType());
@@ -399,6 +418,7 @@ public class OrderServiceImpl implements OrderService {
         } else {
             //TODO 狗
         }
+        //更新卖家账户表、账户流水
         updateCount = tAccountTicketMapper.updateAccountTicket(updateSellAccountTicketRequestDto);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.UPDATE_ERR);
@@ -408,16 +428,29 @@ public class OrderServiceImpl implements OrderService {
         sellAccountTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance());
         sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount));
         sellAccountTicketFlow.setAddTime(new Date());
+
+        sellFeeTicketFlow.setUserId(sellUserId);
+        sellFeeTicketFlow.setAmount(sellFee);
+        sellFeeTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance().add(amount));
+        sellFeeTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount).subtract(sellFee));
+        sellFeeTicketFlow.setAddTime(new Date());
+        //出售账户流水
         updateCount = tAccountTicketFlowMapper.insertSelective(sellAccountTicketFlow);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
         }
+        //手续费账户流水
+        updateCount = tAccountTicketFlowMapper.insertSelective(sellFeeTicketFlow);
+        if (updateCount != 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
         //更新卖家仓库累计出售数量、累计利润、累计积分
+        BigDecimal gainIntegral = AmountUtil.integralCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum()));
         WareHouseCumulativeDataRequestDto wareHouseCumulativeDataRequestDto = new WareHouseCumulativeDataRequestDto();
         wareHouseCumulativeDataRequestDto.setUserId(sellUserId);
         wareHouseCumulativeDataRequestDto.setAllSell(requestDto.getNum());
         wareHouseCumulativeDataRequestDto.setAllProfit(AmountUtil.profitCalculate(order.getType(),requestDto.getNum()));
-        wareHouseCumulativeDataRequestDto.setAllIntegral(AmountUtil.integralCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum())));
+        wareHouseCumulativeDataRequestDto.setAllIntegral(gainIntegral);
         if (GoodsType.EGG.getType() == order.getType()){
             updateCount = tDuckWarehouseMapper.updateDuckWareHouseCumulativeData(wareHouseCumulativeDataRequestDto);
         }else if (GoodsType.DUCK.getType() == order.getType()){
@@ -479,6 +512,65 @@ public class OrderServiceImpl implements OrderService {
         tbuyNotice.setAddTime(new Date());
         updateCount = tNoticeMapper.insertSelective(tbuyNotice);
         if (updateCount != 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //添加返现记录表
+        TBackReward backReward = new TBackReward();
+        backReward.setUserId(sellUserId);
+        backReward.setType(order.getType()+"");
+        backReward.setNum(requestDto.getNum());
+        backReward.setAmount(amount);
+        backReward.setIfBack("1");
+        backReward.setSource(sellAccountTicketFlow.getId());
+        backReward.setUpdateTime(new Date());
+        backReward.setAddTime(new Date());
+        updateCount = tBackRewardMapper.insertSelective(backReward);
+        if (updateCount < 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+        //添加积分
+        TAccountIntegral sellAccountIntegral = tAccountIntegralMapper.queryByUserId(sellUserId);
+        BigDecimal integralBefore = new BigDecimal("0");
+        BigDecimal integralAfter = new BigDecimal("0");
+        if(sellAccountIntegral == null){
+            integralAfter = gainIntegral;
+            sellAccountIntegral = new TAccountIntegral();
+            sellAccountIntegral.setUserId(sellUserId);
+            sellAccountIntegral.setBalance(gainIntegral);
+            sellAccountIntegral.setAccConsume(new BigDecimal("0"));
+            sellAccountIntegral.setAccGain(gainIntegral);
+            sellAccountIntegral.setAddTime(new Date());
+            sellAccountIntegral.setUpdateTime(new Date());
+            updateCount = tAccountIntegralMapper.insertSelective(sellAccountIntegral);
+        }else{
+            integralBefore = sellAccountIntegral.getBalance();
+            integralAfter = integralBefore.add(gainIntegral);
+            //更新
+            TAccountIntegral updateIntegral = new TAccountIntegral();
+            updateIntegral.setUserId(sellUserId);
+            updateIntegral.setAccGain(gainIntegral);
+            updateIntegral.setBalance(gainIntegral);
+            updateCount = tAccountIntegralMapper.updateIntegralByUserId(updateIntegral);
+        }
+        if(updateCount < 1){
+            throw new BizException(ErrorCode.UPDATE_ERR);
+        }
+        //添加积分流水
+        TAccountIntegralFlow accountIntegralFlow = new TAccountIntegralFlow();
+        accountIntegralFlow.setUserId(sellUserId);
+        accountIntegralFlow.setType("1");
+        accountIntegralFlow.setAmount(gainIntegral);
+        accountIntegralFlow.setAmountBefore(integralBefore);
+        accountIntegralFlow.setAmountAfter(integralAfter);
+        accountIntegralFlow.setAddTime(new Date());
+        accountIntegralFlow.setUpdateTime(new Date());
+        if(GoodsType.EGG.getType() == order.getType()){
+            accountIntegralFlow.setRemarks("出售蛋"+requestDto.getNum()+"只,获得"+gainIntegral+"积分");
+        }else{
+            accountIntegralFlow.setRemarks("出售鸭"+requestDto.getNum()+"只,获得"+gainIntegral+"积分");
+        }
+        updateCount = tAccountIntegralFlowMapper.insertSelective(accountIntegralFlow);
+        if(updateCount < 1){
             throw new BizException(ErrorCode.ADD_ERR);
         }
         return true;

@@ -54,7 +54,7 @@ public class Constant {
     //偷蛋需要支付的价格
     public static final BigDecimal STEAL_EGG_PRICE = new BigDecimal("20");
     //偷鸭需要支付的价格
-    public static final BigDecimal STEAL_DUCK_PRICE = new BigDecimal("20");
+    public static final BigDecimal STEAL_DUCK_PRICE = new BigDecimal("25");
 
 
     public static final String DEFAULT_CODE = "0000";//默认code
