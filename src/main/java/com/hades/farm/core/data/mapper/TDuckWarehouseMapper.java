@@ -1,7 +1,11 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.api.view.response.StealModel;
 import com.hades.farm.core.data.dto.requestDto.*;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TDuckWarehouseMapper {
     /**
@@ -65,5 +69,12 @@ public interface TDuckWarehouseMapper {
     int updateDuckWareHouseOfFeeding(UpdateDuckWareHouseFeedingRequestDto requestDto);
 
     int updateDuckWareHouseCumulativeData(WareHouseCumulativeDataRequestDto requestDto);
+
+    /**
+     * 偷蛋列表
+     * @param userId
+     * @return
+     */
+    List<StealModel> queryCanStealList(@Param("userId") Long userId,@Param("offSet")int offSet,@Param("pageSize")int pageSize);
 
 }

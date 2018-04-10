@@ -285,5 +285,15 @@
       where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
-
+  <select id="queryCanStealList" resultType="com.hades.farm.api.view.response.StealModel" >
+    SELECT td.user_id userId,tu.name,tu.img_url imgUrl,
+    td.duck_harvest harvestNum,0 canStealNum
+    FROM t_egg_warehouse td LEFT JOIN t_user tu ON td.user_id = tu.id
+    WHERE
+    duck_harvest >0
+    AND if_steal = 1
+    AND user_id!= #{userId,jdbcType=BIGINT}
+    order by duck_harvest desc
+    LIMIT #{offSet},#{pageSize}
+  </select>
 </mapper>

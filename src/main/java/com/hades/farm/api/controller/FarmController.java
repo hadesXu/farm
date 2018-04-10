@@ -30,9 +30,6 @@ import java.util.List;
 @RequestMapping("/api/farm")
 public class FarmController {
     @Autowired
-    private DuckWareHouseServiceImpl duckWareHouseService;
-
-    @Autowired
     private NoticeService noticeService;
 
     @Autowired

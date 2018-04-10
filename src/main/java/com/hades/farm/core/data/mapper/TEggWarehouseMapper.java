@@ -1,10 +1,14 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.api.view.response.StealModel;
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.data.dto.requestDto.WareHouseCumulativeDataRequestDto;
 import com.hades.farm.core.data.entity.TEggWarehouse;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TEggWarehouseMapper {
     /**
@@ -64,4 +68,6 @@ public interface TEggWarehouseMapper {
     int updateEggWareHouseSellDuck(PublishOrderRequestDto requestDto);
 
     int updateEggWareHouseCumulativeData(WareHouseCumulativeDataRequestDto requestDto);
+
+    List<StealModel> queryCanStealList(@Param("userId") Long userId,@Param("offSet")int offSet,@Param("pageSize")int pageSize);
 }

@@ -1,25 +1,25 @@
 package com.hades.farm.core.service.impl;
 
+import com.hades.farm.api.view.response.StealModel;
 import com.hades.farm.core.data.entity.TEggWarehouse;
 import com.hades.farm.core.data.mapper.TEggWarehouseMapper;
 import com.hades.farm.core.exception.BizException;
-import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.result.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhengzl on 2018/3/10.
  */
-@Service("eggWareHouseServiceImpl")
-public class EggWareHouseServiceImpl implements WareHouseService{
+@Service
+public class EggWareHouseServiceImpl{
     @Autowired
     private TEggWarehouseMapper tEggWarehouseMapper;
 
-    @Override
     public void addWareHouse(long userId) throws BizException{
         TEggWarehouse eggWarehouse = new TEggWarehouse();
         eggWarehouse.setUserId(userId);
@@ -44,5 +44,9 @@ public class EggWareHouseServiceImpl implements WareHouseService{
 
     public TEggWarehouse queryEggWareHouse(long userId){
         return tEggWarehouseMapper.selectByUserId(userId);
+    }
+
+    public List<StealModel> queryCanStealList(Long userId,int offSet,int pageSize){
+       return tEggWarehouseMapper.queryCanStealList(userId,offSet,pageSize);
     }
 }

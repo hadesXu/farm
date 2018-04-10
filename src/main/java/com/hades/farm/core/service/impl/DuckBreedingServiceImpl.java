@@ -12,16 +12,13 @@ import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
 import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.DuckBreedingService;
-import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 

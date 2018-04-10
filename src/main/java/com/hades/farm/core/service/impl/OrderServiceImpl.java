@@ -5,16 +5,13 @@ import com.hades.farm.core.data.entity.*;
 import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.OrderService;
-import com.hades.farm.core.service.WareHouseService;
 import com.hades.farm.enums.AcctOpreType;
 import com.hades.farm.enums.GoodsType;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.enums.WareHouseOperType;
 import com.hades.farm.result.ErrorCode;
-import com.hades.farm.result.Result;
 import com.hades.farm.utils.AmountUtil;
 import com.hades.farm.utils.Constant;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by zhengzl on 2018/3/10.
@@ -54,12 +50,10 @@ public class OrderServiceImpl implements OrderService {
     private TAccountIntegralFlowMapper tAccountIntegralFlowMapper;
 
     @Autowired
-    @Qualifier("duckWareHouseServiceImpl")
-    private WareHouseService duckWareHouseServiceImpl;
+    private DuckWareHouseServiceImpl duckWareHouseServiceImpl;
 
     @Autowired
-    @Qualifier("eggWareHouseServiceImpl")
-    private WareHouseService eggWareHouseServiceImpl;
+    private EggWareHouseServiceImpl eggWareHouseServiceImpl;
 
     @Autowired
     private TBackRewardMapper tBackRewardMapper;
