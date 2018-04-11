@@ -37,6 +37,7 @@ public enum ErrorCode {
     BALANCE_NOT_ERR(2018, "您的余额不足哦~"),
     NUM_ILLEGAL(2019, "输入数量非法"),
     HAS_PAY(2020, "已经支付"),
+    CANNT_STEAL(2021, "该用户已经被偷"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),

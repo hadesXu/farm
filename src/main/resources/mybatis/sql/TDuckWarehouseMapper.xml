@@ -315,6 +315,22 @@
     LIMIT #{offSet},#{pageSize}
   </select>
 
+  <update id="updateOfStealByOther" >
+     UPDATE t_duck_warehouse
+     SET if_steal = 2,
+     update_time = NOW(),
+     egg_harvest = egg_harvest - #{stealNum,jdbcType=INTEGER}
+     where user_id = #{userId,jdbcType=BIGINT}
+     and if_steal = 1
+     and egg_harvest &gt;= #{stealNum,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateOfStealOther" >
+    UPDATE t_duck_warehouse
+    update_time = NOW(),
+    egg = egg + #{stealNum,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
 
 
 </mapper>

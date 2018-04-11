@@ -25,6 +25,11 @@ public enum NoticeType {
 
     PAY_STEAL_EGG(19,"支付偷蛋费用","成功支付偷蛋费用"),
     PAY_STEAL_DUCK(20,"支付偷鸭费用","成功支付偷鸭费用"),
+    STEAL_EGG_OTHER_WAREHOUSE(21,"偷蛋","成功偷到num个鸭蛋，已放入您的仓库"),
+    STEAL_EGG_BYOTHER_WAREHOUSE(22,"被偷蛋","您的蛋未及时收获，被玩家偷走20%"),
+
+    STEAL_DUCK_OTHER_WAREHOUSE(23,"偷鸭","成功偷到num只鸭，已放入您的仓库"),
+    STEAL_DUCK_BYOTHER_WAREHOUSE(24,"被偷鸭","您的鸭未及时收获，被玩家偷走20%"),
     ;
     private int type;
     private String desc;

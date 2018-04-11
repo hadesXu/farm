@@ -151,6 +151,7 @@ public class OrderController {
         requestDto.setOffSet(Integer.parseInt(offSet));
         requestDto.setIfExceptSelf(1);//排除自己的记录
         requestDto.setUserId(userId);
+        requestDto.setStatus(1);
         List<OrderUserResultDto> allOrderList = orderQueryService.queryOrderList(requestDto);
         response.setResult(allOrderList);
         return response;

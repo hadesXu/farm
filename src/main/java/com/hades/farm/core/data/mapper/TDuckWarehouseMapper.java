@@ -77,4 +77,19 @@ public interface TDuckWarehouseMapper {
      */
     List<StealModel> queryCanStealList(@Param("userId") Long userId,@Param("offSet")int offSet,@Param("pageSize")int pageSize);
 
+    /**
+     * 被偷
+     * @param userId
+     * @param stealNum
+     * @return
+     */
+    int updateOfStealByOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
+
+    /**
+     * 偷别人的
+     * @param userId
+     * @param stealNum
+     * @return
+     */
+    int updateOfStealOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
 }

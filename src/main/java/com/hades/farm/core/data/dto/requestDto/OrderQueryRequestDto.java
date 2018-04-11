@@ -8,6 +8,8 @@ public class OrderQueryRequestDto {
     private int offSet;
     private long pageSize;
     private Integer type;
+    private Integer status;
+
     //是否排除自己的记录
     private Integer ifExceptSelf;//1:是，其它：否
 
@@ -49,5 +51,13 @@ public class OrderQueryRequestDto {
 
     public void setIfExceptSelf(Integer ifExceptSelf) {
         this.ifExceptSelf = ifExceptSelf;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

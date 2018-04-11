@@ -45,6 +45,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         allOrderCondition.setPageSize(4);
         allOrderCondition.setIfExceptSelf(1);//排除自己的记录
         allOrderCondition.setUserId(userId);
+        allOrderCondition.setStatus(1);
         orderIndexModel.setAllOrderList(tOrdersMapper.queryOrderListByCondition(allOrderCondition));
         OrderQueryRequestDto myOrderCondition = new OrderQueryRequestDto();
         myOrderCondition.setUserId(userId);

@@ -296,4 +296,22 @@
     order by duck_harvest desc
     LIMIT #{offSet},#{pageSize}
   </select>
+
+  <update id="updateOfStealByOther" >
+    UPDATE t_egg_warehouse
+    SET if_steal = 2,
+    update_time = NOW(),
+    duck_harvest = duck_harvest - #{stealNum,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+    and if_steal = 1
+    and duck_harvest &gt;= #{stealNum,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateOfStealOther" >
+    UPDATE t_egg_warehouse
+    update_time = NOW(),
+    duck = duck + #{stealNum,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
 </mapper>

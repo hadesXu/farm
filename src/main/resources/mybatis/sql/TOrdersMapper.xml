@@ -168,6 +168,9 @@
                 and t1.user_id = #{userId,jdbcType=BIGINT}
             </if>
         </if>
+        <if test="status != null">
+            and t1.status = #{status,jdbcType=INTEGER}
+        </if>
         <if test="type != null">
            and t1.type = #{type,jdbcType=INTEGER}
         </if>
