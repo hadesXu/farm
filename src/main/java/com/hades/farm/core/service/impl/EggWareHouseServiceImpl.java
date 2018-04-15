@@ -62,7 +62,7 @@ public class EggWareHouseServiceImpl{
      * @param targetUserId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void stealEgg(long userId,long targetUserId) throws BizException{
+    public void stealDuck(long userId,long targetUserId) throws BizException{
         TEggWarehouse targetEggWarehouse = tEggWarehouseMapper.selectByUserId(targetUserId);
         if(targetEggWarehouse.getIfSteal() ==2 || targetEggWarehouse.getDuckHarvest()==0){
             throw new BizException(ErrorCode.CANNT_STEAL.getCode(),

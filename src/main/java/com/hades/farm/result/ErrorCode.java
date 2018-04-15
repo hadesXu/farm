@@ -38,6 +38,7 @@ public enum ErrorCode {
     NUM_ILLEGAL(2019, "输入数量非法"),
     HAS_PAY(2020, "已经支付"),
     CANNT_STEAL(2021, "该用户已经被偷"),
+    STEAL_TIME_ERROR(2022, "偷鸭时间为：15:30-21:30"),
 
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),

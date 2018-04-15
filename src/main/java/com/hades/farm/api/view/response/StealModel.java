@@ -7,7 +7,7 @@ public class StealModel {
     private long userId;
     private int canStealNum;
     private int harvestNum;
-    private int name;
+    private String name;
     private String imgUrl;
 
     public long getUserId() {
@@ -34,11 +34,11 @@ public class StealModel {
         this.harvestNum = harvestNum;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

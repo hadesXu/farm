@@ -326,7 +326,7 @@
   </update>
 
   <update id="updateOfStealOther" >
-    UPDATE t_duck_warehouse
+    UPDATE t_duck_warehouse set
     update_time = NOW(),
     egg = egg + #{stealNum,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=BIGINT}

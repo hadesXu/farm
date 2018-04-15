@@ -43,7 +43,6 @@
 		<div style="position:absolute;top:50%;text-align:right;right:0;width:97%;">
 			<a href="#" onclick="more()"><img src="../img/gd.png" style="width:70px;height:40px;margin-right:20px;"></a>
 		</div>
-
 		<div class="page-footer" style="z-index:999; ">
 			<div class="tools" style="width:86%;">
 				<ul class="tool-ul clearfix" style="top:-20%;">
@@ -72,12 +71,12 @@
 	pageSize = 5;
 	$(function () {
 		checkLogin();
-		jsonTokenAjax("/api/steal/stealList", "GET", {"offSet":offSet,"pageSize":pageSize,"type":"2"}, callBack, errorback);
+		jsonTokenAjax("/api/steal/stealList", "GET", {"offSet":offSet,"pageSize":pageSize,"type":"1"}, callBack, errorback);
 	});
 
 	function more(){
 		init = 1;
-		jsonTokenAjax("/api/steal/stealList", "GET", {"offSet":offSet,"pageSize":pageSize,"type":"2"}, callBack, errorback);
+		jsonTokenAjax("/api/steal/stealList", "GET", {"offSet":offSet,"pageSize":pageSize,"type":"1"}, callBack, errorback);
 	}
 	function callBack(data) {
 		if(data.status == "1"){
@@ -86,6 +85,7 @@
 		   }else{
 			   //填充偷鸭列表
 			   var result = data.result;
+			   console.log(result);
 			   var listHtml = '<ul> <li style="width:25%">头像</li> <li style="width:30%">昵称</li> <li style="width:15%">数量</li>';
 			   listHtml = listHtml + '<li style="width:15%">操作</li> </ul>';
 			   if(result!=null){
@@ -99,10 +99,8 @@
 				   $.each(result, function(index, value, array){
 					   listHtml = listHtml + '<ul> <li style="width:25%">'+value.imgUrl+'</li> <li style="width:30%">'+value.name+
 					   '</li> <li style="width:15%">'+value.canStealNum+'</li>';
-					   listHtml = listHtml + '<li style="width:15%" onclick="touya('+value.userId+')">偷鸭</li> </ul>';
+					   listHtml = listHtml + '<li style="width:15%" onclick="touya('+value.userId+')">偷蛋</li> </ul>';
 				   })
-			   }else{
-				   offSet = 0;
 			   }
 			   $("#stealList").html(listHtml);
 		   }
@@ -112,7 +110,7 @@
 	}
 
 	function touya(userId){
-		jsonTokenAjax("/api/steal/stealDuck", "GET", {"targetUserId":userId}, stealCallBack, errorback);
+		jsonTokenAjax("/api/steal/stealEgg", "GET", {"targetUserId":userId}, stealCallBack, errorback);
 	}
 
 
@@ -121,11 +119,11 @@
 		if(result.code=='0000'){
 			//提示
 			layer.open({
-				content: "偷鸭成功"
+				content: "偷蛋成功"
 				,skin: 'msg'
 				,time: 1 //2秒后自动关闭
 			});
-			window.setTimeout("window.location='farm_ty.html'",1200);
+			window.setTimeout("window.location='farm_td.html'",1200);
 		} else{
 			//提示
 			layer.open({
