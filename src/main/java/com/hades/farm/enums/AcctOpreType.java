@@ -19,6 +19,8 @@ public enum AcctOpreType {
     PAY_STEAL_DUCK(20,"支付偷鸭费用"),
     SELL_EGG_FEE(21,"出售蛋手续费"),
     SELL_DUCK_FEE(22,"出售鸭手续费"),
+    SELL_EGG_INTEGRAL_FEE(23,"出售蛋积分费"),
+    SELL_DUCK_INTEGRAL_FEE(24,"出售鸭积分费"),
     ;
     private int type;
     private String desc;

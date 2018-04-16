@@ -12,9 +12,9 @@ public class AmountUtil {
     public static BigDecimal integralCalculate(int type){
         BigDecimal integral = new BigDecimal("1");
        if(type == GoodsType.EGG.getType()){
-           integral = integral.multiply(Constant.EGG_INTEGRAL_RATE);
+           integral = integral.multiply(Constant.EGG_INTEGRAL_RATE).multiply(Constant.EGG_PRICE);
        }else if(type == GoodsType.DUCK.getType()){
-           integral = integral.multiply(Constant.DUCK_INTEGRAL_RATE);
+           integral = integral.multiply(Constant.DUCK_INTEGRAL_RATE).multiply(Constant.DUCK_PRICE);
        }
         return integral;
     }

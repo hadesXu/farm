@@ -41,10 +41,10 @@ public class Constant {
     public static final int PRACTICE_DAY = 3;
     //一只鸭每次喂饲料数量
     public static final int DUCK_SINGLE_FEED_AMOUNT = 1;
-    //一个蛋的积分
-    public static final BigDecimal EGG_INTEGRAL_RATE = new BigDecimal("0.04");
-    //一个鸭的积分
-    public static final BigDecimal DUCK_INTEGRAL_RATE = new BigDecimal("0.1");
+    //一个蛋的积分率
+    public static final BigDecimal EGG_INTEGRAL_RATE = new BigDecimal("0.035");
+    //一个鸭的积分率
+    public static final BigDecimal DUCK_INTEGRAL_RATE = new BigDecimal("0.115");
     //卖出鸭的手续费
     public static final BigDecimal SELL_DUCK_RATE = new BigDecimal("0.05");
     //卖出蛋的手续费
