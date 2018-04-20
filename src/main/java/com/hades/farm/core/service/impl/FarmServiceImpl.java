@@ -68,20 +68,26 @@ public class FarmServiceImpl implements FarmService {
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             fdcInfoModel.setHasDog(2);
+            fdcInfoModel.setRobotEndDay("未购买");
         }else{
             if(DateUtils.isDateBefore2(DateUtils.dateToString(user.getDogEndDay()),DateUtils.dateToString(new Date()))){
                 fdcInfoModel.setHasDog(1);
+                fdcInfoModel.setDogEndDay(DateUtils.dateToYYMMDDStr(user.getDogEndDay()));
             }else {
                 fdcInfoModel.setHasDog(2);
+                fdcInfoModel.setRobotEndDay("已到期");
             }
         }
         if(user.getRobotEndDay() == null){
             fdcInfoModel.setHasRobot(2);
+            fdcInfoModel.setRobotEndDay("未购买");
         }else{
             if(DateUtils.isDateBefore2(DateUtils.dateToString(user.getRobotEndDay()),DateUtils.dateToString(new Date()))){
                 fdcInfoModel.setHasRobot(1);
+                fdcInfoModel.setRobotEndDay(DateUtils.dateToYYMMDDStr(user.getRobotEndDay()));
             }else {
                 fdcInfoModel.setHasRobot(2);
+                fdcInfoModel.setRobotEndDay("已到期");
             }
         }
         fdcInfoModel.setsEgg(user.getsEgg());

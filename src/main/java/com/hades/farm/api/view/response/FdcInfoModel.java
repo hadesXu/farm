@@ -10,6 +10,24 @@ public class FdcInfoModel {
     private int ifSteal;//今日是否已偷
     private int sEgg;//是否有偷蛋权限
     private int hasRobot;//是否有机器人
+    private String dogEndDay;
+    private String robotEndDay;
+
+    public String getRobotEndDay() {
+        return robotEndDay;
+    }
+
+    public void setRobotEndDay(String robotEndDay) {
+        this.robotEndDay = robotEndDay;
+    }
+
+    public String getDogEndDay() {
+        return dogEndDay;
+    }
+
+    public void setDogEndDay(String dogEndDay) {
+        this.dogEndDay = dogEndDay;
+    }
 
     public int getEggDoing() {
         return eggDoing;

@@ -40,8 +40,8 @@
             </div>
         </div>
 
-		<div style="position:absolute;top:50%;text-align:right;right:0;width:97%;">
-			<a href="#" onclick="more()"><img src="../img/gd.png" style="width:70px;height:40px;margin-right:20px;"></a>
+		<div style="position:absolute;top:50%;text-align:right;right:0;width:97%;" id="gengduo">
+
 		</div>
 
 		<div class="page-footer" style="z-index:999; ">
@@ -95,6 +95,11 @@
 						   alert("没有数据");
 						   offSet = 0;
 					   }
+				   }
+				   if(result.length<5){
+					   $("#gengduo").html("");
+				   }else{
+					   $("#gengduo").html('<a href="#" onclick="more()"><img src="../img/gd.png" style="width:70px;height:40px;margin-right:20px;"></a>')
 				   }
 				   $.each(result, function(index, value, array){
 					   listHtml = listHtml + '<ul> <li style="width:25%">'+value.imgUrl+'</li> <li style="width:30%">'+value.name+

@@ -555,7 +555,7 @@
 
             </div>
 
-            <div style="float:right;padding-top:49px;margin-right:9%;color:#fff;font-size:14px;">到期时间：2018-04-29</div>            
+            <div style="float:right;padding-top:49px;margin-right:9%;color:#fff;font-size:14px;">到期时间：<span id="dogEndDay"></span></div>
 
             <div class="popup-con-mg" style="top:28%;">
 
@@ -600,10 +600,11 @@
                 <span id="StoreControl_tab_title01" class="tab-01 a-tab00" data-num="0" data-target="#StoreControl_tab_conter01"></span>
 
             </div>
-
+            <div style="float:right;padding-top:49px;margin-right:9%;color:#fff;font-size:14px;">到期时间：<span id="robotEndDay"></span></div>
             <div class="popup-con-mg" style="top:28%;">
 
                <ul>
+
 
                     <li style="color:#fff;">机器人</li>
 
@@ -840,6 +841,8 @@ function warmCallBack(data){
             var result = data.result;
             ifSteal = result.ifSteal;
             sEgg = result.sEgg;
+            $("#dogEndDay").html(result.dogEndDay);
+            $("#robotEndDay").html(result.robotEndDay);
             console.log(result);
             $("#eggSum").html(result.eggDoing);
             $("#eggNum").html(result.egg);

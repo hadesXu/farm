@@ -52,7 +52,7 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         duckBreeding.setDay(0);
         duckBreeding.setAccNoFeed(0);
         duckBreeding.setStatus(1);
-        duckBreeding.setIfFeed(2);
+        duckBreeding.setIsFeed(2);
         duckBreeding.setAddTime(new Date());
         duckBreeding.setUpdateTime(new Date());
         updateCount = tDuckBreedingMapper.insertSelective(duckBreeding);
