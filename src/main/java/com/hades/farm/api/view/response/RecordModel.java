@@ -10,7 +10,7 @@ public class RecordModel {
     /**
      * 添加时间
      */
-    private String timeStr;
+    private long addTime;
 
     /**
      * 类型描述
@@ -22,12 +22,12 @@ public class RecordModel {
      */
     private BigDecimal value;
 
-    public String getTimeStr() {
-        return timeStr;
+    public long getAddTime() {
+        return addTime;
     }
 
-    public void setTimeStr(String timeStr) {
-        this.timeStr = timeStr;
+    public void setAddTime(long addTime) {
+        this.addTime = addTime;
     }
 
     public String getTypeStr() {

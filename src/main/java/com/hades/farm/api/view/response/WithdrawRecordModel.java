@@ -10,7 +10,7 @@ public class WithdrawRecordModel {
     /**
      * 添加时间
      */
-    private String timeStr;
+    private long addTime;
 
     /**
      * 提现状态描述
@@ -18,16 +18,31 @@ public class WithdrawRecordModel {
     private String stateStr;
 
     /**
+     * 真实姓名
+     */
+    private String realName;
+
+    /**
+     * 账号
+     */
+    private String no;
+
+    /**
+     * 类型
+     */
+    private String typeStr;
+
+    /**
      * 值
      */
     private BigDecimal value;
 
-    public String getTimeStr() {
-        return timeStr;
+    public long getAddTime() {
+        return addTime;
     }
 
-    public void setTimeStr(String timeStr) {
-        this.timeStr = timeStr;
+    public void setAddTime(long addTime) {
+        this.addTime = addTime;
     }
 
     public String getStateStr() {
@@ -36,6 +51,30 @@ public class WithdrawRecordModel {
 
     public void setStateStr(String stateStr) {
         this.stateStr = stateStr;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getTypeStr() {
+        return typeStr;
+    }
+
+    public void setTypeStr(String typeStr) {
+        this.typeStr = typeStr;
     }
 
     public BigDecimal getValue() {

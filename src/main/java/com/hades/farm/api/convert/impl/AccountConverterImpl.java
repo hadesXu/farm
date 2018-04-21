@@ -8,6 +8,7 @@ import com.hades.farm.core.data.entity.TAccountIntegralFlow;
 import com.hades.farm.core.data.entity.TAccountTicketFlow;
 import com.hades.farm.core.data.entity.TWithdraw;
 import com.hades.farm.enums.WithdrawStatus;
+import com.hades.farm.enums.WithdrawType;
 import com.hades.farm.utils.DateUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class AccountConverterImpl implements AccountConverter {
         RecordModel model = null;
         for (TAccountIntegralFlow tAccountIntegralFlow : tAccountIntegralFlows) {
             model = new RecordModel();
-            model.setTimeStr(DateUtils.dateToString(tAccountIntegralFlow.getAddTime()));
+            model.setAddTime(DateUtils.getDate(tAccountIntegralFlow.getAddTime()));
             model.setTypeStr("类型");
             model.setValue(tAccountIntegralFlow.getAmountAfter().subtract(tAccountIntegralFlow.getAmountBefore()));
             models.add(model);
@@ -47,7 +48,7 @@ public class AccountConverterImpl implements AccountConverter {
         RecordModel model = null;
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new RecordModel();
-            model.setTimeStr(DateUtils.dateToString(tAccountTicketFlow.getAddTime()));
+            model.setAddTime(DateUtils.getDate(tAccountTicketFlow.getAddTime()));
             model.setValue(tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore()));
             model.setTypeStr("类型");
             models.add(model);
@@ -63,7 +64,7 @@ public class AccountConverterImpl implements AccountConverter {
         BigDecimal bigDecimal = BigDecimal.ZERO;
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new DealRecordModel();
-            model.setTimeStr(DateUtils.dateToString(tAccountTicketFlow.getAddTime()));
+            model.setAddTime(DateUtils.getDate(tAccountTicketFlow.getAddTime()));
             model.setDesc(tAccountTicketFlow.getRemarks());
             bigDecimal = tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore());
             model.setTypeStr(bigDecimal.compareTo(BigDecimal.ZERO) >= 0 ? "增加" : "扣除");
@@ -80,9 +81,12 @@ public class AccountConverterImpl implements AccountConverter {
         WithdrawRecordModel model = null;
         for (TWithdraw tWithdraw : tWithdraws) {
             model = new WithdrawRecordModel();
-            model.setTimeStr(DateUtils.dateToString(tWithdraw.getAddTime()));
+            model.setAddTime(DateUtils.getDate(tWithdraw.getAddTime()));
             model.setValue(tWithdraw.getAmount());
             model.setStateStr(WithdrawStatus.getStatus(tWithdraw.getStatus()).getDesc());
+            model.setTypeStr(WithdrawType.getType(Integer.parseInt(tWithdraw.getType())).tip);
+            model.setNo(WithdrawType.getType(Integer.parseInt(tWithdraw.getType())) == WithdrawType.ALIPAY ? tWithdraw.getAlipayAccount() : tWithdraw.getCardNo());
+            model.setRealName(tWithdraw.getRealName());
             models.add(model);
         }
         return models;

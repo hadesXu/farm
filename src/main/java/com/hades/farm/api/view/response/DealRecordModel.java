@@ -6,9 +6,9 @@ package com.hades.farm.api.view.response;
 public class DealRecordModel {
 
     /**
-     * 时间描述
+     * 添加时间
      */
-    private String timeStr;
+    private long addTime;
 
     /**
      * 类型
@@ -25,12 +25,12 @@ public class DealRecordModel {
      */
     private String desc;
 
-    public String getTimeStr() {
-        return timeStr;
+    public long getAddTime() {
+        return addTime;
     }
 
-    public void setTimeStr(String timeStr) {
-        this.timeStr = timeStr;
+    public void setAddTime(long addTime) {
+        this.addTime = addTime;
     }
 
     public String getTypeStr() {

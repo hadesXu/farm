@@ -78,6 +78,20 @@ public class DateUtils {
         }
     };
 
+
+    /**
+     * 根据时间获取时间戳
+     *
+     * @param time
+     * @return
+     */
+    public static long getDate(Date time) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time);
+        return cal.getTimeInMillis();
+    }
+
+
     /**
      * 时间转换为yyyy-MM-dd HH:mm:ss格式的字符串
      *

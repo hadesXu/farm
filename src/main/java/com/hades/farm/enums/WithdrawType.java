@@ -4,8 +4,8 @@ package com.hades.farm.enums;
  * Created by xiaoxu on 2018/4/6.
  */
 public enum WithdrawType {
-    ALIPAY(1, ""),
-    BANK(2, "");
+    ALIPAY(1, "支付宝"),
+    BANK(2, "银行卡");
     public int type;
     public String tip;
 
