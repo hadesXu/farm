@@ -2,10 +2,7 @@ package com.hades.farm.api.controller;
 
 import com.hades.farm.api.convert.AccountConverter;
 import com.hades.farm.api.view.ApiResponse;
-import com.hades.farm.core.data.entity.TAccountIntegral;
-import com.hades.farm.core.data.entity.TAccountIntegralFlow;
-import com.hades.farm.core.data.entity.TAccountTicket;
-import com.hades.farm.core.data.entity.TAccountTicketFlow;
+import com.hades.farm.core.data.entity.*;
 import com.hades.farm.core.service.AccountService;
 import com.hades.farm.result.Result;
 import com.langu.authorization.annotation.Auth;
@@ -98,6 +95,21 @@ public class AccountApi {
             return response;
         }
         response.setResult(result.getData());
+        return response;
+    }
+
+    @RequestMapping(value = "/withdraw/record", method = RequestMethod.GET)
+    @Auth
+    public ApiResponse findTWithdraw(@RequestParam long userId,
+                                     @RequestParam(required = false, defaultValue = "1") int page,
+                                     @RequestParam(required = false, defaultValue = "20") int num) {
+        ApiResponse response = new ApiResponse<>();
+        Result<List<TWithdraw>> result = accountService.findTWithdraw(userId, page, num);
+        if (!result.isSuccess()) {
+            response.addError(result.getErrorCodes());
+            return response;
+        }
+        response.setResult(accountConverter.converterWithdraw(result.getData()));
         return response;
     }
 

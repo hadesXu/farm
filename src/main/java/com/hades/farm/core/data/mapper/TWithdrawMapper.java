@@ -1,6 +1,9 @@
 package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.entity.TWithdraw;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TWithdrawMapper {
     /**
@@ -50,4 +53,14 @@ public interface TWithdrawMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(TWithdraw record);
+
+    /**
+     * 获取提现记录
+     *
+     * @param userId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<TWithdraw> findWithdraw(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
 }

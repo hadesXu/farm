@@ -1,10 +1,7 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.core.data.entity.*;
-import com.hades.farm.core.data.mapper.TAccountIntegralFlowMapper;
-import com.hades.farm.core.data.mapper.TAccountIntegralMapper;
-import com.hades.farm.core.data.mapper.TAccountTicketFlowMapper;
-import com.hades.farm.core.data.mapper.TAccountTicketMapper;
+import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.AccountService;
 import com.hades.farm.enums.AcctOpreType;
@@ -38,6 +35,8 @@ public class AccountServiceImpl implements AccountService {
     private TAccountIntegralFlowMapper tAccountIntegralFlowMapper;
     @Resource
     private TAccountIntegralMapper tAccountIntegralMapper;
+    @Resource
+    private TWithdrawMapper tWithdrawMapper;
 
 
     @Override
@@ -56,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Result<TAccountIntegral> getAccountIntegral(long userId) {
         Result<TAccountIntegral> result = Result.newResult();
-        TAccountIntegral tAccountIntegral = tAccountIntegralMapper.selectByPrimaryKey(userId);
+        TAccountIntegral tAccountIntegral = tAccountIntegralMapper.queryByUserId(userId);
         if (tAccountIntegral == null) {
             result.addError(ErrorCode.SYSTEM_ERROR);
             return result;
@@ -157,6 +156,17 @@ public class AccountServiceImpl implements AccountService {
         List<TAccountTicketFlow> flows = tAccountTicketFlowMapper.findAccountRecord(userId, offset, num);
         if (CollectionUtils.isNotEmpty(flows)) {
             result.setData(flows);
+        }
+        return result;
+    }
+
+    @Override
+    public Result<List<TWithdraw>> findTWithdraw(long userId, int page, int num) {
+        Result<List<TWithdraw>> result = Result.newResult();
+        int offset = (page - 1) * num;
+        List<TWithdraw> withdraws = tWithdrawMapper.findWithdraw(userId, offset, num);
+        if (CollectionUtils.isNotEmpty(withdraws)) {
+            result.setData(withdraws);
         }
         return result;
     }

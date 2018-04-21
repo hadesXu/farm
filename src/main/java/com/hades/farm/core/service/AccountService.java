@@ -68,4 +68,14 @@ public interface AccountService {
      */
     Result<List<TAccountTicketFlow>> findAccountRecord(long userId, int page, int num);
 
+    /**
+     * 获取提现记录
+     *
+     * @param userId
+     * @param page
+     * @param num
+     * @return
+     */
+    Result<List<TWithdraw>> findTWithdraw(long userId, int page, int num);
+
 }

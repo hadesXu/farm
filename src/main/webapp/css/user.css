@@ -665,11 +665,11 @@ a.bnt_1{ text-align:center; color:#fff}
 
 .font12{ font-size:16px; line-height:100px; text-align:center; color:#333}
 /*================个人中心里面input的所有样式=======*/
-.f_checkbox_t {width: 18px;height: 18px;background:#ffffff url(../img/flow_icon_order.png) 0px 0px no-repeat;
+.f_checkbox_t {width: 18px;height: 18px;
   background-size:24px auto;float: left;}
 .f_checkbox_t {margin: 5px 5px 5px 0;}
-.f_checkbox_t:checked {background: url(../img/low_icon_order.png);background-position:0px -32px;}
-.f_checkbox_t:disabled { background: url(../img/flow_icon_order.png);background-position:0px -63px;}
+.f_checkbox_t:checked {background-position:0px -32px;}
+.f_checkbox_t:disabled { background-position:0px -63px;}
 
 
 

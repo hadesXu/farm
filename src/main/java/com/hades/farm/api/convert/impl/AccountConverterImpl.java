@@ -3,8 +3,11 @@ package com.hades.farm.api.convert.impl;
 import com.hades.farm.api.convert.AccountConverter;
 import com.hades.farm.api.view.response.DealRecordModel;
 import com.hades.farm.api.view.response.RecordModel;
+import com.hades.farm.api.view.response.WithdrawRecordModel;
 import com.hades.farm.core.data.entity.TAccountIntegralFlow;
 import com.hades.farm.core.data.entity.TAccountTicketFlow;
+import com.hades.farm.core.data.entity.TWithdraw;
+import com.hades.farm.enums.WithdrawStatus;
 import com.hades.farm.utils.DateUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -29,7 +32,7 @@ public class AccountConverterImpl implements AccountConverter {
         RecordModel model = null;
         for (TAccountIntegralFlow tAccountIntegralFlow : tAccountIntegralFlows) {
             model = new RecordModel();
-            model.setTimeStr(DateUtils.getDayYYYY_MM_DDStr(tAccountIntegralFlow.getAddTime()));
+            model.setTimeStr(DateUtils.dateToString(tAccountIntegralFlow.getAddTime()));
             model.setTypeStr("类型");
             model.setValue(tAccountIntegralFlow.getAmountAfter().subtract(tAccountIntegralFlow.getAmountBefore()));
             models.add(model);
@@ -44,7 +47,7 @@ public class AccountConverterImpl implements AccountConverter {
         RecordModel model = null;
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new RecordModel();
-            model.setTimeStr(DateUtils.getDayYYYY_MM_DDStr(tAccountTicketFlow.getAddTime()));
+            model.setTimeStr(DateUtils.dateToString(tAccountTicketFlow.getAddTime()));
             model.setValue(tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore()));
             model.setTypeStr("类型");
             models.add(model);
@@ -60,11 +63,26 @@ public class AccountConverterImpl implements AccountConverter {
         BigDecimal bigDecimal = BigDecimal.ZERO;
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new DealRecordModel();
-            model.setTimeStr(DateUtils.getDayYYYY_MM_DDStr(tAccountTicketFlow.getAddTime()));
+            model.setTimeStr(DateUtils.dateToString(tAccountTicketFlow.getAddTime()));
             model.setDesc(tAccountTicketFlow.getRemarks());
             bigDecimal = tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore());
             model.setTypeStr(bigDecimal.compareTo(BigDecimal.ZERO) >= 0 ? "增加" : "扣除");
             model.setValueStr(bigDecimal.toString());
+            models.add(model);
+        }
+        return models;
+    }
+
+    @Override
+    public List<WithdrawRecordModel> converterWithdraw(List<TWithdraw> tWithdraws) {
+        if (CollectionUtils.isEmpty(tWithdraws)) return null;
+        List<WithdrawRecordModel> models = new ArrayList<>();
+        WithdrawRecordModel model = null;
+        for (TWithdraw tWithdraw : tWithdraws) {
+            model = new WithdrawRecordModel();
+            model.setTimeStr(DateUtils.dateToString(tWithdraw.getAddTime()));
+            model.setValue(tWithdraw.getAmount());
+            model.setStateStr(WithdrawStatus.getStatus(tWithdraw.getStatus()).getDesc());
             models.add(model);
         }
         return models;

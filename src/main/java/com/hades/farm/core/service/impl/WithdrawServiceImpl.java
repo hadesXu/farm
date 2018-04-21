@@ -98,6 +98,10 @@ public class WithdrawServiceImpl implements WithdrawService {
         tWithdraw.setAmount(request.getAmount());
         tWithdraw.setStatus("1");
         tWithdraw.setAddTime(new Date());
+        tWithdraw.setRate(BigDecimal.ZERO);
+        tWithdraw.setFee(BigDecimal.ZERO);
+        tWithdraw.setInterbank(BigDecimal.ZERO);
+        tWithdraw.setUserId(request.getUserId());
         if (withdrawType == WithdrawType.ALIPAY) {
             tWithdraw.setRealName(request.getRealName());
             tWithdraw.setAlipayAccount(request.getAlipayAccount());

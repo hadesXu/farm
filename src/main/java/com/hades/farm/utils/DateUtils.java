@@ -516,10 +516,10 @@ public class DateUtils {
         return s;
     }
 
-    public static String getDayYYYY_MM_DDStr(Date date) {
+    public static String getDay(Date date) {
         String s = null;
         if (date != null) {
-            s = YYYY_MM_DD.get().format(date);
+            s = YYYY_MM_DD_MM_HH_SS.get().format(date);
         }
         return s;
     }

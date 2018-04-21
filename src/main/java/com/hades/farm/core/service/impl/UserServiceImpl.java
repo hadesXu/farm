@@ -269,6 +269,10 @@ public class UserServiceImpl implements UserService {
         user.setAddTime(new Date());
         user.setSex(Sex.UNDEFINED.type);
         user.setBirth(SystemUtil.defaultBirth());
+        user.setsEgg(Constant.NUMBER_ONE);
+        user.setsDuck(Constant.NUMBER_ONE);
+        user.setActive(Constant.NUMBER_TWO);
+        user.setIsGroup(Constant.NUMBER_ONE);
         if (request.getParentId() != null) {
             User parentUser = userMapper.getUserById(request.getParentId());
             if (parentUser != null) {

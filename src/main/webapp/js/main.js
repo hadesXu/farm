@@ -1,7 +1,7 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
-var serverUrl = "http://api.chirs.top";
-// var serverUrl = "http://127.0.0.1:8098";
+// var serverUrl = "http://api.chirs.top";
+var serverUrl = "http://127.0.0.1:8098";
 //校验登录
 function checkLogin() {
     if (checkNull(userId) || checkNull(token) || userId < 1) {
@@ -196,6 +196,15 @@ function getTimestamp(dateStr) {
     date = dateStr.substring(0, 19);
     date = dateStr.replace(/-/g, '/');
     return new Date(date).getTime();
+}
+
+function formatBigDecimal(val) {
+//金额转换 分->元 保留2位小数 并每隔3位用逗号分开 1,234.56
+    var str = (val).toFixed(2) + '';
+    var intSum = str.substring(0, str.indexOf(".")).replace(/\B(?=(?:\d{3})+$)/g, ',');//取到整数部分
+    var dot = str.substring(str.length, str.indexOf("."))//取到小数部分搜索
+    var ret = intSum + dot;
+    return ret;
 }
 
 

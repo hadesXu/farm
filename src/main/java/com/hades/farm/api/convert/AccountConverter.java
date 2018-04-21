@@ -2,8 +2,10 @@ package com.hades.farm.api.convert;
 
 import com.hades.farm.api.view.response.DealRecordModel;
 import com.hades.farm.api.view.response.RecordModel;
+import com.hades.farm.api.view.response.WithdrawRecordModel;
 import com.hades.farm.core.data.entity.TAccountIntegralFlow;
 import com.hades.farm.core.data.entity.TAccountTicketFlow;
+import com.hades.farm.core.data.entity.TWithdraw;
 
 import java.util.List;
 
@@ -35,4 +37,12 @@ public interface AccountConverter {
      * @return
      */
     List<DealRecordModel> converter(List<TAccountTicketFlow> tAccountTicketFlows);
+
+    /**
+     * 转换提现记录模型
+     *
+     * @param tWithdraws
+     * @return
+     */
+    List<WithdrawRecordModel> converterWithdraw(List<TWithdraw> tWithdraws);
 }

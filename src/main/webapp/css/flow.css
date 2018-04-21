@@ -97,13 +97,13 @@ border-radius: 6px;text-align: center;cursor: pointer;border: .1rem solid #00000
 .cart-checkbox1 { width: 25px; height: 25px; margin-left:0px; background: url(../img/flow_icon.png) no-repeat 0 0;  float:left;  }
 .f_checkbox {width: 20px;height: 20px;background:#ffffff url(../img/flow_icon.png)  no-repeat 0px 0px;
 border-radius: 50%; margin: 20px 10px 0 0;float: left;}
-.f_checkbox:checked { background-image:url(../img/flow_icon.png); background-position:0px -47px;}
+.f_checkbox:checked { ; background-position:0px -47px;}
 .shop_title .f_checkbox{margin-left:10px; margin-top:12px;}
-.f_checkbox_t {width: 18px;height: 18px;background:#ffffff url(../img/flow_icon_order.png) 0px 0px no-repeat;
+.f_checkbox_t {width: 18px;height: 18px;
   background-size:24px auto;float: left; margin: 0px 5px 0px 10px;}
 .order-info .shipping_jm .f_checkbox_t {margin: 5px 5px 5px 0;}
-.f_checkbox_t:checked {background-image: url(../img/flow_icon_order.png);background-position:0px -32px;}
-.f_checkbox_t:disabled { background-image: url(../img/flow_icon_order.png);background-position:0px -63px;}
+.f_checkbox_t:checked {background-position:0px -32px;}
+.f_checkbox_t:disabled { background-position:0px -63px;}
 
 /*购物车属性选择弹出框样式*/
 .f_title_attr {height:130px; margin-top:30px;color:#58595b; background:#ffffff}
