@@ -176,7 +176,7 @@ function formatDateDay(inputTime) {
 function footerHtml() {
     var innerHtml = "";
     innerHtml += "<div class='tools' style='width:86%;'>";
-    innerHtml += " <ul class='tool-ul clearfix' style='top:-20%;'>";
+    innerHtml += " <ul class='tool-ul clearfix' style='top:-28%;'>";
     innerHtml += "   <li class='tools04'>";
     innerHtml += "      <a href='index.html' tppabs='javascript:;'>";
     innerHtml += "           <img src='../img/wdnc.png' tppabs='javascript:;'>";
