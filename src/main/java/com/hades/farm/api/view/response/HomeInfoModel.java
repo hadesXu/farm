@@ -17,6 +17,11 @@ public class HomeInfoModel {
      */
     private BigDecimal integral = BigDecimal.ZERO;
 
+    /**
+     * 冻结金额
+     */
+    private BigDecimal frozen = BigDecimal.ZERO;
+
     public BigDecimal getBalance() {
         return balance;
     }
@@ -31,5 +36,13 @@ public class HomeInfoModel {
 
     public void setIntegral(BigDecimal integral) {
         this.integral = integral;
+    }
+
+    public BigDecimal getFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(BigDecimal frozen) {
+        this.frozen = frozen;
     }
 }

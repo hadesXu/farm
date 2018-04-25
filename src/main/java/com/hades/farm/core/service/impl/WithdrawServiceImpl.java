@@ -98,9 +98,19 @@ public class WithdrawServiceImpl implements WithdrawService {
         tWithdraw.setAmount(request.getAmount());
         tWithdraw.setStatus("1");
         tWithdraw.setAddTime(new Date());
-        tWithdraw.setRate(BigDecimal.ZERO);
-        tWithdraw.setFee(BigDecimal.ZERO);
-        tWithdraw.setInterbank(BigDecimal.ZERO);
+
+        BigDecimal rate = BigDecimal.ZERO;
+        if(withdrawType.type == 1) { //支付宝2%提现手续费
+            rate = new BigDecimal("0.02");
+        }else if(withdrawType.type == 2) { //银行卡5%提现手续费
+            rate = new BigDecimal("0.05");
+        }
+        tWithdraw.setRate(rate);
+        BigDecimal fee = request.getAmount().multiply(rate).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+        tWithdraw.setFee(fee);
+
+        BigDecimal interbank = request.getAmount().subtract(fee).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+        tWithdraw.setInterbank(interbank);
         tWithdraw.setUserId(request.getUserId());
         if (withdrawType == WithdrawType.ALIPAY) {
             tWithdraw.setRealName(request.getRealName());
