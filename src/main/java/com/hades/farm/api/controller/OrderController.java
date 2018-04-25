@@ -50,6 +50,21 @@ public class OrderController {
             }
             int goodNum =  Integer.parseInt(goodNumStr);
             int goodType = Integer.parseInt(goodTypeStr);
+            if(goodType == 1){//蛋
+                if(goodNum>100 || goodNum<10){
+                    msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
+                    msgModel.setMessage("卖出"+ErrorCode.BUY_EGG_LIMIT.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+            }else if(goodType == 2){
+                if(goodNum>100 || goodNum<20){
+                    msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
+                    msgModel.setMessage("卖出" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+            }
             PublishOrderRequestDto requestDto = new PublishOrderRequestDto();
             requestDto.setUserId(userId);
             requestDto.setNum(goodNum);
@@ -80,6 +95,24 @@ public class OrderController {
             int goodNum =  Integer.parseInt(goodNumStr);
             int goodType = Integer.parseInt(goodTypeStr);
             long orderId = Long.parseLong(orderIdStr);
+            //校验num上限下限
+            if(orderIdStr == null || orderId <1){
+                if(goodType == 1){//蛋
+                    if(goodNum>100 || goodNum<10){
+                        msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
+                        msgModel.setMessage("购买"+ErrorCode.BUY_EGG_LIMIT.getMessage());
+                        response.setResult(msgModel);
+                        return response;
+                    }
+                }else if(goodType == 2){
+                    if(goodNum>100 || goodNum<20){
+                        msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
+                        msgModel.setMessage("购买" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
+                        response.setResult(msgModel);
+                        return response;
+                    }
+                }
+            }
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
             requestDto.setUserId(userId);
             requestDto.setType(goodType);
