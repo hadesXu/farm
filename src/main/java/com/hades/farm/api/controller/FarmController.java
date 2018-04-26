@@ -92,6 +92,12 @@ public class FarmController {
             }
             int duckNumInt = Integer.parseInt(duckNum);
             requestDto.setNum(duckNumInt);
+            if(duckNumInt>100 || duckNumInt<10){
+                msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
+                msgModel.setMessage("放养"+ErrorCode.BUY_EGG_LIMIT.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             if(duckNumInt<1 || duckNumInt%10!=0){
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
@@ -181,6 +187,12 @@ public class FarmController {
             }
             int eggNumInt = Integer.parseInt(eggNum);
             requestDto.setNum(eggNumInt);
+            if(eggNumInt>100 || eggNumInt<10){
+                msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
+                msgModel.setMessage("孵化"+ErrorCode.BUY_EGG_LIMIT.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             if(eggNumInt<1 || eggNumInt%10!=0){
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());

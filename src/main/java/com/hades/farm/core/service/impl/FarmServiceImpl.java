@@ -65,6 +65,7 @@ public class FarmServiceImpl implements FarmService {
         fdcInfoModel.setEgg(eggWarehouse.getEgg());
         fdcInfoModel.setEggDoing(eggWarehouse.getEggDoing());
         fdcInfoModel.setIfSteal(eggWarehouse.getIfSteal());
+        fdcInfoModel.setIfHot(eggWarehouse.getIfHot()+"");
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             fdcInfoModel.setHasDog(2);

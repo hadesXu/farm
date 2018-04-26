@@ -12,6 +12,15 @@ public class FdcInfoModel {
     private int hasRobot;//是否有机器人
     private String dogEndDay;
     private String robotEndDay;
+    private String ifHot;//今日是否加温
+
+    public String getIfHot() {
+        return ifHot;
+    }
+
+    public void setIfHot(String ifHot) {
+        this.ifHot = ifHot;
+    }
 
     public String getRobotEndDay() {
         return robotEndDay;
