@@ -77,11 +77,12 @@
 
             <li class="right_td up-box2" style="border:none;" onclick="stealEgg()">"偷蛋"</li>
 
-            <li style="text-align:right; width:40px; margin-top:10px; margin-left:30px; position:relative;z-index:999;">
-
-               <a href="farm_jww.php?act=jww"><img  src="../img/jiazi.png"  ></a> 
-
-            </li>
+           <li style="text-align:right;z-index:6; position:relative;">
+               <img  src="../img/shou.gif" class="ytb" onClick="shouhuo()" />
+           </li>
+           <style>
+               .ytb{width:40px;height:40px;margin:10px;}
+           </style>
 
            
 
@@ -191,7 +192,7 @@
 
      <div style="position:absolute;bottom:7%;right:5%; z-index:999;">
 
-    	 <a href="farm_yjc.php?act=yjc"><img src="../img/yjc_tb.png" style="width:60px;height:60px;"></a>
+    	 <a href="farm_yjc.htm"><img src="../img/yjc_tb.png" style="width:60px;height:60px;"></a>
 
      </div>
 
@@ -717,6 +718,33 @@
 	</script>
     </div>
 	<script type="text/javascript">
+        function shouhuo(){
+            jsonTokenAjax("/api/farm/shouhuo", "POST", {"goodTypeStr":"2"}, shouhuoCallBack, errorback);
+        }
+
+        function shouhuoCallBack(data){
+            if(data.status == "1"){
+                var result = data.result;
+                if(result.code=='0000'){
+                    //提示
+                    layer.open({
+                        content: "收获成功"
+                        ,skin: 'msg'
+                        ,time: 1 //2秒后自动关闭
+                    });
+                    //window.setTimeout("window.location='farm_fdc.htm'",1200);
+                } else{
+                    //提示
+                    layer.open({
+                        content: result.message
+                        ,skin: 'msg'
+                        ,time: 1 //2秒后自动关闭
+                    });
+                }
+            }
+        }
+
+
 	//放蛋孵化
 function fandan(){
     var eggNum = $("#eggNum").html()*1;

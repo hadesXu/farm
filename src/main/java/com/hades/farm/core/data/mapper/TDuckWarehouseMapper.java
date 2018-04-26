@@ -92,4 +92,6 @@ public interface TDuckWarehouseMapper {
      * @return
      */
     int updateOfStealOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
+
+    int shouhuoEgg(Long userId);
 }

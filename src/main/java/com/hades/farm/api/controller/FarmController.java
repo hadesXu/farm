@@ -69,6 +69,26 @@ public class FarmController {
     }
 
     /**
+     * 收获
+     * @param userId
+     * @param goodTypeStr
+     * @return
+     */
+    @RequestMapping(value = "/shouhuo", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<MsgModel> shouhuo(@RequestParam long userId,@RequestParam String goodTypeStr){
+        ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        try {
+             farmService.shouhuo(userId,goodTypeStr);
+        } catch (BizException e){
+            msgModel.setCode(e.getErrCode());
+            msgModel.setMessage(e.getErrMessage());
+        }
+        response.setResult(msgModel);
+        return response;
+    }
+    /**
      * 养鸭
      * @param userId
      * @param duckNum

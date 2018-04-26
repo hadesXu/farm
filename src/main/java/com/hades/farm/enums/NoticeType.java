@@ -30,6 +30,8 @@ public enum NoticeType {
 
     STEAL_DUCK_OTHER_WAREHOUSE(23,"偷鸭","成功偷到num只鸭，已放入您的仓库"),
     STEAL_DUCK_BYOTHER_WAREHOUSE(24,"被偷鸭","您的鸭未及时收获，被玩家偷走20%"),
+    HARVEST_EGG(25,"收获蛋","成功收获num个蛋"),
+    HARVEST_DUCK(26,"收获鸭","成功收获num只鸭"),
     ;
     private int type;
     private String desc;
