@@ -1,6 +1,7 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.api.view.response.OrderIndexModel;
+import com.hades.farm.api.view.response.VendibilityModel;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
@@ -33,12 +34,13 @@ public class OrderQueryServiceImpl implements OrderQueryService {
     private TEggWarehouseMapper tEggWarehouseMapper;
 
     @Override
-    public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto){
+    public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto) {
         List<OrderUserResultDto> orderList = tOrdersMapper.queryOrderListByCondition(requestDto);
         return orderList;
     }
+
     @Override
-    public OrderIndexModel orderIndex(long userId){
+    public OrderIndexModel orderIndex(long userId) {
         OrderIndexModel orderIndexModel = new OrderIndexModel();
         OrderQueryRequestDto allOrderCondition = new OrderQueryRequestDto();
         allOrderCondition.setOffSet(0);
@@ -57,9 +59,19 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         orderIndexModel.setPlatformWarehouse(platformWarehouse);
         //查询商品鸭商品蛋的数量
         TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(userId);
-        TEggWarehouse eggWarehouse  = tEggWarehouseMapper.selectByUserId(userId);
-        orderIndexModel.setDuckNum(eggWarehouse==null?0:eggWarehouse.getDuck());
-        orderIndexModel.setEggNum(duckWarehouse==null?0:duckWarehouse.getEgg());
+        TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(userId);
+        orderIndexModel.setDuckNum(eggWarehouse == null ? 0 : eggWarehouse.getDuck());
+        orderIndexModel.setEggNum(duckWarehouse == null ? 0 : duckWarehouse.getEgg());
         return orderIndexModel;
+    }
+
+    @Override
+    public VendibilityModel findVendibility(long userId) {
+        VendibilityModel model = new VendibilityModel();
+        TDuckWarehouse duckWarehouse = tDuckWarehouseMapper.selectByUserId(userId);
+        TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(userId);
+        model.setDuckNum(eggWarehouse == null ? 0 : eggWarehouse.getDuck());
+        model.setEggNum(duckWarehouse == null ? 0 : duckWarehouse.getEgg());
+        return model;
     }
 }

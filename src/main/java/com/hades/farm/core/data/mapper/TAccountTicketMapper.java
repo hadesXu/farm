@@ -62,4 +62,6 @@ public interface TAccountTicketMapper {
     int incUserAccount(TAccountTicket record);
 
     int withdraw(@Param("userId") long userId, @Param("amount") BigDecimal amount);
+
+    int integral(@Param("userId") long userId, @Param("amount") BigDecimal amount);
 }

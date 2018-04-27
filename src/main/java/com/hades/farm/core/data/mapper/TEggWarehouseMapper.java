@@ -8,6 +8,7 @@ import com.hades.farm.core.data.dto.requestDto.WareHouseCumulativeDataRequestDto
 import com.hades.farm.core.data.entity.TEggWarehouse;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface TEggWarehouseMapper {
@@ -86,5 +87,8 @@ public interface TEggWarehouseMapper {
      * @return
      */
     int updateOfStealOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
+
+
+    int eggChange(@Param("userId") long userId, @Param("num") BigDecimal num);
 
 }

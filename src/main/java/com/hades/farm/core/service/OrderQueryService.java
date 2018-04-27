@@ -1,6 +1,7 @@
 package com.hades.farm.core.service;
 
 import com.hades.farm.api.view.response.OrderIndexModel;
+import com.hades.farm.api.view.response.VendibilityModel;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
 import com.hades.farm.core.data.entity.TOrders;
@@ -14,4 +15,6 @@ public interface OrderQueryService {
     public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto);
 
     public OrderIndexModel orderIndex(long userId);
+
+    VendibilityModel findVendibility(long userId);
 }

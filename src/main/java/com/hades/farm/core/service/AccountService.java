@@ -5,6 +5,7 @@ import com.hades.farm.core.exception.BizException;
 import com.hades.farm.enums.AcctOpreType;
 import com.hades.farm.result.Result;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -78,4 +79,22 @@ public interface AccountService {
      */
     Result<List<TWithdraw>> findTWithdraw(long userId, int page, int num);
 
+    /**
+     * 菜票 兑换积分
+     *
+     * @param userId
+     * @param num
+     * @return
+     */
+    void integralChange(long userId, BigDecimal num) throws BizException;
+
+    /**
+     * 商品兑换积分
+     *
+     * @param userId
+     * @param type
+     * @param num
+     * @return
+     */
+    void goodsChange(long userId, int type, BigDecimal num) throws BizException;
 }

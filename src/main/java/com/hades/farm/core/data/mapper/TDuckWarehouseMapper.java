@@ -5,6 +5,7 @@ import com.hades.farm.core.data.dto.requestDto.*;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface TDuckWarehouseMapper {
@@ -72,24 +73,30 @@ public interface TDuckWarehouseMapper {
 
     /**
      * 偷蛋列表
+     *
      * @param userId
      * @return
      */
-    List<StealModel> queryCanStealList(@Param("userId") Long userId,@Param("offSet")int offSet,@Param("pageSize")int pageSize);
+    List<StealModel> queryCanStealList(@Param("userId") Long userId, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
     /**
      * 被偷
+     *
      * @param userId
      * @param stealNum
      * @return
      */
-    int updateOfStealByOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
+    int updateOfStealByOther(@Param("userId") Long userId, @Param("stealNum") int stealNum);
 
     /**
      * 偷别人的
+     *
      * @param userId
      * @param stealNum
      * @return
      */
-    int updateOfStealOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
+    int updateOfStealOther(@Param("userId") Long userId, @Param("stealNum") int stealNum);
+
+
+    int duckChange(@Param("userId") long userId, @Param("num") BigDecimal num);
 }

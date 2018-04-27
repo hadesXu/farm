@@ -50,7 +50,8 @@ public enum ErrorCode {
     USER_NOT_EXIST(3007, "用户不存在"),
     PASSWORD_INVALID(3008, "密码不正确"),
     RELATION_NOT_EXIST(3009, "关系不存在"),
-    ITEM_NOT_EXIST(3007, "商品不存在"),
+    ITEM_NOT_EXIST(3010, "商品不存在"),
+    INTEGRAL_ERROR(3011, "积分兑换不能小于10"),
 
 
     SUCCESS(0000, "成功");

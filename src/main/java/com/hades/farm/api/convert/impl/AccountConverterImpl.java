@@ -7,6 +7,7 @@ import com.hades.farm.api.view.response.WithdrawRecordModel;
 import com.hades.farm.core.data.entity.TAccountIntegralFlow;
 import com.hades.farm.core.data.entity.TAccountTicketFlow;
 import com.hades.farm.core.data.entity.TWithdraw;
+import com.hades.farm.enums.IntegralType;
 import com.hades.farm.enums.WithdrawStatus;
 import com.hades.farm.enums.WithdrawType;
 import com.hades.farm.utils.DateUtils;
@@ -34,7 +35,7 @@ public class AccountConverterImpl implements AccountConverter {
         for (TAccountIntegralFlow tAccountIntegralFlow : tAccountIntegralFlows) {
             model = new RecordModel();
             model.setAddTime(DateUtils.getDate(tAccountIntegralFlow.getAddTime()));
-            model.setTypeStr("类型");
+            model.setTypeStr(IntegralType.getType(Integer.parseInt(tAccountIntegralFlow.getType())).getDesc());
             model.setValue(tAccountIntegralFlow.getAmountAfter().subtract(tAccountIntegralFlow.getAmountBefore()));
             models.add(model);
         }

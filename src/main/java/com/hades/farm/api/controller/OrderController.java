@@ -3,6 +3,7 @@ package com.hades.farm.api.controller;
 import com.hades.farm.api.view.ApiResponse;
 import com.hades.farm.api.view.response.MsgModel;
 import com.hades.farm.api.view.response.OrderIndexModel;
+import com.hades.farm.api.view.response.VendibilityModel;
 import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
@@ -36,26 +37,26 @@ public class OrderController {
 
     @RequestMapping(value = "/sellGoods", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<MsgModel> sellGoods(@RequestParam long userId,@RequestParam String goodNumStr,@RequestParam String goodTypeStr){
+    public ApiResponse<MsgModel> sellGoods(@RequestParam long userId, @RequestParam String goodNumStr, @RequestParam String goodTypeStr) {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage());
         try {
 
             ErrorCode errorCode = NumUtil.validateInteger(goodNumStr);
-            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+            if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
-            int goodNum =  Integer.parseInt(goodNumStr);
+            int goodNum = Integer.parseInt(goodNumStr);
             int goodType = Integer.parseInt(goodTypeStr);
             PublishOrderRequestDto requestDto = new PublishOrderRequestDto();
             requestDto.setUserId(userId);
             requestDto.setNum(goodNum);
             requestDto.setType(goodType);
             orderService.publishOrders(requestDto);
-        }catch (BizException e){
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
@@ -66,40 +67,40 @@ public class OrderController {
 
     @RequestMapping(value = "/buyGoods", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<MsgModel> buyGoods (@RequestParam long userId,@RequestParam String goodNumStr,@RequestParam String goodTypeStr,@RequestParam String orderIdStr){
+    public ApiResponse<MsgModel> buyGoods(@RequestParam long userId, @RequestParam String goodNumStr, @RequestParam String goodTypeStr, @RequestParam String orderIdStr) {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage());
         try {
             ErrorCode errorCode = NumUtil.validateInteger(goodNumStr);
-            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+            if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
-            int goodNum =  Integer.parseInt(goodNumStr);
+            int goodNum = Integer.parseInt(goodNumStr);
             int goodType = Integer.parseInt(goodTypeStr);
             long orderId = Long.parseLong(orderIdStr);
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
             requestDto.setUserId(userId);
             requestDto.setType(goodType);
             requestDto.setNum(goodNum);
-            if(orderIdStr == null || orderId <1){
-                if(goodType == 1){
+            if (orderIdStr == null || orderId < 1) {
+                if (goodType == 1) {
                     orderService.buyEggFromPlatform(requestDto);
-                }else if(goodType == 2){
+                } else if (goodType == 2) {
                     orderService.buyDuckFromPlatform(requestDto);
-                }else{
+                } else {
                     msgModel.setCode(ErrorCode.GOOD_TYPE_ERROR.getCode());
                     msgModel.setMessage(ErrorCode.GOOD_TYPE_ERROR.getMessage());
                     response.setResult(msgModel);
                     return response;
                 }
-            }else{
+            } else {
                 requestDto.setOrderId(orderId);
                 orderService.buyGoodsFromOrder(requestDto);
             }
-        }catch (BizException e){
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
@@ -109,23 +110,23 @@ public class OrderController {
 
     @RequestMapping(value = "/buyFood", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<MsgModel> buyFood(@RequestParam long userId,@RequestParam String foodStr){
+    public ApiResponse<MsgModel> buyFood(@RequestParam long userId, @RequestParam String foodStr) {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage());
         try {
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
             requestDto.setUserId(userId);
             //校验food
             ErrorCode errorCode = NumUtil.validateInteger(foodStr);
-            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+            if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
             requestDto.setFeedNum(Integer.parseInt(foodStr));
-           orderService.buyFeed(requestDto);
-        }catch (BizException e){
+            orderService.buyFeed(requestDto);
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
@@ -135,16 +136,25 @@ public class OrderController {
 
     @RequestMapping(value = "/orderIndex", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<OrderIndexModel> orderIndex(@RequestParam long userId){
+    public ApiResponse<OrderIndexModel> orderIndex(@RequestParam long userId) {
         ApiResponse<OrderIndexModel> response = new ApiResponse<OrderIndexModel>();
         OrderIndexModel orderIndexModel = orderQueryService.orderIndex(userId);
         response.setResult(orderIndexModel);
         return response;
     }
 
+    @RequestMapping(value = "/vendibility", method = RequestMethod.POST)
+    @Auth
+    public ApiResponse<VendibilityModel> findVendibility(@RequestParam long userId) {
+        ApiResponse<VendibilityModel> response = new ApiResponse<VendibilityModel>();
+        VendibilityModel vendibility = orderQueryService.findVendibility(userId);
+        response.setResult(vendibility);
+        return response;
+    }
+
     @RequestMapping(value = "/queryAllOrderList", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<List<OrderUserResultDto>> queryAllOrderList(@RequestParam long userId,@RequestParam String offSet,@RequestParam String pageSize){
+    public ApiResponse<List<OrderUserResultDto>> queryAllOrderList(@RequestParam long userId, @RequestParam String offSet, @RequestParam String pageSize) {
         ApiResponse<List<OrderUserResultDto>> response = new ApiResponse<List<OrderUserResultDto>>();
         OrderQueryRequestDto requestDto = new OrderQueryRequestDto();
         requestDto.setPageSize(Integer.parseInt(pageSize));
@@ -159,7 +169,7 @@ public class OrderController {
 
     @RequestMapping(value = "/queryMyOrderList", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<List<OrderUserResultDto>> queryMyOrderList(@RequestParam long userId,@RequestParam String offSet,@RequestParam String pageSize){
+    public ApiResponse<List<OrderUserResultDto>> queryMyOrderList(@RequestParam long userId, @RequestParam String offSet, @RequestParam String pageSize) {
         ApiResponse<List<OrderUserResultDto>> response = new ApiResponse<List<OrderUserResultDto>>();
         OrderQueryRequestDto requestDto = new OrderQueryRequestDto();
         requestDto.setPageSize(Integer.parseInt(pageSize));
@@ -172,33 +182,33 @@ public class OrderController {
 
     @RequestMapping(value = "/buyDoorDogOrRobot", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<MsgModel> buyDoorDogOrRobot(@RequestParam long userId,@RequestParam String monthStr,@RequestParam String type){
+    public ApiResponse<MsgModel> buyDoorDogOrRobot(@RequestParam long userId, @RequestParam String monthStr, @RequestParam String type) {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage());
         try {
             //校验month
             ErrorCode errorCode = NumUtil.validateInteger(monthStr);
-            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+            if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
-            if(!"1".equals(monthStr) && !"2".equals(monthStr) && !"3".equals(monthStr)){
+            if (!"1".equals(monthStr) && !"2".equals(monthStr) && !"3".equals(monthStr)) {
                 msgModel.setCode(ErrorCode.NUM_ILLEGAL.getCode());
                 msgModel.setMessage(ErrorCode.NUM_ILLEGAL.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
             BuyGoodsRequestDto requestDto = new BuyGoodsRequestDto();
-            requestDto.setNum(Integer.parseInt(monthStr)*30);//天数
+            requestDto.setNum(Integer.parseInt(monthStr) * 30);//天数
             requestDto.setUserId(userId);
-            if("1".equals(type)){
+            if ("1".equals(type)) {
                 orderService.buyDoorDog(requestDto);
-            }else{
+            } else {
                 orderService.buyRobot(requestDto);
             }
-        }catch (BizException e){
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
@@ -208,25 +218,26 @@ public class OrderController {
 
     /**
      * 支付偷蛋或偷鸭费用
+     *
      * @param userId
      * @param type
      * @return
      */
     @RequestMapping(value = "/payStealDuckOrEgg", method = RequestMethod.POST)
     @Auth
-    public ApiResponse<MsgModel> payStealDuckOrEgg(@RequestParam long userId,@RequestParam String type){
+    public ApiResponse<MsgModel> payStealDuckOrEgg(@RequestParam long userId, @RequestParam String type) {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
-        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
+        MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage());
         try {
             ErrorCode errorCode = NumUtil.validateInteger(type);
-            if(errorCode.getCode()!=ErrorCode.SUCCESS.getCode()){
+            if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
-             orderService.payStealDuckOrEgg(userId,Integer.parseInt(type));
-        }catch (BizException e){
+            orderService.payStealDuckOrEgg(userId, Integer.parseInt(type));
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
