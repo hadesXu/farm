@@ -113,6 +113,9 @@
             <img  src="../img/weiyang.png" class="ytb" onClick="cc('wy')">
 
             </li>
+            <li style="text-align:right;z-index:6; position:relative;">
+                <img  src="../img/shou.gif" class="ytb" onClick="shouhuo()" />
+            </li>
 
         </ul>
 
@@ -962,7 +965,7 @@
 
 	                <img src="../img/gwsc.png"></a></li>
 
-	           <li class="tools04"><a href="v_user.php">
+	           <li class="tools04"><a href="v_user.html">
 
 	                <img src="../img/grxx.png"></a></li>		          
 
@@ -1024,6 +1027,33 @@
         checkLogin();
         jsonTokenAjax("/api/farm/yjcInfo", "GET", {}, callBack, errorback);
     });
+
+    function shouhuo(){
+        jsonTokenAjax("/api/farm/shouhuo", "POST", {"goodTypeStr":"1"}, shouhuoCallBack, errorback);
+    }
+
+    function shouhuoCallBack(data){
+        if(data.status == "1"){
+            var result = data.result;
+            if(result.code=='0000'){
+                //提示
+                layer.open({
+                    content: "收获成功"
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+                window.setTimeout("window.location='farm_yjc.htm'",1200);
+            } else{
+                //提示
+                layer.open({
+                    content: result.message
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
+                });
+            }
+        }
+    }
+
     var ifSteal = 2;//否
     var sDuck = 1;//是
 
@@ -1119,13 +1149,13 @@
                     ,time: 2 //2秒后自动关闭
                 });return;
             }
-            if(number1%10!=0){
+            /*if(number1%10!=0){
                 layer.open({
                     content:'请输入10的整数倍'
                     ,skin: 'msg'
                     ,time: 2 //2秒后自动关闭
                 });return;
-            }
+            }*/
         }
         if(duckNum < number1){
             layer.open({

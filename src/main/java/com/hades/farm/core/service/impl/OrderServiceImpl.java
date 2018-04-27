@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
         platformWarehouseFlow.setNum(requestDto.getNum());
         platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
         platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
-        platformWarehouseFlow.setRemarks(GoodsType.DUCK.getDesc());
+        platformWarehouseFlow.setRemarks("卖出" + requestDto.getNum()+"只鸭，购买用户ID:" + requestDto.getUserId());
         platformWarehouseFlow.setAddTime(new Date());
         updateCount =  tPlatformWarehouseFlowMapper.insertSelective(platformWarehouseFlow);
         if (updateCount != 1) {
@@ -164,7 +164,7 @@ public class OrderServiceImpl implements OrderService {
         platformWarehouseFlow.setNum(requestDto.getNum());
         platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
         platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
-        platformWarehouseFlow.setRemarks(GoodsType.EGG.getDesc());
+        platformWarehouseFlow.setRemarks("卖出" + requestDto.getNum()+ "个蛋，购买用户ID:"+requestDto.getUserId());
         platformWarehouseFlow.setAddTime(new Date());
         updateCount =  tPlatformWarehouseFlowMapper.insertSelective(platformWarehouseFlow);
         if (updateCount != 1) {
@@ -371,8 +371,8 @@ public class OrderServiceImpl implements OrderService {
         TAccountTicket sellAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(sellUserId);
         TAccountTicket buyAccountTicketBefore = tAccountTicketMapper.queryAccountByUserId(buyUserId);
         TAccountTicketFlow sellAccountTicketFlow = new TAccountTicketFlow();//卖出流水
-        TAccountTicketFlow sellFeeTicketFlow = new TAccountTicketFlow();//手续费流水
-        TAccountTicketFlow integralFeeTicketFlow = new TAccountTicketFlow();//积分费流水
+        //TAccountTicketFlow sellFeeTicketFlow = new TAccountTicketFlow();//手续费流水
+        //TAccountTicketFlow integralFeeTicketFlow = new TAccountTicketFlow();//积分费流水
         TAccountTicketFlow buyAccountTicketFlow = new TAccountTicketFlow();
         TNotice tSellNotice = new TNotice();
         TNotice tbuyNotice = new TNotice();
@@ -388,11 +388,11 @@ public class OrderServiceImpl implements OrderService {
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_EGG.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_EGG.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_EGG.getType());
-            sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount);
-            sellFeeTicketFlow.setType(AcctOpreType.SELL_EGG_FEE.getType());
+            sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount.subtract(sellFee).subtract(integralFee));
+            /*sellFeeTicketFlow.setType(AcctOpreType.SELL_EGG_FEE.getType());
             sellFeeTicketFlow.setRemarks("出售鸭蛋支付手续费：" + sellFee);
             integralFeeTicketFlow.setType(AcctOpreType.SELL_EGG_INTEGRAL_FEE.getType());
-            integralFeeTicketFlow.setRemarks("出售鸭蛋支付积分费：" + integralFee);
+            integralFeeTicketFlow.setRemarks("出售鸭蛋支付积分费：" + integralFee);*/
             buyAccountTicketFlow.setType(AcctOpreType.BUY_EGG.getType());
             buyAccountTicketFlow.setRemarks("买鸭蛋花费菜票:" + amount);
             tSellNotice.setType(NoticeType.SELL_EGG.getType());
@@ -405,11 +405,11 @@ public class OrderServiceImpl implements OrderService {
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_DUCK.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_DUCK.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_DUCK.getType());
-            sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount);
-            sellFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_FEE.getType());
+            sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount.subtract(sellFee).subtract(integralFee));
+            /*sellFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_FEE.getType());
             sellFeeTicketFlow.setRemarks("出售鸭支付手续费："+sellFee);
             integralFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_INTEGRAL_FEE.getType());
-            integralFeeTicketFlow.setRemarks("出售鸭支付积分费：" + integralFee);
+            integralFeeTicketFlow.setRemarks("出售鸭支付积分费：" + integralFee);*/
             buyAccountTicketFlow.setType(AcctOpreType.BUY_DUCK.getType());
             buyAccountTicketFlow.setRemarks("买鸭花费菜票:" + amount);
             tSellNotice.setType(NoticeType.SELL_DUCK.getType());
@@ -430,7 +430,7 @@ public class OrderServiceImpl implements OrderService {
         sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount));
         sellAccountTicketFlow.setAddTime(new Date());
 
-        sellFeeTicketFlow.setUserId(sellUserId);
+        /*sellFeeTicketFlow.setUserId(sellUserId);
         sellFeeTicketFlow.setAmount(sellFee);
         sellFeeTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance().add(amount));
         sellFeeTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount).subtract(sellFee));
@@ -440,13 +440,13 @@ public class OrderServiceImpl implements OrderService {
         integralFeeTicketFlow.setAmount(integralFee);
         integralFeeTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance().add(amount).subtract(sellFee));
         integralFeeTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount).subtract(sellFee).subtract(integralFee));
-        integralFeeTicketFlow.setAddTime(new Date());
+        integralFeeTicketFlow.setAddTime(new Date());*/
         //出售账户流水
         updateCount = tAccountTicketFlowMapper.insertSelective(sellAccountTicketFlow);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
         }
-        //手续费账户流水
+        /*//手续费账户流水
         updateCount = tAccountTicketFlowMapper.insertSelective(sellFeeTicketFlow);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
@@ -455,7 +455,7 @@ public class OrderServiceImpl implements OrderService {
         updateCount = tAccountTicketFlowMapper.insertSelective(integralFeeTicketFlow);
         if (updateCount != 1) {
             throw new BizException(ErrorCode.ADD_ERR);
-        }
+        }*/
         //更新卖家仓库累计出售数量、累计利润、累计积分
         BigDecimal gainIntegral = AmountUtil.integralCalculate(order.getType()).multiply(new BigDecimal(requestDto.getNum()));
         WareHouseCumulativeDataRequestDto wareHouseCumulativeDataRequestDto = new WareHouseCumulativeDataRequestDto();

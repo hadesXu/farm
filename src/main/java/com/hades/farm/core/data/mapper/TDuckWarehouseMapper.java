@@ -99,4 +99,6 @@ public interface TDuckWarehouseMapper {
 
 
     int duckChange(@Param("userId") long userId, @Param("num") BigDecimal num);
+
+    int shouhuoEgg(Long userId);
 }

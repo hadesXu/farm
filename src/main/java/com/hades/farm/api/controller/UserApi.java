@@ -186,6 +186,7 @@ public class UserApi {
             return response;
         }
         infoModel.setBalance(result.getData().getBalance());
+        infoModel.setFrozen(result.getData().getFrozen());
         infoModel.setIntegral(integralResult.getData().getBalance());
         response.setResult(infoModel);
         return response;

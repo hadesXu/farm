@@ -339,5 +339,14 @@
     and (egg - #{num,jdbcType=DECIMAL}) >0
   </update>
 
+  <update id="shouhuoEgg">
+      update t_duck_warehouse
+      set egg = egg + egg_harvest,
+      egg_harvest = 0,
+      if_harvest = 1,
+      update_time = NOW()
+      where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
 
 </mapper>

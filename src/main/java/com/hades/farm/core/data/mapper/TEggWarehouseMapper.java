@@ -88,7 +88,7 @@ public interface TEggWarehouseMapper {
      */
     int updateOfStealOther(@Param("userId") Long userId,@Param("stealNum") int stealNum);
 
-
     int eggChange(@Param("userId") long userId, @Param("num") BigDecimal num);
 
+    int shouhuoDuck(Long userId);
 }

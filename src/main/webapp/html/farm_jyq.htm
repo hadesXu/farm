@@ -634,7 +634,11 @@
         var gm_number = document.getElementById("gm_number").value;
         var goodType = document.getElementById("xiangliang").value;
         if (gm_number < 10) {
-            alert('购买不能小于10');
+            layer.open({
+                content: "购买不能小于10"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
             return;
         }
         if (gm_number == '') {
@@ -671,7 +675,11 @@
         var eggNum = document.getElementById("eggNum").value;
         var c = $("#number").val();
         if (c < 10) {
-            alert('售出不能小于10');
+            layer.open({
+                content: "购买不能小于10"
+                ,skin: 'msg'
+                ,time: 1 //2秒后自动关闭
+            });
             return;
         }
         if (c == '') {

@@ -314,11 +314,21 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
+
   <update id="eggChange">
     UPDATE t_egg_warehouse
     SET  duck= duck - #{num}
     where user_id = #{userId}
     and (duck - #{num,jdbcType=DECIMAL}) >0
+  </update>
+
+  <update id="shouhuoDuck">
+    update t_egg_warehouse
+    set duck = duck + duck_harvest,
+    duck_harvest = 0,
+    if_harvest = 1,
+    update_time = NOW()
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
 </mapper>
