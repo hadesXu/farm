@@ -17,6 +17,7 @@ import com.hades.farm.enums.WithdrawType;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.result.Result;
 import com.hades.farm.utils.Constant;
+import com.hades.farm.utils.DateUtils;
 import com.hades.farm.utils.SystemUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +48,17 @@ public class WithdrawServiceImpl implements WithdrawService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void withdraw(WithdrawRequest request) throws BizException {
+        if (!DateUtils.isInTime(Constant.WITHDRAW_TIME, DateUtils.getDayHHMM(new Date()))) {
+            throw new BizException(ErrorCode.WITHDRAW_ERROR);
+        }
         if (!WithdrawType.valid(request.getType())) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
+        }
+        WithdrawType withdrawType = WithdrawType.getType(request.getType());
+        if (withdrawType == WithdrawType.ALIPAY) {
+            if (request.getAmount().compareTo(new BigDecimal(10000)) <= Constant.NUMBER_ZERO) {
+                throw new BizException(ErrorCode.ARGUMENTS_ERROR);
+            }
         }
         if (request.getAmount().compareTo(BigDecimal.ZERO) <= Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
@@ -57,21 +67,28 @@ public class WithdrawServiceImpl implements WithdrawService {
         if (tAccountTicket.getBalance().compareTo(request.getAmount()) <= Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
         }
+
         User user = userMapper.getUserById(request.getUserId());
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_EXIST);
+        }
+        Date startTime = DateUtils.getFirstDate();
+        Date endTime = DateUtils.getLastDay();
+        int count = tWithdrawMapper.withdrawCount(request.getUserId(), startTime, endTime);
+        if (count >= Constant.NUMBER_ONE) {
+            throw new BizException(ErrorCode.WITHDRAW_COUNT_ERROR);
         }
         Result<Void> voidResult = codeService.validPhoneCode(user.getTelephone(), request.getCode());
         if (!voidResult.isSuccess()) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
         }
-        WithdrawType withdrawType = WithdrawType.getType(request.getType());
         if (withdrawType == WithdrawType.ALIPAY) {
             if (SystemUtil.isNull(request.getRealName()) || SystemUtil.isNull(request.getAlipayAccount())) {
                 throw new BizException(ErrorCode.ARGUMENTS_ERROR);
             }
         } else {
-            if (SystemUtil.isNull(request.getRealName()) || SystemUtil.isNull(request.getCardNo()) || SystemUtil.isNull(request.getBankName())) {
+            if (SystemUtil.isNull(request.getRealName()) || SystemUtil.isNull(request.getCardNo()) ||
+                    SystemUtil.isNull(request.getBankName()) || SystemUtil.isNull(request.getBranchName())) {
                 throw new BizException(ErrorCode.ARGUMENTS_ERROR);
             }
         }
@@ -100,9 +117,9 @@ public class WithdrawServiceImpl implements WithdrawService {
         tWithdraw.setAddTime(new Date());
 
         BigDecimal rate = BigDecimal.ZERO;
-        if(withdrawType.type == 1) { //支付宝2%提现手续费
+        if (withdrawType.type == 1) { //支付宝2%提现手续费
             rate = new BigDecimal("0.02");
-        }else if(withdrawType.type == 2) { //银行卡5%提现手续费
+        } else if (withdrawType.type == 2) { //银行卡5%提现手续费
             rate = new BigDecimal("0.05");
         }
         tWithdraw.setRate(rate);
@@ -119,6 +136,8 @@ public class WithdrawServiceImpl implements WithdrawService {
             tWithdraw.setRealName(request.getRealName());
             tWithdraw.setCardNo(request.getCardNo());
             tWithdraw.setBankName(request.getBankName());
+            tWithdraw.setBranchName(request.getBranchName());
+
         }
         uRes = tWithdrawMapper.insert(tWithdraw);
         if (uRes == Constant.NUMBER_ZERO) {

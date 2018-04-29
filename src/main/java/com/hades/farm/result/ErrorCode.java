@@ -56,6 +56,8 @@ public enum ErrorCode {
     RELATION_NOT_EXIST(3009, "关系不存在"),
     ITEM_NOT_EXIST(3010, "商品不存在"),
     INTEGRAL_ERROR(3011, "积分兑换不能小于10"),
+    WITHDRAW_ERROR(3012, "请在规定时间内提现,谢谢合作！"),
+    WITHDRAW_COUNT_ERROR(3013, "每天只能申请一次提现！"),
 
 
     SUCCESS(0000, "成功");

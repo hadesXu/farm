@@ -3,6 +3,7 @@ package com.hades.farm.core.data.mapper;
 import com.hades.farm.core.data.entity.TWithdraw;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TWithdrawMapper {
@@ -63,4 +64,14 @@ public interface TWithdrawMapper {
      * @return
      */
     List<TWithdraw> findWithdraw(@Param("userId") long userId, @Param("offset") int offset, @Param("size") int size);
+
+    /**
+     * 统计提现次数
+     *
+     * @param userId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    int withdrawCount(@Param("userId") long userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

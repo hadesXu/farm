@@ -79,6 +79,93 @@ public class DateUtils {
     };
 
 
+    public static ThreadLocal<DateFormat> HHMM = new ThreadLocal<DateFormat>() {
+        @Override
+        protected DateFormat initialValue() {
+            return new SimpleDateFormat("HH:mm");
+        }
+    };
+
+    public static String getDayHHMM(Date date) {
+        String s = null;
+        if (date != null) {
+            s = HHMM.get().format(date);
+        }
+        return s;
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(isInTime("09:00-17:30", getDayHHMM(new Date())));
+    }
+
+
+    /**
+     * 获取当天的起始时间
+     *
+     * @return
+     */
+    public static Date getFirstDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    /**
+     * 获取当天的结束时间
+     *
+     * @return
+     */
+    public static Date getLastDay() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        return cal.getTime();
+    }
+
+
+    public static boolean isInTime(String sourceTime, String curTime) {
+        if (sourceTime == null || !sourceTime.contains("-") || !sourceTime.contains(":")) {
+            throw new IllegalArgumentException("Illegal Argument arg:" + sourceTime);
+        }
+        if (curTime == null || !curTime.contains(":")) {
+            throw new IllegalArgumentException("Illegal Argument arg:" + curTime);
+        }
+        String[] args = sourceTime.split("-");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        try {
+            long now = sdf.parse(curTime).getTime();
+            long start = sdf.parse(args[0]).getTime();
+            long end = sdf.parse(args[1]).getTime();
+            if (args[1].equals("00:00")) {
+                args[1] = "24:00";
+            }
+            if (end < start) {
+                if (now >= end && now < start) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                if (now >= start && now < end) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Illegal Argument arg:" + sourceTime);
+        }
+
+    }
+
+
     /**
      * 根据时间获取时间戳
      *

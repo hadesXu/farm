@@ -33,6 +33,11 @@ public class WithdrawRequest {
     private String bankName;
 
     /**
+     * 支行
+     */
+    private String branchName;
+
+    /**
      * 支付宝账号
      */
     private String alipayAccount;
@@ -79,6 +84,22 @@ public class WithdrawRequest {
         this.realName = realName;
     }
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
     public String getAlipayAccount() {
         return alipayAccount;
     }
@@ -101,13 +122,5 @@ public class WithdrawRequest {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
     }
 }
