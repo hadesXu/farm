@@ -43,7 +43,7 @@ public enum ErrorCode {
     BUY_DUCK_LIMIT(2024, "数量需在20~100之间"),
     NO_HARVEST_EGG(2025, "没有可收获的蛋"),
     NO_HARVEST_DUCK(2026, "没有可收获的鸭"),
-
+    DREEDING_LIMIT(2027, "每日上线100，您已超限"),
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
     PWD_FORMAT_ERROR(3002, "密码不能包含特殊字符"),

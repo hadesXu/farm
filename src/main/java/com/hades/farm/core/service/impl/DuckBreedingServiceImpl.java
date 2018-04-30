@@ -15,12 +15,16 @@ import com.hades.farm.core.service.DuckBreedingService;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.utils.Constant;
+import com.hades.farm.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhengzl on 2018/3/10.
@@ -44,6 +48,21 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         }else if(duckWarehouse.getDuck()<requestDto.getNum()) {
             throw new BizException(ErrorCode.DUCK_NO_ENOUGH);
         }
+
+        Map hbMap = new HashMap();
+        hbMap.put("user_id",requestDto.getUserId());
+        hbMap.put("startTime", DateUtils.dateToYYMMDDStr(new  Date())+" 00:00:00");
+        hbMap.put("endTime", DateUtils.dateToYYMMDDStr(new  Date())+" 23:59:59");
+        Map rMap = tDuckBreedingMapper.queryHaveBreed(hbMap);
+        if(rMap != null) {
+           BigDecimal bMap = (BigDecimal) rMap.get("sumNum");
+           //今日放养数量
+           int iMap = bMap.intValue();
+           if(iMap > 100) {
+               throw new BizException(ErrorCode.DREEDING_LIMIT);
+           }
+        }
+
         // 入库，更新鸭养殖数量，更新鸭仓库
         TDuckBreeding duckBreeding = new TDuckBreeding();
         duckBreeding.setUserId(requestDto.getUserId());
@@ -85,10 +104,24 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         if(duckWarehouse == null || duckWarehouse.getDuckDoing() == 0){
             throw new BizException(ErrorCode.NO_DUCK_DOING);
         }
-        int needFoodAmount = Constant.DUCK_SINGLE_FEED_AMOUNT*duckWarehouse.getDuckDoing();
-        if(duckWarehouse.getFood()<needFoodAmount){
+//        int needFoodAmount = Constant.DUCK_SINGLE_FEED_AMOUNT*duckWarehouse.getDuckDoing();
+
+        //查询需要喂养数量
+        int sum = 0;
+        Map sumMap = tDuckBreedingMapper.queryNOFeed(userId);
+        if(sumMap == null) {
+            throw new BizException(ErrorCode.NO_DUCK_DOING); 
+        }
+        System.out.println(sumMap.get("sumNum"));
+        BigDecimal bsum = (BigDecimal) sumMap.get("sumNum");
+        sum = bsum.intValue();
+        if(sum == 0) {
+            throw new BizException(ErrorCode.NO_DUCK_DOING);
+        }
+        if(duckWarehouse.getFood()<sum){
             throw new BizException(ErrorCode.FOOD_NOT_ENOUGH);
         }
+
         QueryDuckBreedingRequestDto requestDto = new QueryDuckBreedingRequestDto();
         requestDto.setUserId(userId);
         requestDto.setStatus(1);
@@ -100,7 +133,7 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
             breedingDucks = breedingDucks+duckBreeding.getNum();
             duckBreedingIds[i] = duckBreeding.getId();
         }
-        if(breedingDucks != duckWarehouse.getDuckDoing()){
+        if(breedingDucks != sum){
             throw new BizException(ErrorCode.DUCK_DOING_NUM_NOT_MATCH);
         }
         //更新养殖表
@@ -114,7 +147,7 @@ public class DuckBreedingServiceImpl implements DuckBreedingService {
         //更新仓库表
         UpdateDuckWareHouseFeedingRequestDto updateDuckWareHouseFeedingRequestDto = new UpdateDuckWareHouseFeedingRequestDto();
         updateDuckWareHouseFeedingRequestDto.setUserId(userId);
-        updateDuckWareHouseFeedingRequestDto.setFeedNum(needFoodAmount);
+        updateDuckWareHouseFeedingRequestDto.setFeedNum(sum);
         updateCount = tDuckWarehouseMapper.updateDuckWareHouseOfFeeding(updateDuckWareHouseFeedingRequestDto);
         if(updateCount !=1){
             throw new BizException(ErrorCode.UPDATE_ERR);

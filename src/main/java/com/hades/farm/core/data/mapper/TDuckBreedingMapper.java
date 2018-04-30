@@ -6,6 +6,7 @@ import com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto;
 import com.hades.farm.core.data.entity.TDuckBreeding;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TDuckBreedingMapper {
     /**
@@ -60,5 +61,7 @@ public interface TDuckBreedingMapper {
 
     int updateOfFeeding(UpdateOfFeedingRequestDto requestDto);
 
+    Map queryNOFeed(Long user_id);
 
+    Map queryHaveBreed(Map map);
 }

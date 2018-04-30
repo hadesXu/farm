@@ -119,8 +119,8 @@ public class FarmController {
                 return response;
             }
             if(duckNumInt<1 || duckNumInt%10!=0){
-                msgModel.setCode(errorCode.getCode());
-                msgModel.setMessage(errorCode.getMessage());
+                msgModel.setCode(1);
+                msgModel.setMessage("请输入10的倍数");
                 response.setResult(msgModel);
                 return response;
             }
