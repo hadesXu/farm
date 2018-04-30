@@ -66,6 +66,7 @@ public class EggBreedingServiceImpl implements EggBreedingService {
             BigDecimal bMap = (BigDecimal) rMap.get("sumNum");
             //今日放养数量
             int iMap = bMap.intValue();
+            iMap = iMap + requestDto.getNum();
             if(iMap > 100) {
                 throw new BizException(ErrorCode.DREEDING_LIMIT);
             }
