@@ -90,6 +90,7 @@ public class FarmServiceImpl implements FarmService {
         yjcInfoModel.setDuckDoing(duckWarehouse.getDuckDoing());
         yjcInfoModel.setFood(duckWarehouse.getFood());
         yjcInfoModel.setIfSteal(duckWarehouse.getIfSteal());
+        yjcInfoModel.setHavestNum(duckWarehouse.getEggHarvest());
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             yjcInfoModel.setHasDog(2);
@@ -116,6 +117,7 @@ public class FarmServiceImpl implements FarmService {
         fdcInfoModel.setEggDoing(eggWarehouse.getEggDoing());
         fdcInfoModel.setIfSteal(eggWarehouse.getIfSteal());
         fdcInfoModel.setIfHot(eggWarehouse.getIfHot()+"");
+        fdcInfoModel.setHavestNum(eggWarehouse.getDuckHarvest());
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             fdcInfoModel.setHasDog(2);

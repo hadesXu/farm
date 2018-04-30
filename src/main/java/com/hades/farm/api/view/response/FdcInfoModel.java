@@ -13,6 +13,7 @@ public class FdcInfoModel {
     private String dogEndDay;
     private String robotEndDay;
     private String ifHot;//今日是否加温
+    private int havestNum;//待收获数量
 
     public String getIfHot() {
         return ifHot;
@@ -84,5 +85,13 @@ public class FdcInfoModel {
 
     public void setHasRobot(int hasRobot) {
         this.hasRobot = hasRobot;
+    }
+
+    public int getHavestNum() {
+        return havestNum;
+    }
+
+    public void setHavestNum(int havestNum) {
+        this.havestNum = havestNum;
     }
 }

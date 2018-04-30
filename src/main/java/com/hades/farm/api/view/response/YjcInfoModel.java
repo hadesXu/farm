@@ -12,6 +12,7 @@ public class YjcInfoModel {
     private int hasDog;
     private int ifSteal;
     private int sDuck;
+    private int havestNum;//待收获数量
 
 
     public YjcInfoModel(){}
@@ -61,5 +62,13 @@ public class YjcInfoModel {
 
     public void setsDuck(int sDuck) {
         this.sDuck = sDuck;
+    }
+
+    public int getHavestNum() {
+        return havestNum;
+    }
+
+    public void setHavestNum(int havestNum) {
+        this.havestNum = havestNum;
     }
 }

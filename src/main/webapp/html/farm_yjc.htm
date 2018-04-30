@@ -113,7 +113,7 @@
             <img  src="../img/weiyang.png" class="ytb" onClick="cc('wy')">
 
             </li>
-            <li style="text-align:right;z-index:6; position:relative;">
+            <li style="text-align:right;z-index:6; position:relative;display: none" id="shouhuo">
                 <img  src="../img/shou.gif" class="ytb" onClick="shouhuo()" />
             </li>
 
@@ -1071,6 +1071,9 @@
             }
             if(result.sDuck !=2){
                 TanWind("up-box2", "close", "popup-box2");	//商店弹窗
+            }
+            if(result.havestNum > 0){
+                $("#shouhuo").show();
             }
         }else{
 
