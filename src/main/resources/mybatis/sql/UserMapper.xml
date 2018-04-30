@@ -29,15 +29,15 @@
 
     <sql id="user_columns">
         id,telephone,name,password,wechat,sex,qq,birth,parent_id,parents,grade,is_trainee isTrainee,s_egg sEgg,s_duck sDuck,
-        active,img_url imgUrl,qr_code qrCode,add_time addTime,update_time updateTime,dog_end_day dogEndDay,robot_end_day robotEndDay
+        active,img_url imgUrl,qr_code qrCode,add_time addTime,update_time updateTime,dog_end_day dogEndDay,robot_end_day robotEndDay,generation
     </sql>
 
     <insert id="insert" parameterType="com.hades.farm.core.data.entity.User" useGeneratedKeys="true"
             keyProperty="id">
         insert into t_user ( id,telephone,name,password,wechat,sex,qq,birth,parent_id,parents,grade,is_trainee,
-        s_egg,s_duck, active,img_url,qr_code,add_time,update_time)
+        s_egg,s_duck, active,img_url,qr_code,add_time,update_time,generation)
         values (#{id},#{telephone},#{name},#{password},#{wechat},#{sex},#{qq},#{birth},#{parentId},#{parents},#{grade},#{isTrainee},
-        #{sEgg},#{sDuck},#{active},#{imgUrl},#{qrCode},#{addTime},#{updateTime})
+        #{sEgg},#{sDuck},#{active},#{imgUrl},#{qrCode},#{addTime},#{updateTime},#{generation})
     </insert>
 
     <select id="getUserById" resultMap="user">

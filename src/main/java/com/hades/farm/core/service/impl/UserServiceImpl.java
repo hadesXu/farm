@@ -288,10 +288,10 @@ public class UserServiceImpl implements UserService {
                 if (parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                     user.setParents(user.getParents() + "," + parentUser.getParentId());
                     parentUser = userMapper.getUserById(parentUser.getParentId());
-                    if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                    if (parentUser != null && parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                         user.setParents(user.getParents() + "," + parentUser.getParentId());
                         parentUser = userMapper.getUserById(parentUser.getParentId());
-                        if (parentUser != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
+                        if (parentUser != null && parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                             user.setParents(user.getParents() + "," + parentUser.getParentId());
                         }
                     }
