@@ -1,5 +1,6 @@
 package com.hades.farm.core.service.impl;
 
+import com.hades.farm.api.view.response.StealModel;
 import com.hades.farm.core.data.dto.requestDto.BreedingRequestDto;
 import com.hades.farm.core.data.entity.TEggBreeding;
 import com.hades.farm.core.data.entity.TEggWarehouse;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -184,4 +186,8 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         return true;
     }
 
+
+    public List<Map> queryBreeList(long userId, int offSet, int pageSize){
+        return tEggBreedingMapper.queryBreeList(userId, offSet, pageSize);
+    }
 }

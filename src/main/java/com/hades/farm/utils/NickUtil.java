@@ -371,10 +371,70 @@ public class NickUtil {
             "友语",
             "艺术桥梁",
             "朝花夕拾"};
+    private static final String[] images = {
+            "../img/touxiang/0.jpg",
+            "../img/touxiang/1.jpg",
+            "../img/touxiang/2.jpg",
+            "../img/touxiang/3.jpg",
+            "../img/touxiang/4.jpg",
+            "../img/touxiang/5.jpg",
+            "../img/touxiang/6.jpg",
+            "../img/touxiang/7.jpg",
+            "../img/touxiang/8.jpg",
+            "../img/touxiang/9.jpg",
+            "../img/touxiang/10.jpg",
+            "../img/touxiang/11.jpg",
+            "../img/touxiang/12.jpg",
+            "../img/touxiang/13.jpg",
+            "../img/touxiang/14.jpg",
+            "../img/touxiang/15.jpg",
+            "../img/touxiang/16.jpg",
+            "../img/touxiang/17.jpg",
+            "../img/touxiang/18.jpg",
+            "../img/touxiang/19.jpg",
+            "../img/touxiang/20.jpg",
+            "../img/touxiang/21.jpg",
+            "../img/touxiang/22.jpg",
+            "../img/touxiang/23.jpg",
+            "../img/touxiang/24.jpg",
+            "../img/touxiang/25.jpg",
+            "../img/touxiang/26.jpg",
+            "../img/touxiang/27.jpg",
+            "../img/touxiang/28.jpg",
+            "../img/touxiang/29.jpg",
+            "../img/touxiang/30.jpg",
+            "../img/touxiang/31.jpg",
+            "../img/touxiang/32.jpg",
+            "../img/touxiang/33.jpg",
+            "../img/touxiang/34.jpg",
+            "../img/touxiang/35.jpg",
+            "../img/touxiang/36.jpg",
+            "../img/touxiang/37.jpg",
+            "../img/touxiang/38.jpg",
+            "../img/touxiang/39.jpg",
+            "../img/touxiang/40.jpg",
+            "../img/touxiang/41.jpg",
+            "../img/touxiang/42.jpg",
+            "../img/touxiang/43.jpg",
+            "../img/touxiang/44.jpg",
+            "../img/touxiang/45.jpg",
+            "../img/touxiang/46.jpg",
+            "../img/touxiang/47.jpg",
+            "../img/touxiang/48.jpg",
+            "../img/touxiang/49.jpg",
+
+    };
+
 
     public static String randomNick() {
         int index = RandomUtils.nextInt(0, nick.length);
         return nick[index];
     }
+    public static String findName(long userId){
+            return nick[Integer.parseInt(userId%nick.length+"")];
+    }
 
+    public static String findImg(long userId){
+            return images[Integer.parseInt(userId%images.length+"")];
+    }
 }

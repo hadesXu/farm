@@ -12,6 +12,7 @@ import com.hades.farm.core.data.entity.TAccountTicket;
 import com.hades.farm.core.data.entity.TNotice;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.service.AccountService;
+import com.hades.farm.core.service.EggBreedingService;
 import com.hades.farm.core.service.NoticeService;
 import com.hades.farm.core.service.UserService;
 import com.hades.farm.result.Result;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xiaoxu on 2016/11/9.
@@ -38,6 +40,8 @@ public class UserApi {
     private UserConverter userConverter;
     @Resource
     private AccountService accountService;
+    @Resource
+    private EggBreedingService eggBreedingService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ApiResponse<UserModel> login(RegisterRequest request) {
@@ -161,12 +165,36 @@ public class UserApi {
                                       @RequestParam(required = false, defaultValue = "1") int page,
                                       @RequestParam(required = false, defaultValue = "20") int num) {
         ApiResponse response = new ApiResponse<>();
-        Result<List<TNotice>> result = noticeService.getBreedNotice(userId, page, num);
-        if (!result.isSuccess()) {
-            response.addError(result.getErrorCodes());
-            return response;
+//        Result<List<TNotice>> result = noticeService.getBreedNotice(userId, page, num);
+//        if (!result.isSuccess()) {
+//            response.addError(result.getErrorCodes());
+//            return response;
+//        }
+//        response.setResult(result.getData());
+        List<Map> list = eggBreedingService.queryBreeList(userId, (page-1)*num, num);
+
+        if(list != null && list.size() > 0) {
+            for(Map map : list) {
+                 map.put("add_time_f",map.get("add_time").toString().substring(0,10));
+                 String info = "";
+                 int num_harvest = (int) map.get("num_harvest");
+                 int day = (int) map.get("day");
+                 if("1".equals(map.get("ty"))) {  //蛋
+                      info += map.get("num")+"只蛋,孵化第"+(day+1)+"天";
+                      if(num_harvest > 0) {
+                          info += "已孵化"+num_harvest+"只鸭";
+                      }
+                 }else if("2".equals(map.get("ty"))) { //鸭
+                     info += map.get("num")+"只鸭,养殖第"+(day+1)+"天";
+                     if(num_harvest > 0) {
+                         info += "已生产"+num_harvest+"只蛋";
+                     }
+                 }
+                 map.put("info",info);
+            }
         }
-        response.setResult(result.getData());
+        response.setResult(list);
+
         return response;
     }
 

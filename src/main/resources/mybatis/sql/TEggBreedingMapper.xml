@@ -194,4 +194,12 @@
     and status = 1
   </select>
 
+  <select id="queryBreeList"  resultType="map">
+      select num,day,num_harvest,add_time,'1' as ty from t_egg_breeding where user_id =#{0} and status = '1'
+      UNION ALL
+      select num,day,num_harvest,add_time,'2' as ty from t_duck_breeding where user_id =#{0} and status = '1'
+      order by add_time desc
+       LIMIT #{1},#{2}
+  </select>
+
 </mapper>

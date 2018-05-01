@@ -33,9 +33,9 @@ public enum NoticeType {
 
     HARVEST_EGG(25,"收获蛋","成功收获num个蛋"),
     HARVEST_DUCK(26,"收获鸭","成功收获num只鸭"),
-
-    EGG_CHANGE(27, "鸭蛋兑换积分", "成功兑换num个鸭蛋"),
-    DUCK_CHANGE(28, "鸭兑换积分", "成功兑换num个鸭");
+    //27养殖日志（定时器）30减少佣金31后台充值32后台消费
+    EGG_CHANGE(33, "鸭蛋兑换积分", "成功兑换num个鸭蛋"),
+    DUCK_CHANGE(34, "鸭兑换积分", "成功兑换num个鸭");
     ;
     private int type;
     private String desc;
