@@ -57,4 +57,6 @@ public interface TEggBreedingMapper {
     Map queryHaveBreed(Map map);
 
     List<TEggBreeding> queryBreedingList(long userId);
+
+    List<Map> queryBreeList(long userId, int offSet, int pageSize);
 }
