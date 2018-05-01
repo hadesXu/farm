@@ -178,13 +178,14 @@ public class UserApi {
                  map.put("add_time_f",map.get("add_time").toString().substring(0,10));
                  String info = "";
                  int num_harvest = (int) map.get("num_harvest");
+                 int day = (int) map.get("day");
                  if("1".equals(map.get("ty"))) {  //蛋
-                      info += map.get("num")+"只蛋,孵化第"+map.get("day")+"天";
+                      info += map.get("num")+"只蛋,孵化第"+(day+1)+"天";
                       if(num_harvest > 0) {
                           info += "已孵化"+num_harvest+"只鸭";
                       }
                  }else if("2".equals(map.get("ty"))) { //鸭
-                     info += map.get("num")+"只鸭,养殖第"+map.get("day")+"天";
+                     info += map.get("num")+"只鸭,养殖第"+(day+1)+"天";
                      if(num_harvest > 0) {
                          info += "已生产"+num_harvest+"只蛋";
                      }
