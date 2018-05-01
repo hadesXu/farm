@@ -3,14 +3,8 @@ package com.hades.farm.core.service.impl;
 import com.hades.farm.api.view.response.FdcInfoModel;
 import com.hades.farm.api.view.response.MsgModel;
 import com.hades.farm.api.view.response.YjcInfoModel;
-import com.hades.farm.core.data.entity.TDuckWarehouse;
-import com.hades.farm.core.data.entity.TEggWarehouse;
-import com.hades.farm.core.data.entity.TNotice;
-import com.hades.farm.core.data.entity.User;
-import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
-import com.hades.farm.core.data.mapper.TEggWarehouseMapper;
-import com.hades.farm.core.data.mapper.TNoticeMapper;
-import com.hades.farm.core.data.mapper.UserMapper;
+import com.hades.farm.core.data.entity.*;
+import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.FarmService;
 import com.hades.farm.enums.NoticeType;
@@ -21,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhengzl on 2018/3/24.
@@ -41,6 +36,8 @@ public class FarmServiceImpl implements FarmService {
     private TDuckWarehouseMapper tDuckWarehouseMapper;
     @Autowired
     private TNoticeMapper tNoticeMapper;
+    @Autowired
+    private TEggBreedingMapper tEggBreedingMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -116,7 +113,7 @@ public class FarmServiceImpl implements FarmService {
         fdcInfoModel.setEgg(eggWarehouse.getEgg());
         fdcInfoModel.setEggDoing(eggWarehouse.getEggDoing());
         fdcInfoModel.setIfSteal(eggWarehouse.getIfSteal());
-        fdcInfoModel.setIfHot(eggWarehouse.getIfHot()+"");
+        fdcInfoModel.setIfHot(eggWarehouse.getIfHot() + "");
         fdcInfoModel.setHavestNum(eggWarehouse.getDuckHarvest());
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
@@ -143,6 +140,9 @@ public class FarmServiceImpl implements FarmService {
                 fdcInfoModel.setRobotEndDay("已到期");
             }
         }
+        //设置养殖记录  queryFdcInfo
+        List<TEggBreeding> eggBreedingList = tEggBreedingMapper.queryBreedingList(userId);
+        fdcInfoModel.setEggBreedingList(eggBreedingList);
         fdcInfoModel.setsEgg(user.getsEgg());
         return fdcInfoModel;
     }

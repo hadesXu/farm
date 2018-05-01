@@ -31,9 +31,9 @@ public class Constant {
     //饲料价格
     public static final BigDecimal FEED_PRICE = new BigDecimal("0.1");
     //狗的价格
-    public static final BigDecimal DOG_PRICE = new BigDecimal("25");
+    public static final BigDecimal DOG_PRICE = new BigDecimal("45");
     //机器人价格
-    public static final BigDecimal ROBOT_PRICE = new BigDecimal("40");
+    public static final BigDecimal ROBOT_PRICE = new BigDecimal("60");
     //鸭养殖周期
     public static final int BREEDING_DUCK_CYC = 24;
     //蛋养殖周期
@@ -68,6 +68,4 @@ public class Constant {
     //地主条件忍住
     public static final int LANDLORD_CONDITION_NUMBER = 10;
     public static final int LANDLORD_CONDITION_GENERATION = 1;
-
-    public static final long SUPERVISOR_ID = 88888888;
 }
