@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by xiaoxu on 2018/4/5.
+ * Created by xiaoxu on 10018/4/5.
  */
 @RestController
 @RequestMapping("/api/account")
@@ -30,7 +30,7 @@ public class AccountApi {
     @Auth
     public ApiResponse getBreedNotice(@RequestParam long userId,
                                       @RequestParam(required = false, defaultValue = "1") int page,
-                                      @RequestParam(required = false, defaultValue = "20") int num) {
+                                      @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
         Result<List<TAccountIntegralFlow>> result = accountService.findIntegralRecord(userId, page, num);
         if (!result.isSuccess()) {
@@ -45,7 +45,7 @@ public class AccountApi {
     @Auth
     public ApiResponse findTicketRecord(@RequestParam long userId,
                                         @RequestParam(required = false, defaultValue = "1") int page,
-                                        @RequestParam(required = false, defaultValue = "20") int num) {
+                                        @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
         Result<List<TAccountTicketFlow>> result = accountService.findTicketRecord(userId, page, num);
         if (!result.isSuccess()) {
@@ -61,7 +61,7 @@ public class AccountApi {
     @Auth
     public ApiResponse findAccountRecord(@RequestParam long userId,
                                          @RequestParam(required = false, defaultValue = "1") int page,
-                                         @RequestParam(required = false, defaultValue = "20") int num) {
+                                         @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
         Result<List<TAccountTicketFlow>> result = accountService.findAccountRecord(userId, page, num);
         if (!result.isSuccess()) {
@@ -102,7 +102,7 @@ public class AccountApi {
     @Auth
     public ApiResponse findTWithdraw(@RequestParam long userId,
                                      @RequestParam(required = false, defaultValue = "1") int page,
-                                     @RequestParam(required = false, defaultValue = "20") int num) {
+                                     @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
         Result<List<TWithdraw>> result = accountService.findTWithdraw(userId, page, num);
         if (!result.isSuccess()) {

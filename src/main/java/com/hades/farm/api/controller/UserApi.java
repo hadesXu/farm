@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by xiaoxu on 2016/11/9.
+ * Created by xiaoxu on 10016/11/9.
  */
 @RestController
 @RequestMapping("/api/user")
@@ -148,7 +148,7 @@ public class UserApi {
     @Auth
     public ApiResponse getNotice(@RequestParam long userId,
                                  @RequestParam(required = false, defaultValue = "1") int page,
-                                 @RequestParam(required = false, defaultValue = "20") int num) {
+                                 @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
         Result<List<TNotice>> result = noticeService.getNotice(userId, page, num);
         if (!result.isSuccess()) {
@@ -163,7 +163,7 @@ public class UserApi {
     @Auth
     public ApiResponse getBreedNotice(@RequestParam long userId,
                                       @RequestParam(required = false, defaultValue = "1") int page,
-                                      @RequestParam(required = false, defaultValue = "20") int num) {
+                                      @RequestParam(required = false, defaultValue = "100") int num) {
         ApiResponse response = new ApiResponse<>();
 //        Result<List<TNotice>> result = noticeService.getBreedNotice(userId, page, num);
 //        if (!result.isSuccess()) {
@@ -237,7 +237,7 @@ public class UserApi {
     @Auth
     public ApiResponse getApprentice(@RequestParam long userId,
                                      @RequestParam(required = false, defaultValue = "1") int page,
-                                     @RequestParam(required = false, defaultValue = "20") int num,
+                                     @RequestParam(required = false, defaultValue = "100") int num,
                                      @RequestParam(required = false, defaultValue = "0") int type) {
         ApiResponse response = new ApiResponse<>();
         Result<List<User>> result = null;
