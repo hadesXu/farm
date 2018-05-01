@@ -12,9 +12,11 @@ import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.OrderQueryService;
 import com.hades.farm.core.service.OrderService;
 import com.hades.farm.result.ErrorCode;
+import com.hades.farm.utils.Constant;
 import com.hades.farm.utils.NumUtil;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +36,9 @@ public class OrderController {
 
     @Autowired
     private OrderQueryService orderQueryService;
+
+    @Value("${farm.SUPERVISOR_ID}")
+    private String SUPERVISOR_ID;
 
     @RequestMapping(value = "/sellGoods", method = RequestMethod.POST)
     @Auth
@@ -98,19 +103,22 @@ public class OrderController {
             long orderId = Long.parseLong(orderIdStr);
             //校验num上限下限
             if (orderIdStr == null || orderId < 1) {
-                if (goodType == 1) {//蛋
-                    if (goodNum > 100 || goodNum < 10) {
-                        msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
-                        msgModel.setMessage("购买" + ErrorCode.BUY_EGG_LIMIT.getMessage());
-                        response.setResult(msgModel);
-                        return response;
-                    }
-                } else if (goodType == 2) {
-                    if (goodNum > 100 || goodNum < 20) {
-                        msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
-                        msgModel.setMessage("购买" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
-                        response.setResult(msgModel);
-                        return response;
+                //校验是否是super用户
+                if(userId != Long.parseLong(SUPERVISOR_ID)){
+                    if (goodType == 1) {//蛋
+                        if (goodNum > 100 || goodNum < 10) {
+                            msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
+                            msgModel.setMessage("购买" + ErrorCode.BUY_EGG_LIMIT.getMessage());
+                            response.setResult(msgModel);
+                            return response;
+                        }
+                    } else if (goodType == 2) {
+                        if (goodNum > 100 || goodNum < 20) {
+                            msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
+                            msgModel.setMessage("购买" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
+                            response.setResult(msgModel);
+                            return response;
+                        }
                     }
                 }
             }

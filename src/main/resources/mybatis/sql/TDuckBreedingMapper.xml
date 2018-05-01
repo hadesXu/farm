@@ -191,6 +191,7 @@
   from t_duck_breeding
   where user_id = #{userId,jdbcType=BIGINT}
     and status = #{status,jdbcType=INTEGER}
+    and is_feed = 2
 </select>
 
   <update id="updateOfFeeding" parameterType="com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto" >
@@ -204,4 +205,14 @@
      )
     and is_feed = 2
   </update>
+
+  <select id="queryNOFeed" parameterType="long" resultType="map">
+         select sum(num) as sumNum from  t_duck_breeding where user_id = #{user_id,jdbcType=BIGINT} and is_feed = 2 and status = '1'
+  </select>
+
+  <select id="queryHaveBreed" parameterType="map" resultType="map" >
+          select sum(num) as sumNum from  t_duck_breeding  where  user_id = #{user_id,jdbcType=BIGINT}
+          and add_time >= #{startTime,jdbcType=TIMESTAMP}
+          and #{endTime,jdbcType=TIMESTAMP} >= add_time
+  </select>
 </mapper>

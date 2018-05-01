@@ -181,6 +181,10 @@
     WHERE user_id=#{userId}
   </select>
 
-
+  <select id="queryHaveBreed" parameterType="map" resultType="map" >
+    select sum(num) as sumNum from  t_egg_breeding  where  user_id = #{user_id,jdbcType=BIGINT}
+    and add_time >= #{startTime,jdbcType=TIMESTAMP}
+    and #{endTime,jdbcType=TIMESTAMP} >= add_time
+  </select>
 
 </mapper>

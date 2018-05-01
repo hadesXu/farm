@@ -40,10 +40,10 @@ public enum ErrorCode {
     CANNT_STEAL(2021, "该用户已经被偷"),
     STEAL_TIME_ERROR(2022, "偷鸭时间为：15:30-21:30"),
     BUY_EGG_LIMIT(2023, "数量需在10~100之间"),
-    BUY_DUCK_LIMIT(2024, "数量需在10~100之间"),
+    BUY_DUCK_LIMIT(2024, "数量需在20~100之间"),
     NO_HARVEST_EGG(2025, "没有可收获的蛋"),
     NO_HARVEST_DUCK(2026, "没有可收获的鸭"),
-
+    DREEDING_LIMIT(2027, "每日上线100，您已超限"),
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
     PWD_FORMAT_ERROR(3002, "密码不能包含特殊字符"),

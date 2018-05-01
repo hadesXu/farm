@@ -46,4 +46,7 @@ server:
 switch:
   debug: true
 
+farm:
+  SUPERVISOR_ID: 99999999
+
 

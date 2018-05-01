@@ -68,4 +68,6 @@ public class Constant {
     //地主条件忍住
     public static final int LANDLORD_CONDITION_NUMBER = 10;
     public static final int LANDLORD_CONDITION_GENERATION = 1;
+
+    public static final long SUPERVISOR_ID = 88888888;
 }

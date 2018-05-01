@@ -112,15 +112,15 @@ public class FarmController {
             }
             int duckNumInt = Integer.parseInt(duckNum);
             requestDto.setNum(duckNumInt);
-            if(duckNumInt>100 || duckNumInt<10){
-                msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
-                msgModel.setMessage("放养"+ErrorCode.BUY_EGG_LIMIT.getMessage());
+            if(duckNumInt>100 || duckNumInt<20){
+                msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
+                msgModel.setMessage("放养"+ErrorCode.BUY_DUCK_LIMIT.getMessage());
                 response.setResult(msgModel);
                 return response;
             }
             if(duckNumInt<1 || duckNumInt%10!=0){
-                msgModel.setCode(errorCode.getCode());
-                msgModel.setMessage(errorCode.getMessage());
+                msgModel.setCode(1);
+                msgModel.setMessage("请输入10的倍数");
                 response.setResult(msgModel);
                 return response;
             }

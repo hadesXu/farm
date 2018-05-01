@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhengzl on 2018/3/9.
@@ -54,6 +56,22 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         }else if(eggWarehouse.getEgg()<requestDto.getNum()){
             throw new BizException(ErrorCode.EGG_NO_ENOUGH);
         }
+
+        Map hbMap = new HashMap();
+        hbMap.put("user_id",requestDto.getUserId());
+        hbMap.put("startTime", DateUtils.dateToYYMMDDStr(new  Date())+" 00:00:00");
+        hbMap.put("endTime", DateUtils.dateToYYMMDDStr(new  Date())+" 23:59:59");
+        Map rMap = tEggBreedingMapper.queryHaveBreed(hbMap);
+        if(rMap != null) {
+            BigDecimal bMap = (BigDecimal) rMap.get("sumNum");
+            //今日放养数量
+            int iMap = bMap.intValue();
+            iMap = iMap + requestDto.getNum();
+            if(iMap > 100) {
+                throw new BizException(ErrorCode.DREEDING_LIMIT);
+            }
+        }
+
         //入库，更新蛋养殖数量，更新仓库
         TEggBreeding eggBreeding = new TEggBreeding();
         eggBreeding.setUserId(requestDto.getUserId());

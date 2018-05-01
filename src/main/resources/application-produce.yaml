@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://120.79.137.135:3306/farmdb?useUnicode=true&autoReconnect=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/farmdb?useUnicode=true&autoReconnect=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: XHroot2018!
+    password: 20180427QWEasd
     jmx-enabled: true
     test-while-idle: true
     test-on-borrow: true
@@ -37,12 +37,15 @@ wechat:
   appId: wx91d44661b7c82f7d
   appSecret: 45bd3a8f81fde7d645fbd8d45a6699fd
   authUrl: https://open.weixin.qq.com/connect/oauth2/authorize
-  redirectUri: http://api.chirs.top/api/weChat/callback
-  serverUrl: http://app.chirs.top/
+  redirectUri: http://api.gxyxgtz.com/api/weChat/callback
+  serverUrl: http://api.gxyxgtz.com/
 
 server:
   port: 8098
 
 switch:
   debug: true
+
+farm:
+  SUPERVISOR_ID: 99999999
 
