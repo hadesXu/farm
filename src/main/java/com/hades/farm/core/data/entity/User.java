@@ -38,9 +38,9 @@ public class User {
     private long birth;
 
     /**
-     * QQ
+     * 是否实名认证 1.否 2.是
      */
-    private String qq;
+    private int isAuth;
 
     /**
      * 微信key
@@ -169,12 +169,12 @@ public class User {
         this.birth = birth;
     }
 
-    public String getQq() {
-        return qq;
+    public int getIsAuth() {
+        return isAuth;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq;
+    public void setIsAuth(int isAuth) {
+        this.isAuth = isAuth;
     }
 
     public String getWechat() {

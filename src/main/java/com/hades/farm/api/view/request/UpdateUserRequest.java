@@ -21,9 +21,14 @@ public class UpdateUserRequest {
     private Integer sex;
 
     /**
-     * QQ号
+     * 真实姓名
      */
-    private String qq;
+    private String realName;
+
+    /**
+     * 身份证号码
+     */
+    private String idNo;
 
     public long getUserId() {
         return userId;
@@ -49,11 +54,19 @@ public class UpdateUserRequest {
         this.sex = sex;
     }
 
-    public String getQq() {
-        return qq;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 }

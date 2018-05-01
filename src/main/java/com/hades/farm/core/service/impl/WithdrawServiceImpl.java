@@ -1,14 +1,8 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.api.view.request.WithdrawRequest;
-import com.hades.farm.core.data.entity.TAccountTicket;
-import com.hades.farm.core.data.entity.TAccountTicketFlow;
-import com.hades.farm.core.data.entity.TWithdraw;
-import com.hades.farm.core.data.entity.User;
-import com.hades.farm.core.data.mapper.TAccountTicketFlowMapper;
-import com.hades.farm.core.data.mapper.TAccountTicketMapper;
-import com.hades.farm.core.data.mapper.TWithdrawMapper;
-import com.hades.farm.core.data.mapper.UserMapper;
+import com.hades.farm.core.data.entity.*;
+import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.CodeService;
 import com.hades.farm.core.service.WithdrawService;
@@ -37,6 +31,8 @@ public class WithdrawServiceImpl implements WithdrawService {
     @Resource
     private TWithdrawMapper tWithdrawMapper;
     @Resource
+    private TIdentityCardRecordMapper tIdentityCardRecordMapper;
+    @Resource
     private TAccountTicketMapper tAccountTicketMapper;
     @Resource
     private TAccountTicketFlowMapper tAccountTicketFlowMapper;
@@ -56,7 +52,7 @@ public class WithdrawServiceImpl implements WithdrawService {
         }
         WithdrawType withdrawType = WithdrawType.getType(request.getType());
         if (withdrawType == WithdrawType.ALIPAY) {
-            if (request.getAmount().compareTo(new BigDecimal(10000)) <= Constant.NUMBER_ZERO) {
+            if (request.getAmount().compareTo(new BigDecimal(10000)) > Constant.NUMBER_ZERO) {
                 throw new BizException(ErrorCode.ARGUMENTS_ERROR);
             }
         }
@@ -72,6 +68,9 @@ public class WithdrawServiceImpl implements WithdrawService {
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_EXIST);
         }
+        if (user.getIsAuth() != Constant.NUMBER_TWO) {
+            throw new BizException(ErrorCode.AUTH_ERROR);
+        }
         Date startTime = DateUtils.getFirstDate();
         Date endTime = DateUtils.getLastDay();
         int count = tWithdrawMapper.withdrawCount(request.getUserId(), startTime, endTime);
@@ -81,16 +80,6 @@ public class WithdrawServiceImpl implements WithdrawService {
         Result<Void> voidResult = codeService.validPhoneCode(user.getTelephone(), request.getCode());
         if (!voidResult.isSuccess()) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
-        }
-        if (withdrawType == WithdrawType.ALIPAY) {
-            if (SystemUtil.isNull(request.getRealName()) || SystemUtil.isNull(request.getAlipayAccount())) {
-                throw new BizException(ErrorCode.ARGUMENTS_ERROR);
-            }
-        } else {
-            if (SystemUtil.isNull(request.getRealName()) || SystemUtil.isNull(request.getCardNo()) ||
-                    SystemUtil.isNull(request.getBankName()) || SystemUtil.isNull(request.getBranchName())) {
-                throw new BizException(ErrorCode.ARGUMENTS_ERROR);
-            }
         }
         int uRes = tAccountTicketMapper.withdraw(request.getUserId(), request.getAmount());
         if (uRes == Constant.NUMBER_ZERO) {
@@ -129,11 +118,14 @@ public class WithdrawServiceImpl implements WithdrawService {
         BigDecimal interbank = request.getAmount().subtract(fee).setScale(2, BigDecimal.ROUND_HALF_DOWN);
         tWithdraw.setInterbank(interbank);
         tWithdraw.setUserId(request.getUserId());
+        TIdentityCardRecord record = tIdentityCardRecordMapper.getByUserId(request.getUserId());
+        if (record != null) {
+            tWithdraw.setRealName(record.getRealName());
+
+        }
         if (withdrawType == WithdrawType.ALIPAY) {
-            tWithdraw.setRealName(request.getRealName());
             tWithdraw.setAlipayAccount(request.getAlipayAccount());
         } else {
-            tWithdraw.setRealName(request.getRealName());
             tWithdraw.setCardNo(request.getCardNo());
             tWithdraw.setBankName(request.getBankName());
             tWithdraw.setBranchName(request.getBranchName());

@@ -4,9 +4,11 @@ import com.hades.farm.api.view.request.RegisterRequest;
 import com.hades.farm.api.view.request.UpdateUserRequest;
 import com.hades.farm.core.data.entity.TAccountIntegral;
 import com.hades.farm.core.data.entity.TAccountTicket;
+import com.hades.farm.core.data.entity.TIdentityCardRecord;
 import com.hades.farm.core.data.entity.User;
 import com.hades.farm.core.data.mapper.TAccountIntegralMapper;
 import com.hades.farm.core.data.mapper.TAccountTicketMapper;
+import com.hades.farm.core.data.mapper.TIdentityCardRecordMapper;
 import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.service.CodeService;
 import com.hades.farm.core.service.UserService;
@@ -42,6 +44,8 @@ public class UserServiceImpl implements UserService {
     private TAccountIntegralMapper tAccountIntegralMapper;
     @Resource
     private TAccountTicketMapper tAccountTicketMapper;
+    @Resource
+    private TIdentityCardRecordMapper tIdentityCardRecordMapper;
     @Resource
     private CodeService codeService;
 
@@ -171,7 +175,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result<Void> updateUser(UpdateUserRequest request) {
         Result<Void> result = Result.newResult();
-        int uRes = userMapper.updateUser(request.getUserId(), request.getBirth(), Sex.getType(request.getSex()).type, request.getQq());
+        User user = userMapper.getUserById(request.getUserId());
+        if (user == null) {
+            result.addError(ErrorCode.USER_NOT_EXIST);
+            return result;
+        }
+        Integer auth = null;
+        if (user.getIsAuth() != Constant.NUMBER_TWO) {
+            if (!(SystemUtil.nameValidate(request.getRealName()) && SystemUtil.IDCardValidate(request.getIdNo()))) {
+                result.addError(ErrorCode.AUTH_USER_INVALID);
+                return result;
+            }
+            TIdentityCardRecord record = new TIdentityCardRecord();
+            record.setRealName(request.getRealName());
+            record.setIdNo(request.getIdNo());
+            record.setUserId(request.getUserId());
+            int uRes = tIdentityCardRecordMapper.insert(record);
+            if (uRes != Constant.NUMBER_ONE) {
+                result.addError(ErrorCode.ADD_ERR);
+                return result;
+            }
+            auth = Constant.NUMBER_TWO;
+        }
+        int uRes = userMapper.updateUser(request.getUserId(), request.getBirth(), Sex.getType(request.getSex()).type, auth);
         if (uRes != Constant.NUMBER_ONE) {
             result.addError(ErrorCode.UPDATE_ERR);
             return result;

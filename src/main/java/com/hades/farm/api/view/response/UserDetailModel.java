@@ -25,15 +25,26 @@ public class UserDetailModel {
      */
     private int sex;
 
+
+    /**
+     * 是否实名认证 1.否 2.是
+     */
+    private int isAuth;
+
     /**
      * 生日
      */
     private long birth;
 
     /**
-     * QQ
+     * 真实姓名
      */
-    private String qq;
+    private String realName;
+
+    /**
+     * 身份证号码
+     */
+    private String idNo;
 
     public long getUserId() {
         return userId;
@@ -75,11 +86,27 @@ public class UserDetailModel {
         this.birth = birth;
     }
 
-    public String getQq() {
-        return qq;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
+    public int getIsAuth() {
+        return isAuth;
+    }
+
+    public void setIsAuth(int isAuth) {
+        this.isAuth = isAuth;
     }
 }

@@ -23,11 +23,6 @@ public class WithdrawRequest {
     private BigDecimal amount;
 
     /**
-     * 真实姓名
-     */
-    private String realName;
-
-    /**
      * 开户行名称
      */
     private String bankName;
@@ -74,14 +69,6 @@ public class WithdrawRequest {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
     }
 
     public String getBankName() {

@@ -26,10 +26,11 @@ public interface UserMapper {
 
     int updateGrade(@Param("userId") long userId, @Param("grade") int grade);
 
+    int updateAuth(@Param("userId") long userId, @Param("auth") int auth);
+
     int updatePwd(@Param("userId") long userId, @Param("pwd") String pwd);
 
-    int updateUser(@Param("userId") long userId, @Param("birth") Long birth, @Param("sex") Integer sex, @Param("qq") String qq);
-
+    int updateUser(@Param("userId") long userId, @Param("birth") Long birth, @Param("sex") Integer sex, @Param("auth") Integer auth);
 
     int updateNameAndImgUrl(@Param("userId") long userId, @Param("name") String name, @Param("imgUrl") String imgUrl);
 

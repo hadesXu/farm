@@ -3,9 +3,13 @@ package com.hades.farm.api.convert.impl;
 import com.hades.farm.api.convert.UserConverter;
 import com.hades.farm.api.view.response.UserDetailModel;
 import com.hades.farm.api.view.response.UserModel;
+import com.hades.farm.core.data.entity.TIdentityCardRecord;
 import com.hades.farm.core.data.entity.User;
+import com.hades.farm.core.data.mapper.TIdentityCardRecordMapper;
+import com.hades.farm.core.data.mapper.UserMapper;
 import com.hades.farm.core.manager.TokenManager;
 import com.hades.farm.result.Result;
+import com.hades.farm.utils.Constant;
 import com.hades.farm.utils.SystemUtil;
 import com.hades.farm.web.config.WeChatConfig;
 import org.slf4j.Logger;
@@ -27,6 +31,8 @@ public class UserConverterImpl implements UserConverter {
     private TokenManager tokenManager;
     @Autowired
     private WeChatConfig weChatConfig;
+    @Resource
+    private TIdentityCardRecordMapper tIdentityCardRecordMapper;
 
     @Override
     public UserModel convert(User user, boolean newToken) {
@@ -58,7 +64,13 @@ public class UserConverterImpl implements UserConverter {
         model.setBirth(user.getBirth());
         model.setSex(user.getSex());
         model.setName(user.getName());
-        model.setQq(user.getQq());
+        if (user.getIsAuth() == Constant.NUMBER_TWO) {
+            TIdentityCardRecord record = tIdentityCardRecordMapper.getByUserId(user.getId());
+            if (record != null) {
+                model.setRealName(record.getRealName());
+                model.setIdNo(record.getIdNo());
+            }
+        }
         model.setTelephone(SystemUtil.replacePhone(user.getTelephone()));
         model.setUserId(user.getId());
         return model;

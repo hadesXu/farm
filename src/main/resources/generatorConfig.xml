@@ -74,7 +74,7 @@
 
 
         </javaClientGenerator>
-        <table tableName="t_withdraw"
+        <table tableName="t_identity_card_record"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
