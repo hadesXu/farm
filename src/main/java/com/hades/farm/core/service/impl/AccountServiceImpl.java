@@ -184,12 +184,12 @@ public class AccountServiceImpl implements AccountService {
         if (num.compareTo(BigDecimal.ZERO) <= Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
         }
-        if (num.compareTo(BigDecimal.TEN) <= Constant.NUMBER_ZERO) {
+        if (num.compareTo(BigDecimal.TEN) < Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.INTEGRAL_ERROR);
         }
         TAccountTicket tAccountTicket = tAccountTicketMapper.queryAccountByUserId(userId);
-        if (tAccountTicket.getBalance().compareTo(num) <= Constant.NUMBER_ZERO) {
-            throw new BizException(ErrorCode.ARGUMENTS_ERROR);
+        if (tAccountTicket.getBalance().compareTo(num) < Constant.NUMBER_ZERO) {
+            throw new BizException(ErrorCode.ARGUMENTS_ERROR2);
         }
         User user = userMapper.getUserById(userId);
         if (user == null) {
@@ -246,7 +246,7 @@ public class AccountServiceImpl implements AccountService {
         //新增账户流水表记录
         TAccountTicketFlow accountTicketFlow = new TAccountTicketFlow();
         accountTicketFlow.setUserId(userId);
-        accountTicketFlow.setType(AcctOpreType.WITHDRAW.getType());
+        accountTicketFlow.setType(AcctOpreType.EXCHANGE_GRADE.getType());
         accountTicketFlow.setAmount(num);
         accountTicketFlow.setAmountBefore(tAccountTicket.getBalance());
         accountTicketFlow.setAmountAfter(tAccountTicket.getBalance().subtract(num));
@@ -264,7 +264,7 @@ public class AccountServiceImpl implements AccountService {
         if (num.compareTo(BigDecimal.ZERO) <= Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.ARGUMENTS_ERROR);
         }
-        if (num.compareTo(BigDecimal.TEN) <= Constant.NUMBER_ZERO) {
+        if (num.compareTo(BigDecimal.TEN) < Constant.NUMBER_ZERO) {
             throw new BizException(ErrorCode.INTEGRAL_ERROR);
         }
         BigDecimal balance = BigDecimal.ZERO;
