@@ -2,6 +2,7 @@ package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.entity.TEggBreeding;
 
+import java.util.List;
 import java.util.Map;
 
 public interface TEggBreedingMapper {
@@ -54,4 +55,6 @@ public interface TEggBreedingMapper {
     int updateByPrimaryKey(TEggBreeding record);
 
     Map queryHaveBreed(Map map);
+
+    List<TEggBreeding> queryBreedingList(long userId);
 }
