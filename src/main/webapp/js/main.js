@@ -1,7 +1,7 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
-// var serverUrl = "http://api.chirs.top";
- var serverUrl = "http://127.0.0.1:8098";
+var serverUrl = "http://api.chirs.top";
+ // var serverUrl = "http://127.0.0.1:8098";
  //var serverUrl = "http://api.gxyxgtz.com/";
 //校验登录
 function checkLogin() {
