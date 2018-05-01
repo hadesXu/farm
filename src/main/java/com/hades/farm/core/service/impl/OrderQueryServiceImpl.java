@@ -10,6 +10,7 @@ import com.hades.farm.core.data.entity.TOrders;
 import com.hades.farm.core.data.entity.TPlatformWarehouse;
 import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.service.OrderQueryService;
+import com.hades.farm.utils.NickUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
     @Override
     public List<OrderUserResultDto> queryOrderList(OrderQueryRequestDto requestDto) {
         List<OrderUserResultDto> orderList = tOrdersMapper.queryOrderListByCondition(requestDto);
+        replaceNameAndImg(orderList);
         return orderList;
     }
 
@@ -62,6 +64,8 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         TEggWarehouse eggWarehouse = tEggWarehouseMapper.selectByUserId(userId);
         orderIndexModel.setDuckNum(eggWarehouse == null ? 0 : eggWarehouse.getDuck());
         orderIndexModel.setEggNum(duckWarehouse == null ? 0 : duckWarehouse.getEgg());
+        replaceNameAndImg(orderIndexModel.getAllOrderList());
+        replaceNameAndImg(orderIndexModel.getMyOrderList());
         return orderIndexModel;
     }
 
@@ -73,5 +77,14 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         model.setDuckNum(eggWarehouse == null ? 0 : eggWarehouse.getDuck());
         model.setEggNum(duckWarehouse == null ? 0 : duckWarehouse.getEgg());
         return model;
+    }
+
+    private void replaceNameAndImg(List<OrderUserResultDto> orderList){
+        if(orderList !=null && orderList.size() >0){
+            for(OrderUserResultDto orderUserResultDto: orderList){
+                orderUserResultDto.setName(NickUtil.findName(orderUserResultDto.getUserId()));
+                orderUserResultDto.setImgUrl(NickUtil.findImg(orderUserResultDto.getUserId()));
+            }
+        }
     }
 }
