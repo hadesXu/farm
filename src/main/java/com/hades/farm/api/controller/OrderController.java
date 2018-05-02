@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,6 +49,12 @@ public class OrderController {
         try {
 
             ErrorCode errorCode = NumUtil.validateInteger(goodNumStr);
+            if(!validateTime()){
+                msgModel.setCode(ErrorCode.SELL_GOOD_TIME_ERROR.getCode());
+                msgModel.setMessage(ErrorCode.SELL_GOOD_TIME_ERROR.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             if (errorCode.getCode() != ErrorCode.SUCCESS.getCode()) {
                 msgModel.setCode(errorCode.getCode());
                 msgModel.setMessage(errorCode.getMessage());
@@ -284,6 +291,17 @@ public class OrderController {
         }
         response.setResult(msgModel);
         return response;
+    }
+
+    private boolean validateTime(){
+        Date now = new Date();
+        int hours = now.getHours();
+        int minutes = now.getMinutes();
+        if(hours>=9 && (hours <17 || (hours==17 && minutes<=30))){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
