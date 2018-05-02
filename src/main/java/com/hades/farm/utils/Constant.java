@@ -53,7 +53,7 @@ public class Constant {
     //一只鸭的产蛋量
     public static final int PRODUCE_EGGS = 3;
     //偷蛋需要支付的价格
-    public static final BigDecimal STEAL_EGG_PRICE = new BigDecimal("20");
+    public static final BigDecimal STEAL_EGG_PRICE = new BigDecimal("25");
     //偷鸭需要支付的价格
     public static final BigDecimal STEAL_DUCK_PRICE = new BigDecimal("25");
 

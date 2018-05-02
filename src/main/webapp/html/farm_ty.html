@@ -102,7 +102,7 @@
 					   $("#gengduo").html('<a href="#" onclick="more()"><img src="../img/gd.png" style="width:70px;height:40px;margin-right:20px;"></a>')
 				   }
 				   $.each(result, function(index, value, array){
-					   listHtml = listHtml + '<ul> <li style="width:25%">'+value.imgUrl+'</li> <li style="width:30%">'+value.name+
+					   listHtml = listHtml + '<ul> <li style="width:25%" ><img style="width:40px;border-radius:100%;" src="'+value.imgUrl+'" alt="头像"/></li> <li style="width:30%">'+value.name+
 					   '</li> <li style="width:15%">'+value.canStealNum+'</li>';
 					   listHtml = listHtml + '<li style="width:15%" onclick="touya('+value.userId+')">偷鸭</li> </ul>';
 				   })

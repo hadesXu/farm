@@ -8,6 +8,7 @@ import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.impl.DuckWareHouseServiceImpl;
 import com.hades.farm.core.service.impl.EggWareHouseServiceImpl;
 import com.hades.farm.result.ErrorCode;
+import com.hades.farm.utils.NickUtil;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,8 @@ public class StealController {
         if(canStealList!=null && canStealList.size()>0){
             for(StealModel stealModel:canStealList){
                 stealModel.setCanStealNum(stealModel.getHarvestNum()/5);
+                stealModel.setName(NickUtil.findName(stealModel.getUserId()));
+                stealModel.setImgUrl(NickUtil.findImg(stealModel.getUserId()));
             }
         }
         response.setResult(canStealList);
@@ -117,8 +120,7 @@ public class StealController {
     private boolean validateTime(){
         Date now = new Date();
         int hours = now.getHours();
-        int minutes = now.getMinutes();
-        if((hours == 15 && minutes >=30) || (hours>=16 && hours <21) || (hours ==21 && minutes <=30)){
+        if(hours>=18 && hours <21){
             return true;
         }else{
             return false;
