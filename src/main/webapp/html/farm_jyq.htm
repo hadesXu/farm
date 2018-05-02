@@ -671,9 +671,9 @@
     //卖出
     function mc() {
         var a = document.getElementById("leixing").value;
-        var duckNum = document.getElementById("duckNum").value;
-        var eggNum = document.getElementById("eggNum").value;
-        var c = $("#number").val();
+        var duckNum = document.getElementById("duckNum").value*1;
+        var eggNum = document.getElementById("eggNum").value*1;
+        var c = $("#number").val()*1;
         if (c < 10) {
             layer.open({
                 content: "购买不能小于10"
