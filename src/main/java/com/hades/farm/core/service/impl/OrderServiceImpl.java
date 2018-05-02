@@ -379,7 +379,7 @@ public class OrderServiceImpl implements OrderService {
         UpdateAccountTicketRequestDto updateSellAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         UpdateAccountTicketRequestDto updateBuyAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         updateSellAccountTicketRequestDto.setUserId(sellUserId);
-        updateSellAccountTicketRequestDto.setBalance(amount.subtract(sellFee).subtract(integralFee));//扣除手续费、和积分费
+        updateSellAccountTicketRequestDto.setBalance(amount.subtract(sellFee).subtract(integralFee).setScale(2, BigDecimal.ROUND_DOWN));//扣除手续费、和积分费
         updateBuyAccountTicketRequestDto.setUserId(buyUserId);
         updateBuyAccountTicketRequestDto.setBalance(amount);
 
@@ -388,7 +388,7 @@ public class OrderServiceImpl implements OrderService {
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_EGG.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_EGG.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_EGG.getType());
-            sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount.subtract(sellFee).subtract(integralFee));
+            sellAccountTicketFlow.setRemarks("成功出售鸭蛋获得菜票：" + amount.subtract(sellFee).subtract(integralFee).setScale(2, BigDecimal.ROUND_DOWN));
             /*sellFeeTicketFlow.setType(AcctOpreType.SELL_EGG_FEE.getType());
             sellFeeTicketFlow.setRemarks("出售鸭蛋支付手续费：" + sellFee);
             integralFeeTicketFlow.setType(AcctOpreType.SELL_EGG_INTEGRAL_FEE.getType());
@@ -405,7 +405,7 @@ public class OrderServiceImpl implements OrderService {
             updateSellAccountTicketRequestDto.setAcctOpreType(AcctOpreType.SELL_DUCK.getType());
             updateBuyAccountTicketRequestDto.setAcctOpreType(AcctOpreType.BUY_DUCK.getType());
             sellAccountTicketFlow.setType(AcctOpreType.SELL_DUCK.getType());
-            sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount.subtract(sellFee).subtract(integralFee));
+            sellAccountTicketFlow.setRemarks("成功出售鸭获得菜票：" + amount.subtract(sellFee).subtract(integralFee).setScale(2, BigDecimal.ROUND_DOWN));
             /*sellFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_FEE.getType());
             sellFeeTicketFlow.setRemarks("出售鸭支付手续费："+sellFee);
             integralFeeTicketFlow.setType(AcctOpreType.SELL_DUCK_INTEGRAL_FEE.getType());
@@ -425,9 +425,9 @@ public class OrderServiceImpl implements OrderService {
             throw new BizException(ErrorCode.UPDATE_ERR);
         }
         sellAccountTicketFlow.setUserId(sellUserId);
-        sellAccountTicketFlow.setAmount(amount);
+        sellAccountTicketFlow.setAmount(amount.subtract(sellFee).subtract(integralFee).setScale(2, BigDecimal.ROUND_DOWN));
         sellAccountTicketFlow.setAmountBefore(sellAccountTicketBefore.getBalance());
-        sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount));
+        sellAccountTicketFlow.setAmountAfter(sellAccountTicketBefore.getBalance().add(amount).subtract(sellFee).subtract(integralFee).setScale(2, BigDecimal.ROUND_DOWN));
         sellAccountTicketFlow.setAddTime(new Date());
 
         /*sellFeeTicketFlow.setUserId(sellUserId);

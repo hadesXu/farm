@@ -44,25 +44,25 @@
 
 		.wh{width:40px;height:40px;}
 
-		.ck1{position:absolute;top:30%;left:45%;}
+		.ck1{position:absolute;top:30%;left:45%;display: none}
 
-		.ck2{position:absolute;top:35%;left:35%; transform:rotateY(180deg);z-index:999;}
+		.ck2{position:absolute;top:35%;left:35%; transform:rotateY(180deg);z-index:999;display: none}
 
-		.ck3{position:absolute;top:44%;left:40%;z-index:888;}
+		.ck3{position:absolute;top:44%;left:40%;z-index:888;display: none}
 
-		.ck4{position:absolute;top:35%;left:55%;}
+		.ck4{position:absolute;top:35%;left:55%;display: none}
 
-		.ck5{position:absolute;top:47%;left:53%;z-index:888;}
+		.ck5{position:absolute;top:47%;left:53%;z-index:888;display: none}
 
-		.ck6{position:absolute;top:40%;right:0%;}
+		.ck6{position:absolute;top:40%;right:0%;display: none}
 
-		.ck7{position:absolute;top:50%;left:65%;z-index:888;}
+		.ck7{position:absolute;top:50%;left:65%;z-index:888;display: none}
 
-		.ck8{position:absolute;top:41%;right:3%;}
+		.ck8{position:absolute;top:41%;right:3%;display: none}
 
-		.ck9{position:absolute;top:40%;left:18%;}
+		.ck9{position:absolute;top:40%;left:18%;display: none}
 
-		.ck10{position:absolute;top:53%;left:71%;z-index:888;}
+		.ck10{position:absolute;top:53%;left:71%;z-index:888;display: none}
 
 		
 
@@ -1068,6 +1068,26 @@
             $("#duckNum").html(result.duck);
             if(result.hasDog == 2){
                 $("#hasDog").hide();
+            }
+            if(result.duckDoing == 0){
+
+            }else if(result.duckDoing <100){
+                $(".ck1").show();
+                $(".ck2").show();
+                $(".ck3").show();
+                $(".ck4").show();
+                $(".ck9").show();
+            }else{
+                $(".ck1").show();
+                $(".ck2").show();
+                $(".ck3").show();
+                $(".ck4").show();
+                $(".ck5").show();
+                $(".ck6").show();
+                $(".ck7").show();
+                $(".ck8").show();
+                $(".ck9").show();
+                $(".ck10").show();
             }
             if(result.sDuck !=2){
                 TanWind("up-box2", "close", "popup-box2");	//商店弹窗
