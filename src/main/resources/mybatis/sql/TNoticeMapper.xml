@@ -129,7 +129,7 @@
         SELECT
         <include refid="Base_Column_List"></include>
         FROM `t_notice`
-        WHERE user_id = #{userId,jdbcType=BIGINT}  AND type IN ('12','13','14','15','16','17','18','21','22','23','24')
+        WHERE user_id = #{userId,jdbcType=BIGINT}  
         ORDER BY  add_time DESC
         LIMIT #{offset}, #{size}
     </select>
