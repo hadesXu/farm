@@ -18,6 +18,11 @@ public class AccountValidatorUtil {
     public static final String REGEX_PASSWORD = "^(?:\\d+|[a-zA-Z]+|[!@#$%^&*]+)$";
 
     /**
+     *  由数字和字母组成
+     */
+    public static final String REGEX_PASSWORD2 = "^[0-9A-Za-z]{6,20}$";
+
+    /**
      * 正则表达式：验证手机号
      */
     public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\\\d{8}$";
@@ -65,6 +70,10 @@ public class AccountValidatorUtil {
      */
     public static boolean isPassword(String password) {
         return Pattern.matches(REGEX_PASSWORD, password);
+    }
+
+    public static boolean isPassword2(String password) {
+        return Pattern.matches(REGEX_PASSWORD2, password);
     }
 
     /**

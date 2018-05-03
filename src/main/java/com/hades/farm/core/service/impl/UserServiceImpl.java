@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.PHONE_FORMAT_ERROR);
             return result;
         }
-        if (!AccountValidatorUtil.isPassword(request.getPwd())) {
+        if (!AccountValidatorUtil.isPassword2(request.getPwd())) {
             result.addError(ErrorCode.PWD_FORMAT_ERROR);
             return result;
         }
@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
             result.addError(ErrorCode.PHONE_EXIST);
             return result;
         }
-        if (!SystemUtil.isNull(request.getWechat())) {
+        if (!SystemUtil.isNull(request.getWechat()) && !"undefined".equals(request.getWechat())) {
             user = userMapper.getUserByWeChat(request.getWechat());
             if (user != null) {
                 result.addError(ErrorCode.WECHAT_EXIST);
@@ -324,11 +324,11 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        if (!SystemUtil.isNull(request.getWechat())) {
+        if (!SystemUtil.isNull(request.getWechat()) && !"undefined".equals(request.getWechat())) {
             user.setWechat(request.getWechat());
         }
         user.setTelephone(request.getPhone());
-        if (!SystemUtil.isNull(request.getName())) {
+        if (!SystemUtil.isNull(request.getName()) && !"undefined".equals(request.getName())) {
             user.setName(request.getName());
         } else {
             user.setName(NickUtil.randomNick());

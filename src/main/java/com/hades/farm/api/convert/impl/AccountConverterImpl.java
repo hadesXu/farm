@@ -50,7 +50,8 @@ public class AccountConverterImpl implements AccountConverter {
         for (TAccountTicketFlow tAccountTicketFlow : tAccountTicketFlows) {
             model = new RecordModel();
             model.setAddTime(DateUtils.getDate(tAccountTicketFlow.getAddTime()));
-            model.setValue(tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore()));
+//            model.setValue(tAccountTicketFlow.getAmountAfter().subtract(tAccountTicketFlow.getAmountBefore()));
+            model.setValue(tAccountTicketFlow.getAmount());
             model.setTypeStr(tAccountTicketFlow.getRemarks());
             models.add(model);
         }
