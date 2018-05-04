@@ -299,6 +299,7 @@ public class UserServiceImpl implements UserService {
         user.setsDuck(Constant.NUMBER_ONE);
         user.setActive(Constant.NUMBER_TWO);
         user.setIsGroup(Constant.NUMBER_ONE);
+        user.setIsTrainee(Constant.NUMBER_TWO);
         if (request.getParentId() != null) {
             User parentUser = userMapper.getUserById(request.getParentId());
             if (parentUser != null) {
