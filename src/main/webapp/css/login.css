@@ -28,9 +28,9 @@
 .btn_big1{ display:block; margin:auto; background:#FF2233; font-size:16px; line-height:45px; height:45px;
  border:0px; color:#FFF; width:100%; margin:auto;margin-top:10px; margin-bottom:0px;border-radius:5px;}
  .p_type1{ background:url(../img/input-eye-off.png) no-repeat right center; background-size:22px 22px; width:30px; height:36px; position:absolute; right:26px; top:10px;}
- .p_type1.on{ background-image:url(input-eye-on.png)}
+ .p_type1.on{ background-image:url(../img/input-eye-on.png)}
   .p_type{ background:url(../img/input-eye-off.png) no-repeat right center; background-size:22px 22px; width:30px; height:36px; position:absolute; right:26px; top:10px;}
- .p_type.on{ background-image:url(input-eye-on.png)}
+ .p_type.on{ background-image:url(../img/input-eye-on.png)}
  .login_ffri input{-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 -webkit-appearance: none;
 border: 0;
