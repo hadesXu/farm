@@ -90,5 +90,5 @@ public interface TEggWarehouseMapper {
 
     int eggChange(@Param("userId") long userId, @Param("num") BigDecimal num);
 
-    int shouhuoDuck(Long userId);
+    int shouhuoDuck(@Param("userId")Long userId,@Param("harvestNumOfDone")int harvestNumOfDone);
 }

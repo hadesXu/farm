@@ -11,5 +11,5 @@ import com.hades.farm.core.exception.BizException;
 public interface FarmService {
     public YjcInfoModel queryYjcInfo(long userId) throws BizException;
     public FdcInfoModel queryFdcInfo(long userId) throws BizException;
-    public void shouhuo(long userId,String goodTypeStr) throws BizException;
+    public String shouhuo(long userId,String goodTypeStr) throws BizException;
 }

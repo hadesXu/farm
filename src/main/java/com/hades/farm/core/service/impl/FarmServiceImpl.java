@@ -3,6 +3,7 @@ package com.hades.farm.core.service.impl;
 import com.hades.farm.api.view.response.FdcInfoModel;
 import com.hades.farm.api.view.response.MsgModel;
 import com.hades.farm.api.view.response.YjcInfoModel;
+import com.hades.farm.core.data.dto.resultDto.HarvestResultDto;
 import com.hades.farm.core.data.entity.*;
 import com.hades.farm.core.data.mapper.*;
 import com.hades.farm.core.exception.BizException;
@@ -38,25 +39,57 @@ public class FarmServiceImpl implements FarmService {
     private TNoticeMapper tNoticeMapper;
     @Autowired
     private TEggBreedingMapper tEggBreedingMapper;
+    @Autowired
+    private TDuckBreedingMapper tDuckBreedingMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void shouhuo(long userId,String goodTypeStr) throws BizException{
+    public String shouhuo(long userId,String goodTypeStr) throws BizException{
         TDuckWarehouse duckWarehouse =null;
         TEggWarehouse eggWarehouse = null;
+        int harvestNum = 0;
         if("1".equals(goodTypeStr)){  //蛋
             duckWarehouse = duckWareHouseService.queryDuckWareHouse(userId);
-             if(duckWarehouse == null || duckWarehouse.getEggHarvest()<=0){
+             //查询鸭养殖记录中是否有待收获的蛋
+            List<HarvestResultDto> harvestList = tDuckBreedingMapper.queryCanHarvestList(userId);
+             if(duckWarehouse == null || harvestList ==null || harvestList.size()==0){
                  throw new BizException(ErrorCode.NO_HARVEST_EGG.getCode(),ErrorCode.NO_HARVEST_EGG.getMessage());
              }else{
-                 tDuckWarehouseMapper.shouhuoEgg(userId);
+                 int harvestNumOfDone = 0;
+                 for(HarvestResultDto harvestResultDto:harvestList){
+                     if(harvestResultDto.getStatus() ==2){
+                         harvestNumOfDone = harvestNumOfDone+harvestResultDto.getProduce();
+                         harvestNumOfDone = harvestNumOfDone+harvestResultDto.getNumFreeze();
+                     }
+                     harvestNum = harvestNum + harvestResultDto.getProduce();
+                 }
+                 if(harvestNumOfDone>0){
+                     tDuckWarehouseMapper.shouhuoEgg(userId,harvestNumOfDone);
+                 }
+                 //更新养殖表记录
+                 tDuckBreedingMapper.harvestOfDoing(userId);
+                 tDuckBreedingMapper.harvestOfDone(userId);
              }
          }else if("2".equals(goodTypeStr)){//鸭
             eggWarehouse = eggWareHouseService.queryEggWareHouse(userId);
-             if(eggWarehouse == null || eggWarehouse.getDuckHarvest()<=0){
+            List<HarvestResultDto> harvestList = tEggBreedingMapper.queryCanHarvestList(userId);
+             if(eggWarehouse == null || harvestList ==null || harvestList.size()==0){
                  throw new BizException(ErrorCode.NO_HARVEST_DUCK.getCode(),ErrorCode.NO_HARVEST_DUCK.getMessage());
              }else{
-                 tEggWarehouseMapper.shouhuoDuck(userId);
+                 int harvestNumOfDone = 0;
+                 for(HarvestResultDto harvestResultDto:harvestList){
+                     if(harvestResultDto.getStatus() ==2){
+                         harvestNumOfDone = harvestNumOfDone+harvestResultDto.getProduce();
+                         harvestNumOfDone = harvestNumOfDone+harvestResultDto.getNumFreeze();
+                     }
+                     harvestNum = harvestNum + harvestResultDto.getProduce();
+                 }
+                 if(harvestNumOfDone>0){
+                     tEggWarehouseMapper.shouhuoDuck(userId,harvestNumOfDone);
+                 }
+                 //更新养殖记录
+                 tEggBreedingMapper.harvestOfDoing(userId);
+                 tEggBreedingMapper.harvestOfDone(userId);
              }
          }else{
              throw new BizException(ErrorCode.GOOD_TYPE_ERROR.getCode(),ErrorCode.GOOD_TYPE_ERROR.getMessage());
@@ -64,15 +97,19 @@ public class FarmServiceImpl implements FarmService {
         //t_notice
         TNotice tNotice = new TNotice();
         tNotice.setUserId(userId);
+        String msgStr = "";
         if("1".equals(goodTypeStr)){
             tNotice.setType(NoticeType.HARVEST_EGG.getType());
-            tNotice.setRemarks(NoticeType.HARVEST_EGG.getRemarks().replace("num", duckWarehouse.getEggHarvest() + ""));
+            tNotice.setRemarks(NoticeType.HARVEST_EGG.getRemarks().replace("num", harvestNum + ""));
+            msgStr = NoticeType.HARVEST_EGG.getRemarks().replace("num", harvestNum + "");
         }else{
             tNotice.setType(NoticeType.HARVEST_DUCK.getType());
-            tNotice.setRemarks(NoticeType.HARVEST_DUCK.getRemarks().replace("num", eggWarehouse.getDuckHarvest() + ""));
+            tNotice.setRemarks(NoticeType.HARVEST_DUCK.getRemarks().replace("num", harvestNum + ""));
+            msgStr = NoticeType.HARVEST_DUCK.getRemarks().replace("num", harvestNum + "");
         }
         tNotice.setAddTime(new Date());
         tNoticeMapper.insertSelective(tNotice);
+        return  msgStr;
     }
 
     @Override
@@ -87,7 +124,13 @@ public class FarmServiceImpl implements FarmService {
         yjcInfoModel.setDuckDoing(duckWarehouse.getDuckDoing());
         yjcInfoModel.setFood(duckWarehouse.getFood());
         yjcInfoModel.setIfSteal(duckWarehouse.getIfSteal());
-        yjcInfoModel.setHavestNum(duckWarehouse.getEggHarvest());
+        // yjcInfoModel.setHavestNum(duckWarehouse.getEggHarvest());
+        List<HarvestResultDto> harvestList = tDuckBreedingMapper.queryCanHarvestList(userId);
+        if(harvestList!=null && harvestList.size()>0){
+            yjcInfoModel.setHavestNum(1);
+        }else{
+            yjcInfoModel.setHavestNum(0);
+        }
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             yjcInfoModel.setHasDog(2);
@@ -114,7 +157,13 @@ public class FarmServiceImpl implements FarmService {
         fdcInfoModel.setEggDoing(eggWarehouse.getEggDoing());
         fdcInfoModel.setIfSteal(eggWarehouse.getIfSteal());
         fdcInfoModel.setIfHot(eggWarehouse.getIfHot() + "");
-        fdcInfoModel.setHavestNum(eggWarehouse.getDuckHarvest());
+        // fdcInfoModel.setHavestNum(eggWarehouse.getDuckHarvest());
+        List<HarvestResultDto> harvestList = tEggBreedingMapper.queryCanHarvestList(userId);
+        if(harvestList!=null && harvestList.size()>0){
+            fdcInfoModel.setHavestNum(1);
+        }else{
+            fdcInfoModel.setHavestNum(0);
+        }
         User user = userMapper.getUserById(userId);
         if(user.getDogEndDay() == null){
             fdcInfoModel.setHasDog(2);

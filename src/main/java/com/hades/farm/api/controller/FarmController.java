@@ -80,7 +80,8 @@ public class FarmController {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
         MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
-             farmService.shouhuo(userId,goodTypeStr);
+            String msg = farmService.shouhuo(userId,goodTypeStr);
+            msgModel.setMessage(msg);
         } catch (BizException e){
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
