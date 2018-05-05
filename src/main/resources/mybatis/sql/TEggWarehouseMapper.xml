@@ -271,7 +271,7 @@
     WHERE
     td.if_steal = 1  and te.status in(1,2)
     AND td.user_id!= #{userId,jdbcType=BIGINT}
-    GROUP BY td.user_id,tu.name,tu.img_url HAVING SUM(te.produce)>0
+    GROUP BY td.user_id,tu.name,tu.img_url HAVING SUM(te.produce)*0.2 >= 1
     ORDER BY harvestNum DESC
     LIMIT #{offSet},#{pageSize}
   </select>
