@@ -1,9 +1,12 @@
 package com.hades.farm.core.service.impl;
 
 import com.hades.farm.api.view.response.StealModel;
+import com.hades.farm.core.data.entity.TDuckBreeding;
 import com.hades.farm.core.data.entity.TDuckWarehouse;
 import com.hades.farm.core.data.entity.TNotice;
+import com.hades.farm.core.data.mapper.TDuckBreedingMapper;
 import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
+import com.hades.farm.core.data.mapper.TEggBreedingMapper;
 import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.enums.NoticeType;
@@ -27,6 +30,11 @@ public class DuckWareHouseServiceImpl {
     @Autowired
     private TNoticeMapper tNoticeMapper;
 
+    @Autowired
+    private TDuckBreedingMapper tDuckBreedingMapper;
+
+
+
     public void addWareHouse(long userId) throws BizException{
         //添加仓库记录
         TDuckWarehouse duckWarehouse = new TDuckWarehouse();
@@ -34,8 +42,6 @@ public class DuckWareHouseServiceImpl {
         duckWarehouse.setDuck(0);
         duckWarehouse.setDuckDoing(0);
         duckWarehouse.setEgg(0);
-        duckWarehouse.setEggFreeze(0);
-        duckWarehouse.setEggHarvest(0);
         duckWarehouse.setIfHarvest(2);
         duckWarehouse.setIfSteal(2);
         duckWarehouse.setAllSell(0);
@@ -67,17 +73,19 @@ public class DuckWareHouseServiceImpl {
     public void stealEgg(long userId,long targetUserId) throws BizException{
        //1.校验目标用户是否可偷，查询出可偷的数量
         TDuckWarehouse targetDuckWarehouse = tDuckWarehouseMapper.selectByUserId(targetUserId);
-        if(targetDuckWarehouse.getIfSteal() == 2 || targetDuckWarehouse.getEggHarvest() == 0){
+        int stealNum = tDuckBreedingMapper.queryCanStealNum(targetUserId);
+        if(targetDuckWarehouse.getIfSteal() == 2 || stealNum == 0){
             throw new BizException(ErrorCode.CANNT_STEAL.getCode(),
                     ErrorCode.CANNT_STEAL.getMessage());
         }
-        int stealNum = targetDuckWarehouse.getEggHarvest()/5;
-        //2.更新目标用户的egg_harvest数量、可偷标识
+        //2.更新目标用户的可偷标识
         int updateCount = tDuckWarehouseMapper.updateOfStealByOther(targetUserId, stealNum);
         if(updateCount<1){
             throw new BizException(ErrorCode.CANNT_STEAL.getCode(),
                     ErrorCode.CANNT_STEAL.getMessage());
         }
+        //.更新目标用户养殖记录中produce数量
+        updateCount = tDuckBreedingMapper.updateOfStealByOther(targetUserId);
         //3.更新本用户的egg数量
         updateCount =tDuckWarehouseMapper.updateOfStealOther(userId, stealNum);
         //4.添加提示记录

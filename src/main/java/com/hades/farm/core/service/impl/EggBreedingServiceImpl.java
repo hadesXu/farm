@@ -41,6 +41,9 @@ public class EggBreedingServiceImpl implements EggBreedingService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private EggWareHouseServiceImpl eggWareHouseService;
+
 
     /**
      * 孵蛋
@@ -112,11 +115,15 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         User user = userMapper.getUserById(userId);
         Date now = new Date();
         Date registeDate = user.getAddTime();
-        long diffDays = DateUtils.diffDays(registeDate,now);
+        long diffDays = DateUtils.diffDays(registeDate, now);
         if(diffDays< Constant.PRACTICE_DAY){
             throw new BizException(ErrorCode.PRACTICE_NOWARM_SELF);
         }
         TEggWarehouse tEggWarehouse = tEggWarehouseMapper.selectByUserId(userId);
+        if(tEggWarehouse == null){
+            eggWareHouseService.addWareHouse(userId);
+            tEggWarehouse.setIfHot(2);
+        }
         if(tEggWarehouse.getIfHot() == 1){
             throw new BizException(ErrorCode.HAS_WARM);
         }

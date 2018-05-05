@@ -3,6 +3,7 @@ package com.hades.farm.core.service.impl;
 import com.hades.farm.api.view.response.StealModel;
 import com.hades.farm.core.data.entity.TEggWarehouse;
 import com.hades.farm.core.data.entity.TNotice;
+import com.hades.farm.core.data.mapper.TEggBreedingMapper;
 import com.hades.farm.core.data.mapper.TEggWarehouseMapper;
 import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
@@ -26,14 +27,15 @@ public class EggWareHouseServiceImpl{
     @Autowired
     private TNoticeMapper tNoticeMapper;
 
+    @Autowired
+    private TEggBreedingMapper tEggBreedingMapper;
+
     public void addWareHouse(long userId) throws BizException{
         TEggWarehouse eggWarehouse = new TEggWarehouse();
         eggWarehouse.setUserId(userId);
         eggWarehouse.setEgg(0);
         eggWarehouse.setEggDoing(0);
         eggWarehouse.setDuck(0);
-        eggWarehouse.setDuckFreeze(0);
-        eggWarehouse.setDuckHarvest(0);
         eggWarehouse.setIfHot(2);
         eggWarehouse.setIfHarvest(2);
         eggWarehouse.setIfSteal(2);
@@ -64,16 +66,19 @@ public class EggWareHouseServiceImpl{
     @Transactional(rollbackFor = Exception.class)
     public void stealDuck(long userId,long targetUserId) throws BizException{
         TEggWarehouse targetEggWarehouse = tEggWarehouseMapper.selectByUserId(targetUserId);
-        if(targetEggWarehouse.getIfSteal() ==2 || targetEggWarehouse.getDuckHarvest()==0){
+        int stealNum = tEggBreedingMapper.queryCanStealNum(targetUserId);
+        if(targetEggWarehouse.getIfSteal() ==2 || stealNum==0){
             throw new BizException(ErrorCode.CANNT_STEAL.getCode(),
                     ErrorCode.CANNT_STEAL.getMessage());
         }
-        int stealNum = targetEggWarehouse.getDuckHarvest()/5;
         int updateCount = tEggWarehouseMapper.updateOfStealByOther(targetUserId, stealNum);
         if(updateCount<1){
             throw new BizException(ErrorCode.CANNT_STEAL.getCode(),
                     ErrorCode.CANNT_STEAL.getMessage());
         }
+        //更新目标用户被偷得鸭
+        updateCount = tEggBreedingMapper.updateOfStealByOther(targetUserId);
+        //更新本用户偷到的鸭
         updateCount =tEggWarehouseMapper.updateOfStealOther(userId, stealNum);
         TNotice thisNotice = new TNotice();
         thisNotice.setUserId(userId);

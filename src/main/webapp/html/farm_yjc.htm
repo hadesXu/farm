@@ -1038,7 +1038,7 @@
             if(result.code=='0000'){
                 //提示
                 layer.open({
-                    content: "收获成功"
+                    content: result.message
                     ,skin: 'msg'
                     ,time: 1 //2秒后自动关闭
                 });
@@ -1108,7 +1108,14 @@
 
     function stealDuck(){
         if(sDuck == 2){
-           window.location.href = "farm_ty.html";
+            var date = new Date();
+            var hours = date.getHours();
+            if(hours>=18 && hours <21){
+                window.location.href = "farm_ty.html";
+            }else{
+                alert("偷鸭时间为：18:00-21:00");
+                return false;
+            }
         }
     }
 
