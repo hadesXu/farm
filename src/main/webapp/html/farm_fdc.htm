@@ -624,7 +624,7 @@
 	        <ul class="tool-ul clearfix" style="top:-28%;">
 	            <li class="tools04"><a href="index.html" tppabs="javascript:;">
 	                <img src="../img/wdnc.png" tppabs="javascript:;"></a></li>
-	            <li class="tools04"><a href="farm_yjc.htm" tppabs="javascript:;">
+	            <li class="tools04"><a href="farm_ck.html" tppabs="javascript:;">
 	                <img src="../img/wdck.png" tppabs="javascript:;"></a></li>
 
 	            <li class="tools04 up-open"><a href="farm_jyq.htm" tppabs="javascript:;">
@@ -658,7 +658,7 @@
                 if(result.code=='0000'){
                     //提示
                     layer.open({
-                        content: "收获成功"
+                        content: result.message
                         ,skin: 'msg'
                         ,time: 1 //2秒后自动关闭
                     });
@@ -860,7 +860,14 @@ function warmCallBack(data){
 
     function stealEgg(){
        if(sEgg == 2){
-           window.location.href = "farm_td.html";
+           var date = new Date();
+           var hours = date.getHours();
+           if(hours>=18 && hours <21){
+               window.location.href = "farm_td.html";
+           }else{
+               alert("偷蛋时间为：18:00-21:00");
+               return false;
+           }
        }
     }
 

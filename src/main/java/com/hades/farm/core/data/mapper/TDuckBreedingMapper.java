@@ -3,6 +3,7 @@ package com.hades.farm.core.data.mapper;
 import com.hades.farm.core.data.dto.requestDto.QueryDuckBreedingRequestDto;
 import com.hades.farm.core.data.dto.requestDto.UpdateDuckWareHouseFeedingRequestDto;
 import com.hades.farm.core.data.dto.requestDto.UpdateOfFeedingRequestDto;
+import com.hades.farm.core.data.dto.resultDto.HarvestResultDto;
 import com.hades.farm.core.data.entity.TDuckBreeding;
 
 import java.util.List;
@@ -64,4 +65,19 @@ public interface TDuckBreedingMapper {
     Map queryNOFeed(Long user_id);
 
     Map queryHaveBreed(Map map);
+
+    int queryCanStealNum(long userId);
+
+    int updateOfStealByOther(long userId);
+
+    List<HarvestResultDto> queryCanHarvestList(long userId);
+
+    int harvestOfDoing(long userId);
+
+    int harvestOfDone(long userId);
+
+    int queryHarvestFreeze(long userId);
+
+    int queryHarvestNum(long userId);
+
 }

@@ -1,5 +1,6 @@
 package com.hades.farm.core.data.mapper;
 
+import com.hades.farm.core.data.dto.resultDto.HarvestResultDto;
 import com.hades.farm.core.data.entity.TEggBreeding;
 
 import java.util.List;
@@ -59,4 +60,18 @@ public interface TEggBreedingMapper {
     List<TEggBreeding> queryBreedingList(long userId);
 
     List<Map> queryBreeList(long userId, int offSet, int pageSize);
+
+    int queryCanStealNum(long userId);
+
+    int updateOfStealByOther(long userId);
+
+    List<HarvestResultDto> queryCanHarvestList(long userId);
+
+    int harvestOfDoing(long userId);
+
+    int harvestOfDone(long userId);
+
+    int queryHarvestFreeze(long userId);
+
+    int queryHarvestNum(long userId);
 }

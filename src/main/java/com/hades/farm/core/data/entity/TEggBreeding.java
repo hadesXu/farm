@@ -81,6 +81,25 @@ public class TEggBreeding {
      *
      * @mbggenerated
      */
+    private Integer num_freeze;
+    private Integer produce;
+
+    public Integer getNum_freeze() {
+        return num_freeze;
+    }
+
+    public void setNum_freeze(Integer num_freeze) {
+        this.num_freeze = num_freeze;
+    }
+
+    public Integer getProduce() {
+        return produce;
+    }
+
+    public void setProduce(Integer produce) {
+        this.produce = produce;
+    }
+
     public TEggBreeding(){}
     public TEggBreeding(Long id, Long userId, Integer num, Integer numHarvest, Integer day, Integer accNoHot, Integer status, Date addTime, Date updateTime) {
         this.id = id;

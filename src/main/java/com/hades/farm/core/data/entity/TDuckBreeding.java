@@ -89,6 +89,26 @@ public class TDuckBreeding {
      *
      * @mbggenerated
      */
+
+    public Integer numFreeze;
+    public Integer produce;
+
+    public Integer getNumFreeze() {
+        return numFreeze;
+    }
+
+    public void setNumFreeze(Integer numFreeze) {
+        this.numFreeze = numFreeze;
+    }
+
+    public Integer getProduce() {
+        return produce;
+    }
+
+    public void setProduce(Integer produce) {
+        this.produce = produce;
+    }
+
     public TDuckBreeding(){}
     public TDuckBreeding(Long id, Long userId, Integer num, Integer numHarvest, Integer day, Integer accNoFeed, Integer status, Integer isFeed, Date addTime, Date updateTime) {
         this.id = id;
