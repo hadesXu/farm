@@ -142,16 +142,18 @@ public class CodeServiceImpl implements CodeService {
             }
             hasUpdate = true;
         }
-        Result<Void> sendRes = SmsUtil.sendSms(phone, String.format(Constant.CODE_MESSAGE_TEMPLATE, code));
-        if (!sendRes.isSuccess()) {
-            logger.error("Send code message failed, phone:{}", phone);
-        } else {
-            tSmsRecord.setCode(code);
-            tSmsRecord.setLastTime(now);
-            if (hasUpdate) {
-                tSmsRecordMapper.updateByPrimaryKey(tSmsRecord);
+        if (!envDev) { //测试环境不发送验证码
+            Result<Void> sendRes = SmsUtil.sendSms(phone, String.format(Constant.CODE_MESSAGE_TEMPLATE, code));
+            if (!sendRes.isSuccess()) {
+                logger.error("Send code message failed, phone:{}", phone);
             } else {
-                tSmsRecordMapper.insert(tSmsRecord);
+                tSmsRecord.setCode(code);
+                tSmsRecord.setLastTime(now);
+                if (hasUpdate) {
+                    tSmsRecordMapper.updateByPrimaryKey(tSmsRecord);
+                } else {
+                    tSmsRecordMapper.insert(tSmsRecord);
+                }
             }
         }
         return result;
