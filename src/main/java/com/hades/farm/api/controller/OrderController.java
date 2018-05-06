@@ -64,14 +64,14 @@ public class OrderController {
             int goodNum = Integer.parseInt(goodNumStr);
             int goodType = Integer.parseInt(goodTypeStr);
             if (goodType == 1) {//蛋
-                if (goodNum > 100 || goodNum < 10) {
+                if (goodNum > 200 || goodNum < 10) {
                     msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
                     msgModel.setMessage("卖出" + ErrorCode.BUY_EGG_LIMIT.getMessage());
                     response.setResult(msgModel);
                     return response;
                 }
             } else if (goodType == 2) {
-                if (goodNum > 100 || goodNum < 20) {
+                if (goodNum > 200 || goodNum < 20) {
                     msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
                     msgModel.setMessage("卖出" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
                     response.setResult(msgModel);
@@ -113,14 +113,14 @@ public class OrderController {
                 //校验是否是super用户
                 if(userId != Long.parseLong(SUPERVISOR_ID)){
                     if (goodType == 1) {//蛋
-                        if (goodNum > 100 || goodNum < 10) {
+                        if (goodNum > 200 || goodNum < 10) {
                             msgModel.setCode(ErrorCode.BUY_EGG_LIMIT.getCode());
                             msgModel.setMessage("购买" + ErrorCode.BUY_EGG_LIMIT.getMessage());
                             response.setResult(msgModel);
                             return response;
                         }
                     } else if (goodType == 2) {
-                        if (goodNum > 100 || goodNum < 20) {
+                        if (goodNum > 200 || goodNum < 20) {
                             msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
                             msgModel.setMessage("购买" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
                             response.setResult(msgModel);
