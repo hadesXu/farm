@@ -83,6 +83,10 @@ public class StealController {
             if(!validateTime()){
                 throw  new BizException(ErrorCode.STEAL_TIME_ERROR.getCode(),ErrorCode.STEAL_TIME_ERROR.getMessage());
             }
+
+            if(!eggWareHouseService.checkIsSteal(userId,23)) {
+                throw  new BizException(ErrorCode.CANNT_STEAL2.getCode(),ErrorCode.CANNT_STEAL2.getMessage());
+            }
             eggWareHouseService.stealDuck(userId, targetUserId);
         }catch (BizException e){
             msgModel.setCode(e.getErrCode());
@@ -107,6 +111,10 @@ public class StealController {
         try {
             if(!validateTime()){
                 throw  new BizException(ErrorCode.STEAL_TIME_ERROR.getCode(),ErrorCode.STEAL_TIME_ERROR.getMessage());
+            }
+
+            if(!eggWareHouseService.checkIsSteal(userId,21)) {
+                throw  new BizException(ErrorCode.CANNT_STEAL2.getCode(),ErrorCode.CANNT_STEAL2.getMessage());
             }
             duckWareHouseService.stealEgg(userId, targetUserId);
         }catch (BizException e){

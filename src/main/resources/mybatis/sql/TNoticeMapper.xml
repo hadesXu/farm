@@ -168,5 +168,9 @@
         LIMIT 0,#{num}
     </select>
 
+    <select id="queryByType" resultType="int" parameterType="map" >
+        SELECT COUNT(*) FROM  t_notice WHERE user_id = #{userId,jdbcType=BIGINT} AND type = #{type,jdbcType=INTEGER} AND
+          add_time >=  #{start_time,jdbcType=TIMESTAMP} AND  #{end_time,jdbcType=TIMESTAMP} >=  add_time
+    </select>
 
 </mapper>

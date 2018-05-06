@@ -9,13 +9,16 @@ import com.hades.farm.core.data.mapper.TNoticeMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.enums.NoticeType;
 import com.hades.farm.result.ErrorCode;
+import com.hades.farm.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhengzl on 2018/3/10.
@@ -56,6 +59,24 @@ public class EggWareHouseServiceImpl{
 
     public List<StealModel> queryCanStealList(Long userId,int offSet,int pageSize){
        return tEggWarehouseMapper.queryCanStealList(userId, offSet, pageSize);
+    }
+
+    public boolean checkIsSteal(long userId, int type) {
+        String s = DateUtils.dateToYYMMDDStr(new Date());
+        String start = s+" 00:00:00";
+        String end = s+" 23:59:59";
+        Map map = new HashMap();
+        map.put("userId",userId);
+        map.put("type",type);
+        map.put("start_time",DateUtils.strToDate(start));
+        map.put("end_time",DateUtils.strToDate(end));
+        int count = tNoticeMapper.queryByType(map);
+        if(count > 0) {
+            return false;
+        }else{
+            return true;
+        }
+
     }
 
     /**

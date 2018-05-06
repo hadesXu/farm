@@ -5,6 +5,7 @@ import com.hades.farm.core.data.entity.TNotice;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TNoticeMapper {
     /**
@@ -77,4 +78,5 @@ public interface TNoticeMapper {
 
     List<NoticeUserResultDto> queryNoticeWithUser(@Param("userId") Long userId, @Param("num") int num);
 
+    int queryByType(Map map);
 }

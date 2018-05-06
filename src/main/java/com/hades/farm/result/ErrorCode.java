@@ -46,6 +46,7 @@ public enum ErrorCode {
     NO_HARVEST_DUCK(2026, "没有可收获的鸭"),
     DREEDING_LIMIT(2027, "每日上线100，您已超限"),
     SELL_GOOD_TIME_ERROR(2028, "挂单时间为：09:00-17:30"),
+    CANNT_STEAL2(2029, "您今天已经偷过，请明天再来"),
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
     PWD_FORMAT_ERROR(3002, "密码不能包含特殊字符"),
