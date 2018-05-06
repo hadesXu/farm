@@ -44,7 +44,7 @@ server:
   port: 8098
 
 switch:
-  debug: true
+  debug: false
 
 farm:
   SUPERVISOR_ID: 99999999
