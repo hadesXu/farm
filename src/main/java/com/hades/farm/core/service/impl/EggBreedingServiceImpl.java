@@ -190,6 +190,17 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         if(updateCount !=1){
             throw new BizException(ErrorCode.UPDATE_ERR);
         }
+        //给师傅的通知
+        TNotice tNotice2 = new TNotice();
+        tNotice2.setUserId(masterUserId);
+        tNotice2.setType(NoticeType.MASTER_EGG_HOT.getType());
+        tNotice2.setRemarks("徒弟:"+userId+" 给你加温");
+        tNotice2.setAddTime(new Date());
+        updateCount = tNoticeMapper.insertSelective(tNotice2);
+        if(updateCount !=1){
+            throw new BizException(ErrorCode.UPDATE_ERR);
+        }
+
         return true;
     }
 
