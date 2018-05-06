@@ -31,7 +31,7 @@ public class SmsUtil {
         //状态报告
         String report = "true";
 
-        SmsSendRequest smsSingleRequest = new SmsSendRequest(account, pswd, msg, phone, report);
+        SmsSendRequest smsSingleRequest = new SmsSendRequest(account, pswd, "【我爱微集市】"+msg, phone, report);
 
         String requestJson = JSON.toJSONString(smsSingleRequest);
 
