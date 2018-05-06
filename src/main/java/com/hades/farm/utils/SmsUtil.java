@@ -43,10 +43,10 @@ public class SmsUtil {
 
         SmsSendResponse smsSingleResponse = JSON.parseObject(response, SmsSendResponse.class);
         System.out.println("response  toString is :" + smsSingleResponse);
-//        if (StringUtils.isNoneBlank(smsSingleResponse.getErrorMsg())) {
-//            result.addError(ErrorCode.SYSTEM_ERROR);
-//            return result;
-//        }
+        if (StringUtils.isNoneBlank(smsSingleResponse.getErrorMsg())) {
+            result.addError(ErrorCode.SYSTEM_ERROR);
+            return result;
+        }
         return result;
     }
 
