@@ -63,7 +63,7 @@ public enum ErrorCode {
     WITHDRAW_COUNT_ERROR(3013, "每天只能申请一次提现！"),
     AUTH_USER_INVALID(3014, "您的身份信息异常，请确认无误后再次提交!"),
     AUTH_ERROR(3015, "请实名认证！"),
-
+    AUTH_USER_EXIST(3016, "身份信息不能认证多次"),
 
     SUCCESS(0000, "成功");
 

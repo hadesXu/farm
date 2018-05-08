@@ -53,4 +53,6 @@ public interface TIdentityCardRecordMapper {
 
 
     TIdentityCardRecord getByUserId(Long userId);
+
+    TIdentityCardRecord getByIdNo(String idNo);
 }

@@ -186,7 +186,12 @@ public class UserServiceImpl implements UserService {
                 result.addError(ErrorCode.AUTH_USER_INVALID);
                 return result;
             }
-            TIdentityCardRecord record = new TIdentityCardRecord();
+            TIdentityCardRecord record = tIdentityCardRecordMapper.getByIdNo(request.getIdNo());
+            if (record != null) {
+                result.addError(ErrorCode.AUTH_USER_EXIST);
+                return result;
+            }
+            record = new TIdentityCardRecord();
             record.setRealName(request.getRealName());
             record.setIdNo(request.getIdNo());
             record.setUserId(request.getUserId());

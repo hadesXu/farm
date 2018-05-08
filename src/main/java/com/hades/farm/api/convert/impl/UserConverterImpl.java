@@ -71,6 +71,7 @@ public class UserConverterImpl implements UserConverter {
                 model.setIdNo(record.getIdNo());
             }
         }
+        model.setIsAuth(user.getIsAuth());
         model.setTelephone(SystemUtil.replacePhone(user.getTelephone()));
         model.setUserId(user.getId());
         return model;
