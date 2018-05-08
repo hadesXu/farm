@@ -313,9 +313,7 @@ public class UserServiceImpl implements UserService {
                 user.setGeneration(parentUser.getGeneration() + Constant.NUMBER_ONE);
                 if (parentUser.getIsGroup() == Constant.NUMBER_TWO) {
                     user.setIsGroup(parentUser.getIsGroup());
-                    if (parentUser.getGroupBossId() != Constant.DEFAULT_ID) {
-                        user.setGroupBossId(parentUser.getGroupBossId());
-                    }
+                    user.setGroupBossId(parentUser.getGroupBossId());
                 }
                 if (parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
                     user.setParents(user.getParents() + "," + parentUser.getParentId());
