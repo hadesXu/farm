@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -101,6 +102,13 @@ public class FarmController {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
         MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
+            // 校验时间
+            if(!validateTime()){
+                msgModel.setCode(ErrorCode.BREEDING_TIME_ERROR.getCode());
+                msgModel.setMessage(ErrorCode.BREEDING_TIME_ERROR.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             BreedingRequestDto requestDto = new BreedingRequestDto();
             requestDto.setUserId(userId);
             //校验duckNum
@@ -140,6 +148,13 @@ public class FarmController {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
         MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
+            // 校验时间
+            if(!validateTime()){
+                msgModel.setCode(ErrorCode.BREEDING_TIME_ERROR.getCode());
+                msgModel.setMessage(ErrorCode.BREEDING_TIME_ERROR.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             duckBreedingService.feeding(userId);
         } catch (BizException e){
             msgModel.setCode(e.getErrCode());
@@ -177,12 +192,19 @@ public class FarmController {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
         MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
+            // 校验时间
+            if(!validateTime()){
+                msgModel.setCode(ErrorCode.BREEDING_TIME_ERROR.getCode());
+                msgModel.setMessage(ErrorCode.BREEDING_TIME_ERROR.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             if("1".equals(warmWho)){
                 eggBreedingService.warmSelf(userId);
             }else{
                 eggBreedingService.warmMaster(userId);
             }
-        } catch (BizException e){
+        } catch (BizException e) {
             msgModel.setCode(e.getErrCode());
             msgModel.setMessage(e.getErrMessage());
         }
@@ -196,6 +218,13 @@ public class FarmController {
         ApiResponse<MsgModel> response = new ApiResponse<MsgModel>();
         MsgModel msgModel = new MsgModel(ErrorCode.SUCCESS.getCode(),ErrorCode.SUCCESS.getMessage());
         try {
+            // 校验时间
+            if(!validateTime()){
+                msgModel.setCode(ErrorCode.BREEDING_TIME_ERROR.getCode());
+                msgModel.setMessage(ErrorCode.BREEDING_TIME_ERROR.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
             BreedingRequestDto requestDto = new BreedingRequestDto();
             requestDto.setUserId(userId);
             //校验duckNum
@@ -227,5 +256,15 @@ public class FarmController {
         }
         response.setResult(msgModel);
         return response;
+    }
+    //0-4点不允许加温
+    private boolean validateTime(){
+        Date now = new Date();
+        int hours = now.getHours();
+        if(hours>=0 && hours <4){
+            return false;
+        }else{
+            return true;
+        }
     }
 }
