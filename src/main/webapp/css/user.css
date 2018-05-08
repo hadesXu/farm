@@ -632,8 +632,7 @@ a.bnt_1{ text-align:center; color:#fff}
 .Personal .innercontent1{ width:100%; margin:auto; overflow:hidden; background:#FFF; padding-bottom:10px;padding-top:10px;}
 .Personal .innercontent1 .name{ width:95%; margin:auto; height:50px;font-size:14px; line-height:50px; color:#666; border-bottom:1px solid #eeeeee}
 .Personal .innercontent1 .name span{width:25%; display:inline-block;}
-.name input{ border:0px solid #DFDFDF; height: 28px; line-height: 18px; padding-top:4px; padding-bottom:4px; padding-left: 5px; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white; margin-left:3px;font-size:16px;}
-
+.name input{ width:65%;border:0px solid #DFDFDF; height: 28px; line-height: 18px; padding-top:4px; padding-bottom:4px; padding-left: 5px; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white; margin-left:3px;font-size:16px;}
 .name select { -webkit-appearance: none; border-radius: 0; border: 0px solid #e5e5e5; height:50px; line-height:50px; background-repeat: no-repeat; background-image: url('../img/down.png'); background-position: center right; background-size: 23px 7px; display: inline-block; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1;font-size:18px; color:#333; padding-right:30px;}
 
 .field_pwd input{  border: 1px solid #DFDFDF; height:25px; padding-top:4px; padding-bottom:4px; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white; display:block; margin:auto; margin-top:10px; font-size:14px; line-height:25px; width:80%; text-indent:10px; }
