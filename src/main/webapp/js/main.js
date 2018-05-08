@@ -87,8 +87,8 @@ function randomString(len) {
 }
 
 function errorback(msg) {
-    alert('error:' + JSON.stringify(msg));
-    if (msg.status == "0") {
+//    alert('error:' + JSON.stringify(msg));
+    if (msg.status == "4") {
         localStorage.clear();
         checkLogin();
     }
