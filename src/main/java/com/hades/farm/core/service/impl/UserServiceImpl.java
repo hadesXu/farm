@@ -25,6 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,6 +50,12 @@ public class UserServiceImpl implements UserService {
     @Resource
     private CodeService codeService;
 
+    @Autowired
+    private EggWareHouseServiceImpl eggWareHouseService;
+
+    @Autowired
+    private DuckWareHouseServiceImpl duckWareHouseService;
+
     @Override
     public Result<User> userRegister(RegisterRequest request) {
         Result<User> result = Result.newResult();
@@ -67,6 +74,16 @@ public class UserServiceImpl implements UserService {
         tAccountTicketMapper.insert(new TAccountTicket(user.getId(), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, new Date()));
         //初始化积分账户
         tAccountIntegralMapper.insert(new TAccountIntegral(user.getId(), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, new Date()));
+
+        try{
+            //初始化鸭仓
+            duckWareHouseService.addWareHouse(user.getId());
+            //初始化蛋仓
+            eggWareHouseService.addWareHouse(user.getId());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         result.setData(user);
         return result;
     }

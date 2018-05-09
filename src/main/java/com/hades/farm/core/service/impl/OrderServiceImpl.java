@@ -735,19 +735,11 @@ public class OrderServiceImpl implements OrderService {
                 throw new BizException(ErrorCode.HAS_PAY.getCode(),ErrorCode.HAS_PAY.getMessage());
             }
         }
-        User updateUser = new User();
-        updateUser.setId(userId);
-        if(type == 1){
-            updateUser.setsEgg(2);
-        }else{
-            updateUser.setsDuck(2);
-        }
-        updateCount = userMapper.updateSduckEgg(updateUser);
-        if (updateCount < 1) {
-            throw new BizException(ErrorCode.ADD_ERR);
-        }
+
         //2.更新账户表
         TAccountTicket accountTicketBefore = tAccountTicketMapper.queryAccountByUserId(userId);
+        BigDecimal syBalance = accountTicketBefore.getBalance();
+
         UpdateAccountTicketRequestDto updateAccountTicketRequestDto = new UpdateAccountTicketRequestDto();
         updateAccountTicketRequestDto.setUserId(userId);
         BigDecimal balance = null;
@@ -755,12 +747,18 @@ public class OrderServiceImpl implements OrderService {
         String remark = "";
         if(type == 1){
             balance = Constant.STEAL_EGG_PRICE;
+            if(syBalance.compareTo(balance) == -1) {
+                throw new BizException(ErrorCode.ARGUMENTS_ERROR2);
+            }
             operType = AcctOpreType.PAY_STEAL_EGG.getType();
             remark = "支付偷蛋费用花费菜票："+balance;
             updateAccountTicketRequestDto.setBalance(balance);
             updateAccountTicketRequestDto.setAcctOpreType(operType);
         }else if(type ==2){
             balance = Constant.STEAL_DUCK_PRICE;
+            if(syBalance.compareTo(balance) == -1) {
+                throw new BizException(ErrorCode.ARGUMENTS_ERROR2);
+            }
             operType = AcctOpreType.PAY_STEAL_DUCK.getType();
             remark = "支付偷鸭费用花费菜票："+balance;
             updateAccountTicketRequestDto.setBalance(balance);
@@ -772,6 +770,19 @@ public class OrderServiceImpl implements OrderService {
         if (updateCount != 1) {
             throw new BizException(ErrorCode.TICKET_NO_ENOUGH);
         }
+
+        User updateUser = new User();
+        updateUser.setId(userId);
+        if(type == 1){
+            updateUser.setsEgg(2);
+        }else{
+            updateUser.setsDuck(2);
+        }
+        updateCount = userMapper.updateSduckEgg(updateUser);
+        if (updateCount < 1) {
+            throw new BizException(ErrorCode.ADD_ERR);
+        }
+
         //3.账户流水
         TAccountTicketFlow accountTicketFlow = new TAccountTicketFlow();
         accountTicketFlow.setUserId(userId);
