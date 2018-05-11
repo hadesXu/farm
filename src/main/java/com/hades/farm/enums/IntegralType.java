@@ -4,10 +4,10 @@ package com.hades.farm.enums;
  * Created by xiaoxu on 2018/4/27.
  */
 public enum IntegralType {
-    ONE(1, "积分获取"),
-    TWO(2, "积分消费"),
-    THREE(3, "菜票兑换积分"),
-    FOUR(4, "商品兑换积分");
+    ONE(1, "菜币获取"),
+    TWO(2, "菜币消费"),
+    THREE(3, "菜票兑换菜币"),
+    FOUR(4, "商品兑换菜币");
 
     private int type;
     private String desc;

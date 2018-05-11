@@ -14,7 +14,7 @@ public enum NoticeType {
     BROKER_CHARGES(8, "佣金", "获得佣金amount"),
     BUY_DOG(9, "购买看门狗", "成功购买看门狗num天"),
     BUY_ROBOT(10, "购买机器人", "成功购买机器人num天"),
-    EXCHANGE_GRADE(11, "兑换积分", "成功兑换积分"),
+    EXCHANGE_GRADE(11, "兑换菜币", "成功兑换菜币"),
     FEED_DUCK(12, "喂鸭", "成功喂鸭"),
     EGG_HOT(13, "给蛋加温", "成功给蛋加温"),
     BREEDING_EGG(14, "孵蛋", "成功放入num个蛋孵化"),
@@ -34,8 +34,8 @@ public enum NoticeType {
     HARVEST_EGG(25,"收获蛋","成功收获num个蛋"),
     HARVEST_DUCK(26,"收获鸭","成功收获num只鸭"),
     //27养殖日志（定时器）30减少佣金31后台充值32后台消费
-    EGG_CHANGE(33, "鸭蛋兑换积分", "成功兑换num个鸭蛋"),
-    DUCK_CHANGE(34, "鸭兑换积分", "成功兑换num个鸭");
+    EGG_CHANGE(33, "鸭蛋兑换菜币", "成功兑换num个鸭蛋"),
+    DUCK_CHANGE(34, "鸭兑换菜币", "成功兑换num个鸭");
     ;
     private int type;
     private String desc;

@@ -59,7 +59,7 @@ public enum ErrorCode {
     PASSWORD_INVALID(3008, "密码不正确"),
     RELATION_NOT_EXIST(3009, "关系不存在"),
     ITEM_NOT_EXIST(3010, "商品不存在"),
-    INTEGRAL_ERROR(3011, "积分兑换不能小于10"),
+    INTEGRAL_ERROR(3011, "菜币兑换不能小于10"),
     WITHDRAW_ERROR(3012, "请在规定时间内提现,谢谢合作！"),
     WITHDRAW_COUNT_ERROR(3013, "每天只能申请一次提现！"),
     AUTH_USER_INVALID(3014, "您的身份信息异常，请确认无误后再次提交!"),

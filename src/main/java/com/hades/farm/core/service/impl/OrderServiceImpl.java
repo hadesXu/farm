@@ -577,9 +577,9 @@ public class OrderServiceImpl implements OrderService {
         accountIntegralFlow.setAddTime(new Date());
         accountIntegralFlow.setUpdateTime(new Date());
         if(GoodsType.EGG.getType() == order.getType()){
-            accountIntegralFlow.setRemarks("出售蛋"+requestDto.getNum()+"只,获得"+gainIntegral+"积分");
+            accountIntegralFlow.setRemarks("出售蛋"+requestDto.getNum()+"只,获得"+gainIntegral+"菜币");
         }else{
-            accountIntegralFlow.setRemarks("出售鸭"+requestDto.getNum()+"只,获得"+gainIntegral+"积分");
+            accountIntegralFlow.setRemarks("出售鸭"+requestDto.getNum()+"只,获得"+gainIntegral+"菜币");
         }
         updateCount = tAccountIntegralFlowMapper.insertSelective(accountIntegralFlow);
         if(updateCount < 1){

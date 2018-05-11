@@ -114,11 +114,16 @@ public class EggBreedingServiceImpl implements EggBreedingService {
         //校验是否是实习期
         User user = userMapper.getUserById(userId);
         Date now = new Date();
-        Date registeDate = user.getAddTime();
-        long diffDays = DateUtils.diffDays(registeDate, now);
-        if(diffDays< Constant.PRACTICE_DAY){
+//        Date registeDate = user.getAddTime();
+//        long diffDays = DateUtils.diffDays(registeDate, now);
+//        if(diffDays< Constant.PRACTICE_DAY){
+//            throw new BizException(ErrorCode.PRACTICE_NOWARM_SELF);
+//        }
+        int trainee = user.getIsTrainee();
+        if(trainee != 1) {
             throw new BizException(ErrorCode.PRACTICE_NOWARM_SELF);
         }
+
         TEggWarehouse tEggWarehouse = tEggWarehouseMapper.selectByUserId(userId);
         if(tEggWarehouse == null){
             eggWareHouseService.addWareHouse(userId);

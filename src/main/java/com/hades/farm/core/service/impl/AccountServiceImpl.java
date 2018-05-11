@@ -238,7 +238,7 @@ public class AccountServiceImpl implements AccountService {
         accountIntegralFlow.setAmountAfter(integralAfter);
         accountIntegralFlow.setAddTime(new Date());
         accountIntegralFlow.setUpdateTime(new Date());
-        accountIntegralFlow.setRemarks("菜票兑换积分，获得" + num + "积分");
+        accountIntegralFlow.setRemarks("菜票兑换菜币，获得" + num + "菜币");
         updateCount = tAccountIntegralFlowMapper.insertSelective(accountIntegralFlow);
         if (updateCount < 1) {
             throw new BizException(ErrorCode.ADD_ERR);
@@ -250,7 +250,7 @@ public class AccountServiceImpl implements AccountService {
         accountTicketFlow.setAmount(num);
         accountTicketFlow.setAmountBefore(tAccountTicket.getBalance());
         accountTicketFlow.setAmountAfter(tAccountTicket.getBalance().subtract(num));
-        accountTicketFlow.setRemarks("兑换积分：" + num);
+        accountTicketFlow.setRemarks("兑换菜币：" + num);
         accountTicketFlow.setAddTime(new Date());
         uRes = tAccountTicketFlowMapper.insertSelective(accountTicketFlow);
         if (uRes == Constant.NUMBER_ZERO) {
@@ -321,7 +321,7 @@ public class AccountServiceImpl implements AccountService {
         accountIntegralFlow.setAmountAfter(integralAfter);
         accountIntegralFlow.setAddTime(new Date());
         accountIntegralFlow.setUpdateTime(new Date());
-        accountIntegralFlow.setRemarks("商品兑换积分，获得" + num + "积分");
+        accountIntegralFlow.setRemarks("商品兑换菜币，获得" + num + "菜币");
         updateCount = tAccountIntegralFlowMapper.insertSelective(accountIntegralFlow);
         if (updateCount < 1) {
             throw new BizException(ErrorCode.ADD_ERR);
