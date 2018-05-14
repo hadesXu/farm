@@ -26,7 +26,7 @@ public class SystemUtil {
     }
 
     public static boolean isNull(String str) {
-        return str == null || str.equals("null") ? true : false;
+        return str == null || str.equals("null") || "".equals(str) ? true : false;
     }
 
 

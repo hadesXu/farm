@@ -31,7 +31,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xiaoxu on 2018/3/4.
@@ -82,6 +84,14 @@ public class UserServiceImpl implements UserService {
             eggWareHouseService.addWareHouse(user.getId());
         } catch (Exception e){
             e.printStackTrace();
+        }
+
+        if(user.getParentId() != null) {
+            Map map = new HashMap();
+            map.put("user_id",user.getId());
+            map.put("if_back","1");
+            map.put("add_time",new Date());
+            userMapper.insertRegister(map);
         }
 
         result.setData(user);
@@ -332,16 +342,9 @@ public class UserServiceImpl implements UserService {
                     user.setIsGroup(parentUser.getIsGroup());
                     user.setGroupBossId(parentUser.getGroupBossId());
                 }
-                if (parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
-                    user.setParents(user.getParents() + "," + parentUser.getParentId());
-                    parentUser = userMapper.getUserById(parentUser.getParentId());
-                    if (parentUser != null && parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
-                        user.setParents(user.getParents() + "," + parentUser.getParentId());
-                        parentUser = userMapper.getUserById(parentUser.getParentId());
-                        if (parentUser != null && parentUser.getParentId() != null && parentUser.getParentId() != Constant.DEFAULT_ID) {
-                            user.setParents(user.getParents() + "," + parentUser.getParentId());
-                        }
-                    }
+
+                if (parentUser.getParentId() != null && !SystemUtil.isNull(parentUser.getParents()) ) {
+                    user.setParents(user.getParents() + "," + parentUser.getParents());
                 }
             }
         }

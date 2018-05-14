@@ -6,6 +6,7 @@ import com.hades.farm.core.data.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xiaoxu on 2018/3/4.
@@ -98,4 +99,5 @@ public interface UserMapper {
 
     int updateSduckEgg(User user);
 
+    void insertRegister(@Param("params")Map map);
 }

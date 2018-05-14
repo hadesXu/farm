@@ -208,5 +208,8 @@
         id = #{id,jdbcType=BIGINT}
     </update>
 
-
+    <insert id="insertRegister" parameterType="map" useGeneratedKeys="true">
+        insert into t_back_register (user_id,if_back,add_time)
+        values (#{params.user_id},#{params.if_back},#{params.add_time})
+    </insert>
 </mapper>
