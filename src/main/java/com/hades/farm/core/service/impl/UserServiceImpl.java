@@ -332,22 +332,34 @@ public class UserServiceImpl implements UserService {
         user.setActive(Constant.NUMBER_TWO);
         user.setIsGroup(Constant.NUMBER_ONE);
         user.setIsTrainee(Constant.NUMBER_TWO);
+        String parents = "";
         if (request.getParentId() != null) {
             User parentUser = userMapper.getUserById(request.getParentId());
             if (parentUser != null) {
                 user.setParentId(request.getParentId());
-                user.setParents(request.getParentId() + "");
                 user.setGeneration(parentUser.getGeneration() + Constant.NUMBER_ONE);
                 if (parentUser.getIsGroup() == Constant.NUMBER_TWO) {
                     user.setIsGroup(parentUser.getIsGroup());
                     user.setGroupBossId(parentUser.getGroupBossId());
                 }
+                parents += parentUser.getId(); //上一代
+                if (parentUser.getParentId() != null  ) {
+                    User pparentUser = userMapper.getUserById(parentUser.getParentId());   //爷信息
+                    if(pparentUser != null) {
+                        parents +=","+parentUser.getParentId(); //上两代
 
-                if (parentUser.getParentId() != null && !SystemUtil.isNull(parentUser.getParents()) ) {
-                    user.setParents(user.getParents() + "," + parentUser.getParents());
+                        if(pparentUser.getParentId() != null) {
+                            User ppparentUser = userMapper.getUserById(pparentUser.getParentId());   //祖信息
+                            if(ppparentUser != null) {
+                                parents +=","+pparentUser.getParentId(); //上三代
+                            }
+                        }
+                    }
                 }
             }
         }
+         user.setParents(parents);
+
         if (!SystemUtil.isNull(request.getWechat()) && !"undefined".equals(request.getWechat())) {
             user.setWechat(request.getWechat());
         }
