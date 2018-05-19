@@ -363,7 +363,6 @@ public class OrderServiceImpl implements OrderService {
             amount = Constant.DUCK_PRICE.multiply(new BigDecimal(requestDto.getNum()));
             integralFee = amount.multiply(Constant.DUCK_INTEGRAL_RATE);
         } else {
-            //TODO 狗
         }
         //卖家手续费
         long sellUserId = order.getUserId();
@@ -417,7 +416,6 @@ public class OrderServiceImpl implements OrderService {
             tbuyNotice.setType(NoticeType.BUY_DUCK.getType());
             tbuyNotice.setRemarks(NoticeType.BUY_DUCK.getRemarks().replace("num", requestDto.getNum() + ""));
         } else {
-            //TODO 狗
         }
         //更新卖家账户表、账户流水
         updateCount = tAccountTicketMapper.updateAccountTicket(updateSellAccountTicketRequestDto);
@@ -504,7 +502,6 @@ public class OrderServiceImpl implements OrderService {
                 throw new BizException(ErrorCode.UPDATE_ERR);
             }
         } else {
-            //todo dog
         }
         //更新买家账户表、账户流水表、t_notice
         updateCount = tAccountTicketMapper.updateAccountTicket(updateBuyAccountTicketRequestDto);
@@ -585,6 +582,10 @@ public class OrderServiceImpl implements OrderService {
         if(updateCount < 1){
             throw new BizException(ErrorCode.ADD_ERR);
         }
+
+        tAccountTicketMapper.updateAccountTicketForAccProfit(AmountUtil.profitCalculate(order.getType(),requestDto.getNum()),sellUserId);
+        tAccountIntegralMapper.updateAccountIntegralForAccGain(gainIntegral,sellUserId);
+
         return true;
     }
 

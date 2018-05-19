@@ -164,4 +164,9 @@
     update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <update id="updateAccountIntegralForAccGain">
+    update t_account_integral set acc_gain = acc_gain + #{acc_gain,jdbcType=DECIMAL}
+    where  user_id = #{user_id,jdbcType=BIGINT}
+  </update>
 </mapper>

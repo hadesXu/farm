@@ -1,6 +1,9 @@
 package com.hades.farm.core.data.mapper;
 
 import com.hades.farm.core.data.entity.TAccountIntegral;
+import org.apache.ibatis.annotations.Param;
+
+import java.math.BigDecimal;
 
 public interface TAccountIntegralMapper {
     /**
@@ -54,4 +57,6 @@ public interface TAccountIntegralMapper {
     TAccountIntegral queryByUserId(long userId);
 
     int updateIntegralByUserId(TAccountIntegral accountIntegral);
+
+    void updateAccountIntegralForAccGain(@Param("acc_gain") BigDecimal acc_gain, @Param("user_id") long user_id);
 }

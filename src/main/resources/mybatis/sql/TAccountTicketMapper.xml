@@ -203,6 +203,11 @@
         </if>
     </update>
 
+    <update id="updateAccountTicketForAccProfit">
+         update t_account_ticket set acc_profit = acc_profit + #{acc_profit,jdbcType=DECIMAL}
+         where  user_id = #{user_id,jdbcType=BIGINT}
+    </update>
+
 
     <select id="queryAccountByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
