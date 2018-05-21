@@ -83,8 +83,8 @@ public class OrderServiceImpl implements OrderService {
         platformWarehouseFlow.setGoods(GoodsType.DUCK.getType() + "");
         platformWarehouseFlow.setType(WareHouseOperType.SELL.getType() + "");
         platformWarehouseFlow.setNum(requestDto.getNum());
-        platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
-        platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
+        platformWarehouseFlow.setNumBefore(platformWarehouse.getDuckNum() + requestDto.getNum());
+        platformWarehouseFlow.setNumAfter(platformWarehouse.getDuckNum());
         platformWarehouseFlow.setRemarks("卖出" + requestDto.getNum()+"只鸭，购买用户ID:" + requestDto.getUserId());
         platformWarehouseFlow.setAddTime(new Date());
         updateCount =  tPlatformWarehouseFlowMapper.insertSelective(platformWarehouseFlow);
@@ -162,7 +162,7 @@ public class OrderServiceImpl implements OrderService {
         platformWarehouseFlow.setGoods(GoodsType.EGG.getType() + "");
         platformWarehouseFlow.setType(WareHouseOperType.SELL.getType() + "");
         platformWarehouseFlow.setNum(requestDto.getNum());
-        platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() - requestDto.getNum());
+        platformWarehouseFlow.setNumBefore(platformWarehouse.getEggNum() + requestDto.getNum());
         platformWarehouseFlow.setNumAfter(platformWarehouse.getEggNum());
         platformWarehouseFlow.setRemarks("卖出" + requestDto.getNum()+ "个蛋，购买用户ID:"+requestDto.getUserId());
         platformWarehouseFlow.setAddTime(new Date());
