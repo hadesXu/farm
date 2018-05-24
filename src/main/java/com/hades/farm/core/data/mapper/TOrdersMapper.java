@@ -60,4 +60,6 @@ public interface TOrdersMapper {
     int updateOrderOfBuy(BuyGoodsRequestDto requestDto);
 
     List<OrderUserResultDto> queryOrderListByCondition(OrderQueryRequestDto requestDto);
+
+    int queryNumByType(OrderQueryRequestDto requestDto);
 }

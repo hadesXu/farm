@@ -48,6 +48,9 @@ public enum ErrorCode {
     SELL_GOOD_TIME_ERROR(2028, "挂单时间为：09:00-17:30"),
     CANNT_STEAL2(2029, "您今天已经偷过，请明天再来"),
     BREEDING_TIME_ERROR(2030, "0~4点不允许加温及养殖"),
+    BUY_DUCK_ZS(2031, "数量必须为10的倍数"),
+    SELL_EGG_LIMIT(2032, "每天最多出售600个蛋"),
+    SELL_DUCK_LIMIT(2033, "每天最多出售200个鸭"),
 
     PHONE_FORMAT_ERROR(3001, "手机号格式错误"),
     PWD_FORMAT_ERROR(3002, "密码不能包含特殊字符"),

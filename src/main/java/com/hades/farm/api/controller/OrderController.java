@@ -8,11 +8,17 @@ import com.hades.farm.core.data.dto.requestDto.BuyGoodsRequestDto;
 import com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto;
 import com.hades.farm.core.data.dto.requestDto.PublishOrderRequestDto;
 import com.hades.farm.core.data.dto.resultDto.OrderUserResultDto;
+import com.hades.farm.core.data.entity.TDuckWarehouse;
+import com.hades.farm.core.data.entity.TEggWarehouse;
+import com.hades.farm.core.data.mapper.TDuckWarehouseMapper;
+import com.hades.farm.core.data.mapper.TEggWarehouseMapper;
+import com.hades.farm.core.data.mapper.TOrdersMapper;
 import com.hades.farm.core.exception.BizException;
 import com.hades.farm.core.service.OrderQueryService;
 import com.hades.farm.core.service.OrderService;
 import com.hades.farm.result.ErrorCode;
 import com.hades.farm.utils.Constant;
+import com.hades.farm.utils.DateUtils;
 import com.hades.farm.utils.NumUtil;
 import com.langu.authorization.annotation.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +44,15 @@ public class OrderController {
     @Autowired
     private OrderQueryService orderQueryService;
 
+    @Autowired
+    private TDuckWarehouseMapper tduckWarehouseMapper;
+
+    @Autowired
+    private TEggWarehouseMapper teggWarehouseMapper;
+
+    @Autowired
+    private TOrdersMapper tordersMapper;
+
     @Value("${farm.SUPERVISOR_ID}")
     private String SUPERVISOR_ID;
 
@@ -62,6 +77,17 @@ public class OrderController {
                 return response;
             }
             int goodNum = Integer.parseInt(goodNumStr);
+            if(goodNum%10 != 0) {
+                msgModel.setCode(ErrorCode.BUY_DUCK_ZS.getCode());
+                msgModel.setMessage(ErrorCode.BUY_DUCK_ZS.getMessage());
+                response.setResult(msgModel);
+                return response;
+            }
+
+            String day = DateUtils.dateToString(new Date());
+            String start = day.substring(0,10)+" 00:00:00";
+            String end = day.substring(0,10)+" 23:59:59";
+
             int goodType = Integer.parseInt(goodTypeStr);
             if (goodType == 1) {//蛋
                 if (goodNum > 200 || goodNum < 10) {
@@ -70,10 +96,54 @@ public class OrderController {
                     response.setResult(msgModel);
                     return response;
                 }
+                TDuckWarehouse duckHose = tduckWarehouseMapper.selectByUserId(userId);
+                if(duckHose.getEgg().intValue() < goodNum) {
+                    msgModel.setCode(ErrorCode.PLATFORM_EGG_NO_ENOUGH.getCode());
+                    msgModel.setMessage(ErrorCode.PLATFORM_EGG_NO_ENOUGH.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+
+                OrderQueryRequestDto o1 = new OrderQueryRequestDto();
+                o1.setUserId(userId);
+                o1.setType(goodType);
+                o1.setStartTime(DateUtils.strToDate(start));
+                o1.setEndTime(DateUtils.strToDate(end));
+
+                int orderEggNum = tordersMapper.queryNumByType(o1);
+                if((orderEggNum+goodNum) > 600) {
+                    msgModel.setCode(ErrorCode.SELL_EGG_LIMIT.getCode());
+                    msgModel.setMessage(ErrorCode.SELL_EGG_LIMIT.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+
             } else if (goodType == 2) {
                 if (goodNum > 200 || goodNum < 20) {
                     msgModel.setCode(ErrorCode.BUY_DUCK_LIMIT.getCode());
                     msgModel.setMessage("卖出" + ErrorCode.BUY_DUCK_LIMIT.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+
+                TEggWarehouse eggHose = teggWarehouseMapper.selectByUserId(userId);
+                if(eggHose.getDuck().intValue() < goodNum) {
+                    msgModel.setCode(ErrorCode.PLATFORM_DUCK_NO_ENOUGH.getCode());
+                    msgModel.setMessage(ErrorCode.PLATFORM_DUCK_NO_ENOUGH.getMessage());
+                    response.setResult(msgModel);
+                    return response;
+                }
+
+                OrderQueryRequestDto o1 = new OrderQueryRequestDto();
+                o1.setUserId(userId);
+                o1.setType(goodType);
+                o1.setStartTime(DateUtils.strToDate(start));
+                o1.setEndTime(DateUtils.strToDate(end));
+
+                int orderDuckNum = tordersMapper.queryNumByType(o1);
+                if((orderDuckNum+goodNum) > 200) {
+                    msgModel.setCode(ErrorCode.SELL_DUCK_LIMIT.getCode());
+                    msgModel.setMessage(ErrorCode.SELL_DUCK_LIMIT.getMessage());
                     response.setResult(msgModel);
                     return response;
                 }
