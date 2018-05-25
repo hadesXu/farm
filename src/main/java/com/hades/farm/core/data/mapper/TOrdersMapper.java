@@ -61,5 +61,5 @@ public interface TOrdersMapper {
 
     List<OrderUserResultDto> queryOrderListByCondition(OrderQueryRequestDto requestDto);
 
-    int queryNumByType(OrderQueryRequestDto requestDto);
+    Integer queryNumByType(OrderQueryRequestDto requestDto);
 }

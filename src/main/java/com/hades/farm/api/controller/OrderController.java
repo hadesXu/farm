@@ -110,13 +110,16 @@ public class OrderController {
                 o1.setStartTime(DateUtils.strToDate(start));
                 o1.setEndTime(DateUtils.strToDate(end));
 
-                int orderEggNum = tordersMapper.queryNumByType(o1);
-                if((orderEggNum+goodNum) > 600) {
-                    msgModel.setCode(ErrorCode.SELL_EGG_LIMIT.getCode());
-                    msgModel.setMessage(ErrorCode.SELL_EGG_LIMIT.getMessage());
-                    response.setResult(msgModel);
-                    return response;
+                Integer orderEggNum = tordersMapper.queryNumByType(o1);
+                if(orderEggNum != null) {
+                    if((orderEggNum.intValue()+goodNum) > 600) {
+                        msgModel.setCode(ErrorCode.SELL_EGG_LIMIT.getCode());
+                        msgModel.setMessage(ErrorCode.SELL_EGG_LIMIT.getMessage());
+                        response.setResult(msgModel);
+                        return response;
+                    }
                 }
+
 
             } else if (goodType == 2) {
                 if (goodNum > 200 || goodNum < 20) {
@@ -140,13 +143,16 @@ public class OrderController {
                 o1.setStartTime(DateUtils.strToDate(start));
                 o1.setEndTime(DateUtils.strToDate(end));
 
-                int orderDuckNum = tordersMapper.queryNumByType(o1);
-                if((orderDuckNum+goodNum) > 200) {
-                    msgModel.setCode(ErrorCode.SELL_DUCK_LIMIT.getCode());
-                    msgModel.setMessage(ErrorCode.SELL_DUCK_LIMIT.getMessage());
-                    response.setResult(msgModel);
-                    return response;
+                Integer orderDuckNum = tordersMapper.queryNumByType(o1);
+                if(orderDuckNum != null) {
+                    if((orderDuckNum.intValue()+goodNum) > 200) {
+                        msgModel.setCode(ErrorCode.SELL_DUCK_LIMIT.getCode());
+                        msgModel.setMessage(ErrorCode.SELL_DUCK_LIMIT.getMessage());
+                        response.setResult(msgModel);
+                        return response;
+                    }
                 }
+
             }
             PublishOrderRequestDto requestDto = new PublishOrderRequestDto();
             requestDto.setUserId(userId);

@@ -183,7 +183,7 @@
     </select>
 
 
-    <select id="queryNumByType" resultType="int" parameterType="com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto" >
+    <select id="queryNumByType" resultType="java.lang.Integer" parameterType="com.hades.farm.core.data.dto.requestDto.OrderQueryRequestDto" >
               SELECT sum(num) FROM t_orders WHERE user_id = #{userId,jdbcType=BIGINT} AND type =  #{type,jdbcType=INTEGER}
               AND  add_time >=  #{startTime,jdbcType=TIMESTAMP}   AND  #{endTime,jdbcType=TIMESTAMP} >= add_time
 
