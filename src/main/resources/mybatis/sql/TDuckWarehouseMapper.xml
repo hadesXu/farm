@@ -275,8 +275,8 @@
   <update id="updateDuckWareHouseCumulativeData" parameterType="com.hades.farm.core.data.dto.requestDto.WareHouseCumulativeDataRequestDto">
     UPDATE t_duck_warehouse
     set all_sell = all_sell + #{allSell,jdbcType=INTEGER},
-    all_profit = #{allProfit,jdbcType=DECIMAL},
-    all_integral = #{allIntegral,jdbcType=DECIMAL},
+    all_profit = all_profit + #{allProfit,jdbcType=DECIMAL},
+    all_integral = all_integral + #{allIntegral,jdbcType=DECIMAL},
     update_time = now()
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
