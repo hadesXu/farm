@@ -961,7 +961,7 @@
 
 	                <img src="../img/jyq.png"></a></li>
 
-	           <li class="tools04"><a href="#">
+	           <li class="tools04"><a href="#" onclick="toSC();">
 
 	                <img src="../img/gwsc.png"></a></li>
 
@@ -1042,7 +1042,7 @@
                     ,skin: 'msg'
                     ,time: 1 //2秒后自动关闭
                 });
-                window.setTimeout("window.location='farm_yjc.htm'",1200);
+                // window.setTimeout("window.location='farm_yjc.htm'",1200);
             } else{
                 //提示
                 layer.open({
@@ -1052,6 +1052,7 @@
                 });
             }
         }
+        window.setTimeout("window.location='farm_yjc.htm'",1200);
     }
 
     var ifSteal = 2;//否
@@ -1278,6 +1279,10 @@
             window.location.href="user-1.htm?backurl=farm_yjc.htm";
         }
         alert('error:' + JSON.stringify(msg));
+    }
+
+    function toSC() {
+        location.href = "http://w.gxjex.com/app/index.php?i=12&c=entry&m=ewei_shopv2&do=mobile&r=goods.detail&id=3105&from=singlemessage&isappinstalled=0";
     }
 </script>
 
