@@ -1,8 +1,8 @@
 var token = localStorage.getItem("token");
 var userId = localStorage.getItem("userId");
 //var serverUrl = "http://api.chirs.top";
- var serverUrl = "http://127.0.0.1:8098";
- //var serverUrl = "http://api.gxyxgtz.com/";
+var serverUrl = "http://127.0.0.1:8098";
+// var serverUrl = "http://api.gxyxgtz.com/";
 //校验登录
 function checkLogin() {
     if (checkNull(userId) || checkNull(token) || userId < 1) {
@@ -194,7 +194,7 @@ function footerHtml() {
     innerHtml += "        </a>";
     innerHtml += "     </li>";
     innerHtml += "     <li class='tools04'>";
-    innerHtml += "     <a href='javascript:;'>";
+    innerHtml += "     <a href='javascript:;' onclick='toSC();'>";
     innerHtml += "           <img src='../img/gwsc.png' tppabs='javascript:;'>";
     innerHtml += "        </a>";
     innerHtml += "    </li>";
@@ -207,6 +207,10 @@ function footerHtml() {
     innerHtml += "</div> ";
     return innerHtml;
 
+}
+
+function toSC() {
+    location.href = "http://w.gxjex.com/app/index.php?i=12&c=entry&m=ewei_shopv2&do=mobile&r=goods.detail&id=3105&from=singlemessage&isappinstalled=0";
 }
 
 function getTimestamp(dateStr) {
