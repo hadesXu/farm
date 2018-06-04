@@ -660,7 +660,7 @@
                 ,skin: 'msg'
                 ,time: 1 //2秒后自动关闭
             });
-            window.setTimeout("window.location='farm_jyq.htm?url='"+furl,1200);
+            window.setTimeout("window.location='farm_jyq.htm?url="+furl+"'",1200);
         } else{
             //提示
             layer.open({
@@ -716,7 +716,7 @@
                     ,skin: 'msg'
                     ,time: 1 //2秒后自动关闭
                 });
-                window.setTimeout("window.location='farm_jyq.htm?url='"+furl,1200);
+                window.setTimeout("window.location='farm_jyq.htm?url="+furl+"'",1200);
             } else{
                 //提示
                 layer.open({
@@ -771,7 +771,7 @@
                 ,skin: 'msg'
                 ,time: 1 //2秒后自动关闭
             });
-            window.setTimeout("window.location='farm_jyq.htm?url='"+furl,1200);
+            window.setTimeout("window.location='farm_jyq.htm?url="+furl+"'",1200);
         } else{
             //提示
             layer.open({
@@ -920,7 +920,8 @@
         if(turl != '' && turl != null) {
             window.location.href= turl;
         } else {
-            window.history.go(-1);
+            // window.history.go(-1);
+            window.location.href='index.html';
         }
     }
 </script>
