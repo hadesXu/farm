@@ -89,6 +89,7 @@ public class AccountConverterImpl implements AccountConverter {
             model.setTypeStr(WithdrawType.getType(Integer.parseInt(tWithdraw.getType())).tip);
             model.setNo(WithdrawType.getType(Integer.parseInt(tWithdraw.getType())) == WithdrawType.ALIPAY ? tWithdraw.getAlipayAccount() : tWithdraw.getCardNo());
             model.setRealName(tWithdraw.getRealName());
+            model.setRemarks(tWithdraw.getRemarks());
             models.add(model);
         }
         return models;

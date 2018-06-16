@@ -37,6 +37,8 @@ public class WithdrawRecordModel {
      */
     private BigDecimal value;
 
+    private String remarks;
+
     public long getAddTime() {
         return addTime;
     }
@@ -83,5 +85,13 @@ public class WithdrawRecordModel {
 
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }
